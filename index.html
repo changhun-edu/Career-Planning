@@ -1,0 +1,2521 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>교감 자격연수 내비게이터</title>
+<meta name="description" content="구 광주광역시교육청 기준, 초등 교사를 위한 교감 자격연수 서류 기준점 계산·진로 시뮬레이션 도구">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" onload="this.media='all'">
+<style>
+:root{
+  --bg:#f4f6fa; --card:#fff; --ink:#18212f; --ink2:#4a5568; --muted:#7a8597; --line:#e2e7ef; --line2:#cfd7e3;
+  --pri:#1f5fbf; --pri-d:#164a96; --pri-l:#e8f0fc; --acc:#d9722b; --acc-l:#fdf0e6;
+  --good:#1e8e5a; --good-l:#e5f5ec; --bad:#c23b33; --bad-l:#fbeceb; --warn:#b7791f; --warn-l:#fdf5e3;
+  --grey-l:#eef1f5; --r:14px; --sh:0 1px 2px rgba(20,30,50,.06),0 4px 14px rgba(20,30,50,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+header.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;border:0;background:none;padding:0;color:var(--ink);font:inherit}
+.logo .mk{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--pri),#3b82d6);display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px}
+.logo b{font-size:16.5px;font-weight:800;letter-spacing:-.3px}
+.logo small{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:-3px}
+.top .tools{display:flex;gap:6px}
+.icon-btn{border:1px solid var(--line2);background:#fff;border-radius:9px;height:34px;padding:0 10px;font:inherit;font-size:13px;color:var(--ink2);cursor:pointer}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:0 0 8px}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;border:0;background:var(--grey-l);color:var(--ink2);font:inherit;font-size:14px;font-weight:500;padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav.tabs button.on{background:var(--pri);color:#fff;font-weight:700}
+main{padding:18px 0 110px}
+section.page{display:none}
+section.page.on{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+h1{font-size:23px;line-height:1.35;margin:4px 0 6px;letter-spacing:-.5px}
+h2{font-size:18px;margin:26px 0 10px;letter-spacing:-.3px}
+h3{font-size:15.5px;margin:0 0 8px}
+p{margin:6px 0}
+.lead{color:var(--ink2);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--sh);margin:12px 0}
+.card.tight{padding:12px 14px}
+.muted{color:var(--muted)} .small{font-size:13px} .xs{font-size:12px}
+.num{font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:520px){.grid3{gap:6px}.grid3 .stat{padding:8px 9px}.grid3 .stat .v{font-size:16.5px}.grid3 .stat .k{font-size:11.5px}}
+.stat{background:var(--grey-l);border-radius:12px;padding:10px 12px}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .v{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.stat .v small{font-size:12px;font-weight:500;color:var(--muted)}
+.hero{background:linear-gradient(135deg,#1f5fbf,#2f7bd8);color:#fff;border:0}
+.hero .muted{color:#d6e4fa}
+.hero .big{font-size:38px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+.hero .stat{background:rgba(255,255,255,.14)}
+.hero .stat .k{color:#d6e4fa}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--grey-l);color:var(--ink2);white-space:nowrap}
+.pill.good{background:var(--good-l);color:var(--good)} .pill.bad{background:var(--bad-l);color:var(--bad)} .pill.warn{background:var(--warn-l);color:var(--warn)} .pill.pri{background:var(--pri-l);color:var(--pri)} .pill.acc{background:var(--acc-l);color:var(--acc)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;background:var(--pri);color:#fff;font:inherit;font-weight:700;font-size:14.5px;padding:10px 16px;cursor:pointer;min-height:42px}
+.btn:hover{background:var(--pri-d)}
+.btn.ghost{background:#fff;color:var(--pri);border:1px solid var(--line2)}
+.btn.sm{font-size:13px;padding:6px 11px;min-height:34px;border-radius:9px}
+.btn.danger{background:#fff;color:var(--bad);border:1px solid #efc9c6}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+/* roadmap */
+.road{list-style:none;margin:0;padding:0;position:relative}
+.road li{position:relative;padding:0 0 16px 40px}
+.road li:before{content:"";position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--line2)}
+.road li:last-child:before{display:none}
+.road .dot{position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--line2);display:grid;place-items:center;font-size:12.5px;font-weight:800;color:var(--muted)}
+.road li.done .dot{background:var(--good);border-color:var(--good);color:#fff}
+.road li.now .dot{background:var(--pri);border-color:var(--pri);color:#fff;box-shadow:0 0 0 5px var(--pri-l)}
+.road .t{font-weight:700}
+.road .d{font-size:13.5px;color:var(--ink2)}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.menu button{text-align:left;border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:14px;font:inherit;cursor:pointer;box-shadow:var(--sh)}
+.menu button b{display:block;font-size:15px;margin-bottom:2px}
+.menu button span{font-size:12.5px;color:var(--muted);line-height:1.45;display:block}
+.menu button i{font-style:normal;display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--pri-l);color:var(--pri);margin-bottom:8px}
+/* forms */
+label.f{display:block;margin:0}
+label.f > span{display:block;font-size:13px;color:var(--ink2);font-weight:500;margin-bottom:4px}
+input[type=number],input[type=date],input[type=text],select{width:100%;font:inherit;font-size:16px;padding:9px 10px;border:1px solid var(--line2);border-radius:10px;background:#fff;color:var(--ink);min-height:42px}
+input:focus,select:focus{outline:2px solid var(--pri-l);border-color:var(--pri)}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;padding:8px 10px;border:1px solid var(--line2);border-radius:10px;background:#fff;cursor:pointer;min-height:42px}
+.chk input{width:18px;height:18px;accent-color:var(--pri);margin:0}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 10px}
+.fgrid .full{grid-column:1/-1}
+.hint{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+details.acc{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin:10px 0;box-shadow:var(--sh);overflow:hidden}
+details.acc > summary{list-style:none;cursor:pointer;padding:13px 14px;display:flex;align-items:center;gap:10px;font-weight:700}
+details.acc > summary::-webkit-details-marker{display:none}
+details.acc > summary:after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:.2s;flex:0 0 auto}
+details.acc[open] > summary:after{transform:rotate(-135deg)}
+details.acc > .in{padding:2px 14px 16px;border-top:1px solid var(--line)}
+summary .sv{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--pri);font-size:14px;white-space:nowrap}
+summary .sv + :after{}
+.sub{font-size:13.5px;font-weight:700;color:var(--ink2);margin:16px 0 8px;display:flex;align-items:center;gap:6px}
+.rate{font-size:11.5px;color:var(--muted);font-weight:500}
+.rowline{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.rowline:last-child{border-bottom:0}
+/* gauge */
+.gauge{margin:10px 0}
+.gauge .lab{display:flex;justify-content:space-between;font-size:13.5px;gap:8px}
+.gauge .lab b{font-weight:700}
+.gauge .track{height:10px;background:var(--grey-l);border-radius:6px;overflow:hidden;margin-top:4px;display:flex;gap:2px}
+.gauge .fill{height:100%;background:var(--pri);border-radius:6px}
+.gauge.full .fill{background:var(--good)}
+.gauge .note{font-size:12px;color:var(--muted);margin-top:2px}
+/* sticky result */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px);padding:8px 0 calc(8px + env(safe-area-inset-bottom));display:none}
+.dock.on{display:block}
+.dock .wrap{display:flex;align-items:center;gap:12px}
+.dock .tot{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.dock .lbl{font-size:11.5px;color:var(--muted);line-height:1.2}
+/* table */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:center;vertical-align:middle;white-space:nowrap;overflow-wrap:normal;word-break:keep-all}
+td.l{white-space:normal}
+th{background:var(--grey-l);font-weight:700;color:var(--ink2);font-size:12.5px;white-space:nowrap}
+td.l,th.l{text-align:left}
+tr.hit td{background:var(--good-l)}
+/* chart */
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#18212f;color:#fff;font-size:12.5px;line-height:1.4;padding:6px 9px;border-radius:8px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .12s;z-index:5}
+.tip.on{opacity:1}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--ink2);margin:4px 0 6px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.legend i.dash{background:repeating-linear-gradient(90deg,var(--acc) 0 4px,transparent 4px 7px)!important}
+/* callout */
+.callout{border-radius:12px;padding:12px 14px;font-size:14px;margin:10px 0;background:var(--pri-l);color:#163a73}
+.callout.warn{background:var(--warn-l);color:#6b4a12}
+.callout.good{background:var(--good-l);color:#13573a}
+.callout.bad{background:var(--bad-l);color:#7a231e}
+.callout b{font-weight:800}
+/* sim rows */
+.plan-sw{display:flex;background:var(--grey-l);border-radius:12px;padding:4px;gap:4px}
+.plan-sw button{flex:1;border:0;background:transparent;border-radius:9px;padding:8px;font:inherit;font-weight:700;color:var(--ink2);cursor:pointer}
+.plan-sw button.on{background:#fff;color:var(--pri);box-shadow:var(--sh)}
+details.yr{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8px 0}
+details.yr > summary{list-style:none;cursor:pointer;padding:11px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+details.yr > summary::-webkit-details-marker{display:none}
+details.yr > summary .y{font-weight:800;font-size:14.5px}
+details.yr > summary .tags{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+details.yr > .in{padding:4px 12px 14px;border-top:1px solid var(--line)}
+.tag{font-size:11.5px;padding:1px 7px;border-radius:6px;background:var(--grey-l);color:var(--ink2)}
+.tag.p{background:var(--pri-l);color:var(--pri)}
+/* strategy */
+.act{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+.act:last-child{border-bottom:0}
+.act .g{flex:0 0 66px;text-align:right}
+.act .g b{font-size:17px;font-weight:800;color:var(--pri);display:block;line-height:1.2}
+.act .g span{font-size:11px;color:var(--muted)}
+.act .b{flex:1}
+.act .b .n{font-weight:700;font-size:14.5px}
+.act .b .d{font-size:12.5px;color:var(--ink2)}
+.act.off{opacity:.55}
+.act.off .g b{color:var(--muted)}
+/* rules */
+.search{position:relative;margin:8px 0 4px}
+.search input{padding-left:36px}
+.search svg{position:absolute;left:11px;top:12px}
+.rule-body table{font-size:12.5px}
+.rule-body td,.rule-body th{padding:6px 6px}
+.badge-date{display:inline-block;font-size:11px;font-weight:800;background:var(--acc-l);color:var(--acc);border-radius:6px;padding:1px 6px;margin-right:4px;white-space:nowrap}
+mark{background:#fff1a8;padding:0 1px;border-radius:2px}
+ul.clean{margin:6px 0;padding-left:18px}
+ul.clean li{margin:3px 0}
+/* ---- 4단계: 위계·상태 ---- */
+nav.tabs{gap:4px}
+nav.tabs button{flex:1 1 auto;padding:8px 6px;text-align:center}
+@media(max-width:400px){nav.tabs button{font-size:13.5px;padding:8px 4px}}
+.top .tools{position:relative}
+.icon-btn.more{width:36px;padding:0;display:grid;place-items:center}
+.menu-pop{position:absolute;right:0;top:40px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px rgba(20,30,50,.16);padding:6px;min-width:190px;z-index:50}
+.menu-pop button{display:block;width:100%;text-align:left;border:0;background:none;font:inherit;font-size:14px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--ink)}
+.menu-pop button:hover{background:var(--grey-l)}
+.menu-pop .danger-t{color:var(--bad)}
+.libsw{display:flex;background:var(--grey-l);border-radius:12px;padding:4px;gap:4px;margin:0 0 14px}
+.libsw button{flex:1;border:0;background:transparent;border-radius:9px;padding:8px;font:inherit;font-size:14px;font-weight:600;color:var(--ink2);cursor:pointer}
+.libsw button.on{background:#fff;color:var(--pri);box-shadow:var(--sh)}
+/* 카드 3종: 결론 / 입력(기본) / 참고 */
+.card.result{border:1px solid #cddcf3;border-top:4px solid var(--pri);background:#fff;box-shadow:0 2px 4px rgba(20,30,50,.05),0 10px 24px rgba(31,95,191,.08)}
+.card.ref{background:transparent;border:1px dashed var(--line2);box-shadow:none;color:var(--ink2)}
+.hero{background:#16243a;color:#fff;border:0;box-shadow:0 10px 28px rgba(22,36,58,.22)}
+.hero .muted{color:#aebbd0}
+.hero .stat{background:rgba(255,255,255,.08)}
+.hero .stat .k{color:#aebbd0}
+/* 상태 표현: 아이콘 + 짧은 문장 */
+.callout.good,.callout.bad,.callout.warn{position:relative;padding-left:42px}
+.callout.good::before,.callout.bad::before,.callout.warn::before{position:absolute;left:13px;top:13px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff}
+.callout.small.good::before,.callout.small.bad::before,.callout.small.warn::before{top:12px}
+.callout.good::before{content:"✓";background:var(--good)}
+.callout.bad::before{content:"✕";background:var(--bad)}
+.callout.warn::before{content:"!";background:var(--warn)}
+/* ---- 5단계: 시뮬레이션 격자 ---- */
+.tg-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px 4px}
+table.tg{border-collapse:separate;border-spacing:3px;width:auto;font-size:13px}
+table.tg th,table.tg td{border:0;padding:0;background:none;white-space:nowrap}
+table.tg th.rl{position:sticky;left:0;z-index:2;background:#fff;text-align:left;min-width:82px;box-shadow:4px 0 6px -4px rgba(20,30,50,.12)}
+table.tg th.rl button{border:0;background:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--ink2);padding:6px 4px;cursor:pointer;text-decoration:underline dotted #b4bfcf;text-underline-offset:3px}
+table.tg thead th.rl{font-size:12px;color:var(--muted);font-weight:600;padding-left:4px}
+table.tg tfoot th.rl{font-size:12px;color:var(--ink);padding:6px 4px}
+.yh{display:block;width:100%;min-width:54px;border:1px solid var(--line2);background:#fff;border-radius:8px;font:inherit;font-weight:800;font-size:12.5px;padding:4px 2px;cursor:pointer;line-height:1.2;color:var(--ink)}
+.yh small{display:block;font-weight:500;font-size:10px;color:var(--muted)}
+.yh.sel{border-color:var(--pri);background:var(--pri-l);color:var(--pri)}
+.gc{display:block;width:100%;min-width:54px;height:36px;border:1px solid var(--line);background:#fafbfd;border-radius:8px;font:inherit;font-size:12.5px;font-weight:700;color:var(--ink2);cursor:pointer}
+td.on .gc{background:var(--pri);border-color:var(--pri);color:#fff}
+td.na .gc{background:repeating-linear-gradient(135deg,#f3f5f8 0 4px,#fff 4px 8px);border-style:dashed;cursor:default}
+td.hitc .gc{box-shadow:inset 0 0 0 2px var(--good)}
+table.tg tfoot td{text-align:center;font-size:12.5px;font-weight:700;padding:6px 2px;border-radius:6px;background:var(--grey-l)}
+table.tg tfoot td.pos{color:var(--good);background:var(--good-l)}
+table.tg tfoot td.neg{color:var(--bad)}
+table.tg tfoot td.hitc{outline:2px solid var(--good)}
+/* ---- 입문 ---- */
+.persona{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:12px 0;box-shadow:var(--sh)}
+.persona-q{font-weight:800;font-size:16px;margin-bottom:10px}
+.persona-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.persona-btns button{text-align:left;border:1.5px solid var(--line2);background:#fff;border-radius:12px;padding:12px;font:inherit;cursor:pointer;line-height:1.35}
+.persona-btns button i{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--pri-l);color:var(--pri);margin-bottom:8px}
+.persona-btns button b{display:block;font-size:15px}
+.persona-btns button span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.persona-btns button.on{border-color:var(--pri);background:var(--pri-l)}
+.persona-btns button.on i{background:var(--pri);color:#fff}
+.persona.chosen{padding:10px 12px}
+.persona.chosen .persona-q{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.persona.chosen .persona-btns button{padding:8px 10px}
+.persona.chosen .persona-btns button i{display:none}
+.persona.chosen .persona-btns button span{display:none}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}
+.sbar-t{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 10px;align-items:baseline;margin:10px 0 6px;font-size:14px}
+.sbar{display:flex;gap:2px;height:38px;border-radius:8px;overflow:hidden}
+.sg{display:flex;align-items:center;justify-content:center;min-width:0;color:#fff;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden}
+.sg span{padding:0 4px;overflow:hidden;text-overflow:clip}
+.sg.c1,.dot.c1{background:#1f5fbf}.sg.c2,.dot.c2{background:#5b8fd9}.sg.c3,.dot.c3{background:#7b8798}.sg.c4,.dot.c4{background:#d9722b}
+.sg.c4{flex-basis:56px!important;flex-grow:0!important;flex-shrink:0}
+.glist{margin-top:14px;display:grid;gap:10px}
+.glist > div{display:grid;grid-template-columns:14px 1fr;column-gap:8px;font-size:13.5px}
+.glist i.dot{width:12px;height:12px;border-radius:3px;margin-top:5px;grid-row:span 2}
+.glist b{font-size:14px}
+.glist span{color:var(--ink2)}
+.styles{display:grid;gap:6px}
+.style{text-align:left;border:1.5px solid var(--line2);background:#fff;border-radius:10px;padding:9px 11px;font:inherit;cursor:pointer;line-height:1.4}
+.style b{font-size:14.5px;margin-right:6px}
+.style span{font-size:12.5px;color:var(--ink2)}
+.style.on{border-color:var(--pri);background:var(--pri-l)}
+.style.on b{color:var(--pri)}
+ol.tline{list-style:none;margin:6px 0 0;padding:0;position:relative}
+ol.tline li{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 0;position:relative}
+ol.tline li::before{content:"";position:absolute;left:73px;top:0;bottom:0;width:2px;background:var(--line)}
+ol.tline li > div{padding-left:14px;position:relative}
+ol.tline li > div::before{content:"";position:absolute;left:-3.5px;top:6px;width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid var(--line2)}
+ol.tline li.key > div::before{border-color:var(--acc);background:var(--acc)}
+ol.tline li.goal > div::before{border-color:var(--good);background:var(--good);width:13px;height:13px;left:-5.5px;top:4px}
+ol.tline .ty{font-weight:800;font-size:14px;text-align:right;line-height:1.2}
+ol.tline .ty small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+ol.tline b{font-size:14px}
+ol.tline p{margin:2px 0 0;font-size:12.5px;color:var(--ink2)}
+ol.tline li.goal b{color:var(--good)}
+.todo-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.todo{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+.todo:last-child{border-bottom:0}
+.todo input{width:20px;height:20px;margin-top:2px;accent-color:var(--good);flex:0 0 auto}
+.todo b{display:block;font-size:14px}
+.todo small{display:block;font-size:12.5px;color:var(--ink2);line-height:1.5}
+.todo.done b{color:var(--muted);text-decoration:line-through}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.paths{grid-template-columns:1fr}}
+.pathc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--sh)}
+.pathc > b{font-size:15px;display:block;margin-bottom:6px}
+.pr{display:grid;grid-template-columns:58px 1fr;gap:6px;font-size:12.5px;margin:3px 0}
+.pr span{color:var(--muted);font-weight:700}
+.pr p{margin:0}
+.pd{font-size:13px;color:var(--ink2);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line)}
+.term{text-decoration:underline dotted #8aa6d6;text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:help}
+.term:hover,.term:focus{color:var(--pri);outline:none}
+.termpop{position:fixed;z-index:70;background:#fff;border:1px solid var(--line2);border-radius:12px;box-shadow:0 10px 30px rgba(20,30,50,.18);padding:12px 14px;font-size:13.5px;line-height:1.55}
+.termpop b{font-size:14.5px;color:var(--pri)}
+.termpop p{margin:4px 0 6px;color:var(--ink)}
+.termpop[hidden]{display:none}
+dl.gloss{margin:6px 0}
+dl.gloss dt{font-weight:800;margin-top:10px;font-size:14px}
+dl.gloss dd{margin:2px 0 0;font-size:13px;color:var(--ink2)}
+/* ---- 편의 기능 ---- */
+.modesw{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--grey-l);border-radius:14px;padding:5px;margin:12px 0}
+.modesw button{border:0;background:transparent;border-radius:10px;padding:9px 6px;font:inherit;font-weight:700;font-size:15px;color:var(--ink2);cursor:pointer;line-height:1.3}
+.modesw button small{display:block;font-weight:500;font-size:11.5px;color:var(--muted)}
+.modesw button.on{background:#fff;color:var(--pri);box-shadow:var(--sh)}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:10px 0;box-shadow:var(--sh);border-left:4px solid var(--line2)}
+.qcard.done{border-left-color:var(--good)}
+.qhd{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.qhd b{font-size:15.5px}
+.qv{margin-left:auto;color:var(--pri);font-weight:800}
+.chk.big{font-size:15px;font-weight:600;padding:11px 12px;min-height:48px;border-width:1.5px}
+.chk.big input{width:22px;height:22px}
+.chk.big:has(input:checked){border-color:var(--good);background:var(--good-l)}
+.chk.mini{min-height:34px;padding:5px 9px;font-size:13px;display:inline-flex}
+.stepper{display:flex;align-items:stretch;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:#fff}
+.stepper input{border:0;border-radius:0;text-align:center;min-width:0;-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.stepper input:focus{outline:none}
+.stepper:focus-within{border-color:var(--pri);box-shadow:0 0 0 2px var(--pri-l)}
+.sb{flex:0 0 40px;border:0;background:var(--grey-l);font-size:19px;font-weight:700;color:var(--ink2);cursor:pointer}
+.sb:active{background:#dfe4ec}
+.qh{width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);background:#fff;color:var(--muted);font:inherit;font-size:12px;font-weight:800;cursor:pointer;display:inline-grid;place-items:center;padding:0;vertical-align:1px}
+.qhd .qh{margin-left:4px}
+.qv + .qh{margin-left:6px}
+.qh.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.helpbox{background:var(--pri-l);color:#173b72;border-radius:10px;padding:9px 11px;font-size:13px;line-height:1.55;margin:0 0 10px}
+.nowbox{min-height:42px;display:flex;align-items:center;padding:0 10px;border:1px dashed var(--line2);border-radius:10px;color:var(--muted);font-size:14px;background:#fafbfd}
+input[type=month]{min-width:0}
+.presets{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:2px 0 10px}
+.presets .xs{margin-right:2px}
+.savestate{font-size:11.5px;color:var(--good);white-space:nowrap;align-self:center;margin-right:2px}
+.savestate.err{color:var(--bad)}
+@media(max-width:440px){.savestate{font-size:0}.savestate::before{content:"✓";font-size:15px;font-weight:800}.savestate.err::before{content:"!"}.savestate:empty::before{content:""}}
+.top .tools{align-items:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;background:#18212f;color:#fff;border-radius:12px;padding:10px 12px 10px 16px;display:flex;gap:12px;align-items:center;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:calc(100vw - 32px);width:max-content}
+.toast.withdock{bottom:calc(84px + env(safe-area-inset-bottom))}
+.toast button{border:0;background:rgba(255,255,255,.14);color:#ffd27a;font:inherit;font-weight:800;border-radius:8px;padding:6px 10px;cursor:pointer;white-space:nowrap}
+.toast[hidden]{display:none}
+.demobar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff4dc;border:1px solid #f0d49b;border-radius:12px;padding:10px 12px;margin:2px 0 14px;font-size:13.5px;color:#6b4a12}
+#printSheet{display:none}
+.fgrid.al-end{align-items:end}
+@page{margin:16mm}
+@media print{
+  body{background:#fff}
+  body > *:not(#printSheet){display:none!important}
+  #printSheet{display:block!important;font-size:12pt;color:#000;padding:0}
+  #printSheet h1{font-size:18pt;margin:0 0 4pt}
+  #printSheet h2{font-size:13pt;margin:14pt 0 6pt}
+  #printSheet table{width:100%;border-collapse:collapse;font-size:11pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:5pt;text-align:center;white-space:normal}
+  #printSheet th{background:#eee}
+  #printSheet .l{text-align:left}
+  .ps-sub{color:#444;margin:0 0 10pt} .ps-note{color:#555;font-size:9.5pt;margin-top:14pt}
+}
+/* 문의처 */
+a.tel{color:var(--pri);font-weight:700;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+a.tel:hover{text-decoration:underline}
+table.contact tr.key td{background:var(--acc-l)}
+/* 지역 표시 */
+.region{background:#fff8ec;border:1px solid #f1d9ad;border-left:4px solid var(--acc);border-radius:12px;padding:12px 14px;margin:12px 0 4px}
+.region-h{display:flex;align-items:center;gap:6px;font-size:15px;color:#7a3f12}
+.region-pin{color:var(--acc);display:grid;place-items:center}
+.region p{font-size:13.5px;color:#5c4423;margin:6px 0 4px}
+.linkbtn{border:0;background:none;padding:2px 0;font:inherit;font-size:13.5px;font-weight:700;color:var(--acc);cursor:pointer}
+.gjtag{display:inline-block;font-size:11.5px;font-weight:700;color:#8a4a12;background:var(--acc-l);border:1px solid #f1d0b0;border-radius:6px;padding:0 7px;margin-left:2px;white-space:nowrap;vertical-align:1px}
+.scope{display:inline-block;font-size:10.5px;font-weight:700;border-radius:5px;padding:0 5px;margin-left:4px;vertical-align:2px;white-space:nowrap}
+.scope.c{background:var(--grey-l);color:var(--ink2)}
+.scope.g{background:var(--acc-l);color:#8a4a12}
+/* bundles & items */
+.bundle{border:1px solid var(--line);border-radius:12px;padding:11px 10px;margin:10px 0;background:#fff}
+.bundle.empty{background:#fafbfd}
+.bh .bt{display:flex;flex-direction:column;gap:1px}
+.bh .bt b{font-size:14.5px}
+.bundle .track{height:8px;background:var(--grey-l);border-radius:5px;overflow:hidden;margin-top:8px}
+.bundle .track .fill{height:100%;background:var(--pri);border-radius:5px;transition:width .25s}
+.bundle .track.full .fill{background:var(--good)}
+.bstat{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;margin-top:3px;color:var(--ink2)}
+.st-full{color:var(--good);font-weight:700}
+.st-left{color:var(--muted)}
+.item{border:1px solid var(--line2);border-radius:10px;padding:9px 9px 8px;margin:10px 0 4px;background:#fff}
+.item.flash{animation:flash 1.2s ease}
+@keyframes flash{0%{box-shadow:0 0 0 4px var(--pri-l);border-color:var(--pri)}100%{box-shadow:none}}
+.ih{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ih b{font-size:14px;flex:1;min-width:0}
+.ipts{font-weight:800;color:var(--pri);font-size:15px}
+.x{border:0;background:var(--grey-l);color:var(--muted);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:13px;flex:0 0 auto}
+.x:hover{background:var(--bad-l);color:var(--bad)}
+.ihint{font-size:12px;color:var(--muted);margin:-2px 0 6px}
+.idet{font-size:12px;color:var(--ink2);margin-top:6px;min-height:0}
+.idet:empty{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{border:1px dashed #9db8e3;background:var(--pri-l);color:var(--pri);font:inherit;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;cursor:pointer;min-height:34px}
+.chip:hover{background:#dbe7fa}
+.chip.ghost{background:#fff;border-color:var(--line2);color:var(--ink2);font-weight:500}
+.chip.warnc{border:1px solid #f0d9a8;background:var(--warn-l);color:#7a5513}
+.seg{display:inline-flex;background:var(--grey-l);border-radius:9px;padding:3px;gap:3px;margin-bottom:8px}
+.seg button{border:0;background:transparent;font:inherit;font-size:12.5px;padding:4px 10px;border-radius:7px;color:var(--ink2);cursor:pointer}
+.seg button.on{background:#fff;color:var(--pri);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+/* progress */
+.prog-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.prog-bar{display:flex;gap:4px;margin:8px 0 2px}
+.prog-bar i{flex:1;height:6px;border-radius:3px;background:var(--grey-l)}
+.prog-bar i.on{background:var(--good)}
+.prog-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+/* dock detail */
+.dock-panel{display:none;max-height:58vh;overflow:auto;border-bottom:1px solid var(--line);padding:6px 0 8px;margin:-8px 0 8px;background:#fff}
+.dock.open .dock-panel{display:block}
+.dock .dock-panel .wrap{display:block}
+.fgrid > *, .grid2 > *, .grid3 > *{min-width:0}
+input[type=date]{min-width:0;max-width:100%;-webkit-appearance:none;appearance:none}
+.item input,.item select{padding:8px 9px}
+.drow{display:grid;grid-template-columns:minmax(0,1fr) 90px 92px;align-items:center;gap:8px;font-size:13px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.drow.ind span:first-child{padding-left:12px;color:var(--ink2);font-size:12.5px}
+.drow .num{text-align:right}
+.drow small{color:var(--muted);font-size:11px;margin-left:1px}
+.drow.tot{border-bottom:0;font-size:14px}
+.mbar{display:block;height:6px;background:var(--grey-l);border-radius:3px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--pri)}
+.mbar.full i{background:var(--good)}
+@media(max-width:380px){.drow{grid-template-columns:minmax(0,1fr) 60px 86px}}
+footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
+.hide{display:none!important}
+@media(max-width:420px){
+  h1{font-size:21px}
+  .hero .big{font-size:33px}
+  .menu{grid-template-columns:1fr 1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .logo small{display:none}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <button class="logo" id="logoBtn" aria-label="홈으로">
+        <span class="mk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c3-1 4-4 6-7s4-5 10-6"/><circle cx="4" cy="20" r="1.6" fill="#fff"/><path d="M15 4l5 3-3 5"/></svg></span>
+        <span><b>교감 자격연수 내비게이터</b><small>구 광주광역시교육청 기준 · 초등</small></span>
+      </button>
+      <div class="tools">
+        <span class="savestate" id="saveState" aria-live="polite"></span>
+        <button class="icon-btn more" id="moreBtn" aria-label="메뉴" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="#4a5568"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+        <div class="menu-pop" id="menuPop" hidden>
+          <button id="printBtn">내 평정 요약 인쇄·PDF</button>
+          <button id="demoBtn">예시 자료로 둘러보기</button>
+          <button id="saveBtn">내 자료 파일로 저장</button>
+          <button id="loadBtn">저장한 파일 불러오기</button>
+          <button id="resetBtn2" class="danger-t">입력 모두 지우기</button>
+        </div>
+        <input type="file" id="fileIn" accept="application/json,.json" class="hide">
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button data-tab="guide">입문</button>
+      <button data-tab="calc">내 점수</button>
+      <button data-tab="sim">시뮬레이션</button>
+      <button data-tab="plan">전략</button>
+      <button data-tab="cut" data-also="rules">자료실</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="demobar hide" id="demoBar"><span><b>예시 자료</b>를 보는 중입니다. 선생님의 자료는 따로 보관되어 있습니다.</span><button type="button" class="btn sm" id="demoExit">내 자료로 돌아가기</button></div>
+
+<!-- ============ HOME ============ -->
+<section class="page" id="p-home">
+  <h1>나는 교감 자격연수까지<br>어디쯤 와 있을까?</h1>
+  <p class="lead">승진 점수가 어떻게 생겼는지 알아보고, 내 점수와 앞으로의 계획으로 교감 자격연수 시기를 미리 그려 봅니다.</p>
+  <div class="persona" id="persona">
+    <div class="persona-q">나는 어떤 상황인가요?</div>
+    <div class="persona-btns">
+      <button type="button" data-persona="new"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V11"/><path d="M12 11c0-4 3-7 8-7 0 5-3 8-8 7z"/><path d="M12 14c0-3-2.5-5.5-7-5.5 0 4 2.5 6.5 7 5.5z"/></svg></i><b>교직 초반이에요</b><span>승진 제도가 처음이에요</span></button>
+      <button type="button" data-persona="ready"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M9 12l2 2 4-4"/></svg></i><b>승진을 준비 중이에요</b><span>평정표로 점수를 계산할래요</span></button>
+    </div>
+  </div>
+  <div class="region">
+    <div class="region-h"><span class="region-pin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><b>이 도구는 구(舊) 광주광역시교육청 기준입니다</b></div>
+    <p>평정의 큰 틀(경력 70 · 근무성적 100 · 연수성적 30 + 가산점)은 전국이 같지만, <b>선택 가산점, 기준점(커트라인), 면접 방식은 시·도 교육청마다 다릅니다.</b> 다른 시·도 선생님은 경력·연수성적 계산만 참고하세요.</p>
+    <button type="button" class="linkbtn" data-go="rules" data-rule="region">전국 공통과 지역별 차이 보기 →</button>
+    <p style="margin-top:8px;padding-top:8px;border-top:1px dashed #ecd2a6">교감 자격연수 문의: 서부교육지원청 초등인사 <a class="tel" href="tel:062-600-9616">062-600-9616</a> <span class="xs">(2026.9.1. 기준)</span><br><button type="button" class="linkbtn" data-go="rules" data-rule="contact">업무별 담당자 전체 보기 →</button></p>
+  </div>
+
+  <div id="homeStatus"></div>
+
+  <h2>교감까지의 길</h2>
+  <div class="card">
+    <ol class="road" id="road"></ol>
+  </div>
+
+  <h2>무엇을 해 볼까요?</h2>
+  <div class="menu">
+    <button data-go="calc"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18H5z"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2M16 12v4"/></svg></i><b>내 점수 계산</b><span>경력·연수성적·가산점을 넣고 지금 점수 확인</span></button>
+    <button data-go="sim"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 16l4-5 4 3 6-8"/><path d="M15 6h4v4"/></svg></i><b>미래 시뮬레이션</b><span>학년도별 근무 계획으로 도달 시점 예측</span></button>
+    <button data-go="plan"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></i><b>보충 전략</b><span>상한이 남은 항목과 가장 빠른 경로</span></button>
+    <button data-go="cut"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="13" width="3" height="4"/></svg></i><b>자료실</b><span>기준점·점수 분포, 규정 요약, 조견표</span></button>
+  </div>
+
+  <div class="card ref small" style="margin-top:18px">이 프로그램의 결과는 <b>개략적인 추정치</b>입니다. 실제 평정은 학교 평정자와 교육청 확인을 거쳐 확정되며, 세부 인정 여부(휴직·파견 기간, 학교 지정 기간 등)에 따라 달라질 수 있습니다. 입력한 내용은 이 기기 브라우저에만 저장되고, 어디로도 전송되지 않습니다.</div>
+</section>
+
+<!-- ============ CUT ============ -->
+<section class="page" id="p-cut">
+  <div class="libsw"><button data-tab="cut" class="on">기준점·분포</button><button data-tab="rules">규정·조견표</button></div>
+  <h1>기준점과 점수 분포</h1>
+  <p class="lead"><span class="gjtag">구 광주광역시교육청 초등 자료</span> 기준점은 시·도마다 따로 정하므로 다른 지역과 비교할 수 없습니다. 교감 자격연수 서류 기준점은 <b>경력평정 + 연수성적평정 + 가산점</b>의 합이며, 근무성적은 들어가지 않습니다.</p>
+
+  <div class="card">
+    <h3>결국 '가산점' 싸움입니다</h3>
+    <p class="small muted">경력(70점)과 연수성적(30점)은 대부분의 지원자가 만점입니다. 기준점에서 100점을 뺀 만큼을 가산점으로 채워야 합니다.</p>
+    <div class="chart" id="chStack"></div>
+    <div class="grid3" style="margin-top:10px">
+      <div class="stat"><div class="k">경력평정</div><div class="v num">70<small> 점 만점</small></div></div>
+      <div class="stat"><div class="k">연수성적평정</div><div class="v num">30<small> 점 만점</small></div></div>
+      <div class="stat"><div class="k">2026 필요 가산점</div><div class="v num" style="color:var(--acc)">4.96<small> 점</small></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>연도별 기준점</h3>
+    <div class="legend"><span><i style="background:var(--pri)"></i>공고된 기준점</span><span><i class="dash"></i>추세 연장(가정)</span></div>
+    <div class="chart" id="chCut"></div>
+    <p class="small muted">2025년 104.80점 → 2026년 104.96점(+0.16점). 2026.3.1.부터 광주 관내 10년 초과 근무 가산점(월 0.01점)이 새로 쌓이기 시작하므로 앞으로 기준점이 더 빨리 오를 수 있습니다. 시뮬레이션에서는 연간 상승폭을 직접 조정할 수 있습니다.</p>
+    <div class="callout small">특수(초등)교사의 2026년 기준점은 <b>104.40점</b>입니다.</div>
+  </div>
+
+  <div class="card">
+    <h3>2026년 서류 제출자 점수 분포 <span class="pill">48명</span></h3>
+    <div class="chart" id="chD26"></div>
+    <div id="myPos26"></div>
+  </div>
+
+  <div class="card">
+    <h3>2025년 승진·자격 시스템 입력자 점수 분포 <span class="pill">95명</span></h3>
+    <p class="small muted">기준점 104.80점 이상 37명이 서류를 제출했고(미제출 2명), 미만은 56명이었습니다. 104.75~104.80 구간에만 21명이 몰려 있어 0.05점 차이로 당락이 갈립니다.</p>
+    <div class="chart" id="chD25"></div>
+  </div>
+
+  <div class="card ref small muted">출처: 광주광역시교육청 「2025년·2026년 초등 교감 자격연수 대상자 선발을 위한 서류 점수 분포」 안내, 「2026 초등 교육공무원 인사실무」 제10절 승진.</div>
+</section>
+
+<!-- ============ CALC ============ -->
+<!-- ============ GUIDE ============ -->
+<section class="page" id="p-guide">
+  <h1>승진, 처음이라면</h1>
+  <p class="lead">신규·저경력 선생님을 위한 안내입니다. 점수가 어떻게 생겼는지, 언제 무엇을 하면 좋은지, 내 교직 생애에서 교감 자격연수는 언제쯤인지 살펴보세요. <span class="gjtag">구 광주광역시교육청 기준</span></p>
+  <div class="toc">
+    <button type="button" class="chip" data-scroll="g-struct">① 점수 구조</button>
+    <button type="button" class="chip" data-scroll="g-long">② 장기 설계</button>
+    <button type="button" class="chip" data-scroll="g-todo">③ 지금 할 일</button>
+    <button type="button" class="chip" data-scroll="g-path">④ 진로 갈래</button>
+  </div>
+
+  <h2 id="g-struct">① 승진 점수는 이렇게 생겼어요</h2>
+  <div class="card" id="gStruct"></div>
+
+  <h2 id="g-long">② 내 교직 생애로 미리 보기</h2>
+  <div class="card" id="gInputs">
+    <div class="fgrid">
+      <label class="f"><span>임용 연도</span><select data-p="guide.hireYear" id="gHireSel"></select></label>
+      <label class="f"><span>휴직 예정(총 개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="120" inputmode="numeric" data-p="guide.leave" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+      <label class="f"><span>1정 자격연수 예상 성적</span><input type="number" min="80" max="100" step="0.5" inputmode="decimal" data-p="guide.q1" placeholder="예: 95"></label>
+      <label class="f"><span>연구실적 계획</span><select data-p="guide.res"><option value="3">3점(만점) 채울 예정</option><option value="1.5">1.5점(석사 직무관련 등)</option><option value="0">계획 없음</option></select></label>
+    </div>
+    <div class="sub">가산점을 쌓는 방식</div>
+    <div class="styles" id="gStyles"></div>
+    <label class="chk" style="margin-top:10px"><input type="checkbox" data-p="guide.gwangju">광주 관내에서 계속 근무(관내 10년 초과 가산점 반영)</label>
+  </div>
+  <div id="gLongOut"></div>
+  <div id="gTimeline"></div>
+
+  <h2 id="g-todo">③ 지금 할 일, 나중에 해도 되는 일</h2>
+  <div id="gTodo"></div>
+
+  <h2 id="g-path">④ 교직 진로 갈래</h2>
+  <div id="gPaths"></div>
+
+  <div class="btn-row">
+    <button class="btn" data-go="calc">내 점수 계산해 보기 →</button>
+    <button class="btn ghost" data-go="rules" data-rule="gloss">용어 사전</button>
+  </div>
+</section>
+
+<section class="page" id="p-calc">
+  <h1>내 점수 계산</h1>
+  <p class="lead">평정 기준일 현재까지의 실적을 넣으세요. 입력하는 즉시 아래쪽에 합계가 표시됩니다. <span class="gjtag">구 광주광역시교육청 기준</span></p>
+
+  <div class="card">
+    <div class="fgrid">
+      <label class="f"><span>평정 기준일</span>
+        <select data-p="profile.baseYear" id="baseYearSel"></select>
+      </label>
+      <label class="f"><span>대상</span>
+        <select data-p="profile.special">
+          <option value="false">초등 교사</option>
+          <option value="true">특수(초등) 교사</option>
+        </select>
+      </label>
+    </div>
+    <p class="hint">교감 자격연수 서류는 해마다 2월 말일을 기준으로 평정합니다. 예) 2026년 자격연수 = 2026.2.28. 기준</p>
+  </div>
+
+  <div class="card tight" id="progCard"></div>
+
+  <div class="modesw" role="tablist">
+    <button type="button" data-mode="quick">빠른 입력<small>평정표 점수 옮겨 적기</small></button>
+    <button type="button" data-mode="detail">자세히 입력<small>근무 기록으로 계산</small></button>
+  </div>
+
+  <div id="quickWrap">
+    <p class="hint" style="margin:0 0 4px">평정표는 학교 교감 선생님(평정자)께 요청하면 받을 수 있어요. 아직 평정표가 없는 교직 초반이라면 <button type="button" class="linkbtn" data-go="guide">입문 화면의 장기 설계</button>를 먼저 보세요.</p>
+    <div class="qcard" id="qElig">
+      <div class="qhd"><b>응시 요건</b><button type="button" class="qh" data-help="elig" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-elig" hidden>1급 정교사 자격 취득 후 교육경력 3년 이상(평정 기준일 현재)이고, 한국사능력검정 3급 이상 또는 한국사 연수 60시간 이상을 이수했으면 체크하세요. 날짜로 확인하려면 '자세히 입력'을 쓰세요.</div>
+      <label class="chk big"><input type="checkbox" data-p="quick.eligAll">1정 취득 후 3년 이상 + 한국사 요건 모두 충족</label>
+    </div>
+
+    <div class="qcard" id="qCareer">
+      <div class="qhd"><b>경력평정</b><span class="rate">70점</span><span class="qv num" id="qvCareer"></span><button type="button" class="qh" data-help="career" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-career" hidden>경력평정표 맨 아래 '합계' 점수입니다. 교육경력이 20년(기본 15년 + 초과 5년) 이상이면 만점 70점입니다. 휴직 등으로 빠지는 기간은 뺀 실제 인정 경력으로 생각하세요.</div>
+      <label class="chk big"><input type="checkbox" data-p="quick.careerFull">만점(70점) — 인정 경력 20년 이상</label>
+      <div id="qCareerMore" class="fgrid" style="margin-top:10px">
+        <label class="f"><span>인정 경력(년)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.careerY" placeholder="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+        <label class="f"><span>(개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.careerM" placeholder="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+      </div>
+    </div>
+
+    <div class="qcard" id="qTrain">
+      <div class="qhd"><b>연수성적평정</b><span class="rate">30점</span><span class="qv num" id="qvTrain"></span><button type="button" class="qh" data-help="train" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-train" hidden>연수성적평정표 '연수성적 평정점 총계'입니다. 직무연수 3회(18점) + 1급 정교사 자격연수(9점) + 연구실적(3점)이 모두 만점이면 30점입니다. 점수를 모르면 '자세히 입력'에서 계산할 수 있습니다.</div>
+      <label class="chk big"><input type="checkbox" data-p="quick.trainFull">만점(30점)</label>
+      <label class="f" id="qTrainMore" style="margin-top:10px"><span>평정표의 연수성적 점수</span><input type="number" min="0" max="30" step="0.0001" inputmode="decimal" data-p="quick.trainPts" placeholder="예: 29.7625"></label>
+    </div>
+
+    <div class="qcard" id="qBonus">
+      <div class="qhd"><b>가산점</b><span class="qv num" id="qvBonus"></span><button type="button" class="qh" data-help="bonus" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-bonus" hidden>가산점 평정표에서 항목별 점수를 옮겨 적으세요. 묶음별로 넣으면 '보충 전략'이 어느 묶음에 여유가 있는지 알려 줍니다. 합계만 알면 아래에서 '합계만 입력'을 고르세요.</div>
+      <div class="seg" style="margin-bottom:10px"><button type="button" data-qbm="bundle">묶음별로 입력(권장)</button><button type="button" data-qbm="total">합계만 입력</button></div>
+      <div id="qBundleIn">
+        <div class="fgrid al-end">
+          <label class="f"><span>보직교사 + 교육전문직 <span class="rate">≤1.75</span></span><input type="number" min="0" max="1.75" step="0.001" inputmode="decimal" data-p="quick.b.bojik" placeholder="예: 1.386"></label>
+          <label class="f"><span>학교폭력 예방·대응 실적 <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.sv" placeholder="예: 0.3"></label>
+          <label class="f"><span>학교 근무(농촌·소규모·일반 등) <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.region" placeholder="예: 0.648"></label>
+          <label class="f"><span>연구학교·교육실습·한국어학급 <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.research" placeholder="예: 1"></label>
+          <label class="f"><span>연수이수 실적 학점 <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.credits" placeholder="예: 0.8"></label>
+          <label class="f"><span>전국소년체전 지도 <span class="rate">≤0.55</span></span><input type="number" min="0" max="0.55" step="0.001" inputmode="decimal" data-p="quick.b.sports" placeholder=""></label>
+          <label class="f"><span>보직교사 추가 가산점 <span class="rate">≤0.5</span></span><input type="number" min="0" max="0.5" step="0.001" inputmode="decimal" data-p="quick.b.addA" placeholder=""></label>
+          <label class="f"><span>기타(재외국민 등) <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.etc" placeholder=""></label>
+        </div>
+        <p class="hint">보직+전문직은 학폭과 합쳐 2.0, 소년체전은 보직 추가와 합쳐 0.6까지만 인정되어 자동으로 잘립니다.</p>
+      </div>
+      <div id="qTotalIn" class="hide">
+        <label class="f"><span>가산점 합계(평정표)</span><input type="number" min="0" max="15" step="0.001" inputmode="decimal" data-p="quick.bonusTotal" placeholder="예: 4.134"></label>
+        <p class="hint">합계만 넣으면 묶음별 여유를 알 수 없어 '보충 전략'의 상한 판단이 정확하지 않습니다.</p>
+      </div>
+      <label class="chk" style="margin-top:10px"><input type="checkbox" data-p="bonusNone">해당하는 가산점이 없습니다</label>
+      <div class="sub">시뮬레이션용 정보</div>
+      <div class="fgrid">
+        <label class="f"><span>현재 학교 유형</span><select data-p="quick.curRegion"><option value="general">일반·소규모</option><option value="rural">농촌지역</option><option value="insa">인사특구</option><option value="specialSchool">특수학교(초등)</option></select></label>
+        <label class="f"><span>현재 학교 학급 수</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="1" max="60" inputmode="numeric" data-p="quick.curClasses" placeholder="예: 24"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+        <label class="f full"><span>광주 관내 실근무 누적(개월) <button type="button" class="qh" data-help="gj" aria-label="도움말">?</button></span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="600" inputmode="numeric" data-p="profile.gwangju" placeholder="예: 300"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+      </div>
+      <div class="helpbox" id="help-gj" hidden>휴직·타 시도 파견처럼 실제 광주에서 근무하지 않은 기간을 뺀 개월 수입니다. 120개월(10년)을 넘으면 2026.3.1. 이후 근무분부터 월 0.01점(상한 1.0)이 붙습니다. 교직 전체를 광주에서 근무했다면 인정 경력과 거의 같습니다.</div>
+    </div>
+  </div>
+
+  <div id="detailWrap">
+
+  <!-- 경력 -->
+  <details class="acc" id="accCareer" open>
+    <summary>① 경력평정 <span class="rate">70점 만점</span><span class="sv" id="svCareer"></span></summary>
+    <div class="in">
+      <div class="fgrid" style="margin-top:12px">
+        <label class="f full"><span>교사 최초 임용일 <button type="button" class="qh" data-help="hire" aria-label="도움말">?</button></span><input type="date" data-p="profile.hire"></label>
+        <div class="full"><div class="helpbox" id="help-hire" hidden>경력평정표 첫 줄(가장 오래된 경력)의 시작일입니다. 임용 전 군 경력이 있으면 그 기간만큼 앞당겨 넣으세요. 평정 기준일까지의 개월 수에서 '빠지는 기간'을 뺀 만큼이 '가'경력이 됩니다.</div></div>
+        <label class="f"><span>경력에서 빠지는 기간(개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.excl" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+        <label class="f"><span>'나'경력(기간제 등, 개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.na" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+      </div>
+      <p class="hint">빠지는 기간: 경력에 산입되지 않는 휴직(육아·질병 등 0% 인정) 기간, 50% 인정 휴직은 절반. 임용 전 군 경력은 '가'경력에 포함되므로 임용일을 그만큼 앞당겨 넣거나 빠지는 기간에서 빼 주세요.</p>
+      <div id="careerOut" style="margin-top:10px"></div>
+    </div>
+  </details>
+
+  <!-- 자격 요건 -->
+  <details class="acc" open id="accElig">
+    <summary>② 응시 자격 요건 <span class="sv" id="svElig"></span></summary>
+    <div class="in">
+      <div class="fgrid" style="margin-top:12px">
+        <label class="f"><span>1급 정교사 자격 취득일</span><input type="date" data-p="profile.cert1"></label>
+        <label class="f"><span>한국사</span>
+          <select data-p="profile.khist">
+            <option value="">선택하세요</option>
+            <option value="none">아직 없음</option>
+            <option value="exam">한국사능력검정 3급 이상</option>
+            <option value="course">한국사 연수 60시간 이상 이수</option>
+          </select></label>
+      </div>
+      <div id="eligOut" style="margin-top:10px"></div>
+    </div>
+  </details>
+
+  <!-- 연수성적 -->
+  <details class="acc" id="accTrain" open>
+    <summary>③ 연수성적평정 <span class="rate">30점 만점</span><span class="sv" id="svTrain"></span></summary>
+    <div class="in">
+      <div class="sub">직무연수 <span class="rate">최근 10년 내 3회 · 회당 6점 · 18점</span></div>
+      <div id="jobRows"></div>
+      <p class="hint">엑셀 평정표 산식 기준: 교사의 직무연수는 이수하면 회당 6점(만점)으로 처리합니다. 성적을 넣으면 95점 초과→100, 90점 초과→95, 85점 초과→90, 그 외→85로 환산해 6점에 곱합니다. 2020.5.1. 이후 시작한 60시간 이상 연수는 성적이 연수인원과 순위에 따른 <b>상대평가 조견표</b>로 매겨지므로, '순위·인원으로 계산'을 고르면 조견표 점수를 자동으로 찾아 줍니다. <button class="btn ghost sm" data-go="rules" data-rule="lookup" style="margin-left:2px">조견표 보기</button></p>
+
+      <div class="sub">자격연수(1급 정교사) <span class="rate">9점</span></div>
+      <div class="fgrid">
+        <label class="f"><span>입력 방식</span>
+          <select data-p="train.qmode"><option value="score">성적(점수)</option><option value="grade">등급(A~D)</option></select></label>
+        <label class="f" id="qScoreWrap"><span>자격연수 성적</span><input type="number" min="0" max="100" step="0.01" inputmode="decimal" data-p="train.qscore" placeholder="예: 95.5"></label>
+        <label class="f hide" id="qGradeWrap"><span>등급</span>
+          <select data-p="train.qgrade"><option value="">선택하세요</option><option value="A">A (90점)</option><option value="B">B (85점)</option><option value="C">C (80점)</option><option value="D">D (80점)</option></select></label>
+      </div>
+      <p class="hint">교감 자격연수 대상자 산식: 9 − (100 − 성적) × 0.025 (소수 넷째 자리 버림). 정교사(1급) 자격연수는 상대평가 조견표 적용에서 제외됩니다.</p>
+
+      <div class="sub">연구실적 <span class="rate">연구대회 입상 + 학위 · 3점 상한</span></div>
+      <div id="contestRows"></div>
+      <button class="btn ghost sm" id="addContest">+ 연구대회 입상 추가</button>
+      <div class="fgrid" style="margin-top:12px">
+        <label class="f"><span>석사 학위</span>
+          <select data-p="research.master"><option value="none">없음</option><option value="job">직무관련 (1.5점)</option><option value="etc">기타 (1점)</option></select></label>
+        <label class="f"><span>박사 학위</span>
+          <select data-p="research.doctor"><option value="none">없음</option><option value="job">직무관련 (3점)</option><option value="etc">기타 (1.5점)</option></select></label>
+      </div>
+      <p class="hint">연구대회 입상은 1년에 1회만 인정됩니다. 공동 연구는 2인 70%, 3인 50%, 4인 이상 30%로 환산합니다.</p>
+    </div>
+  </details>
+
+  <!-- 가산점 -->
+  <details class="acc" id="accBonus" open>
+    <summary>④ 가산점 <span class="rate">해당 항목만 추가</span><span class="sv" id="svBonus"></span></summary>
+    <div class="in">
+      <p class="hint" style="margin-top:10px"><span class="scope c">전국 공통</span> 항목은 어느 시·도나 같고, <span class="scope g">광주 선택</span> 항목은 구 광주광역시교육청 가산점 평정기준(14차 개정)을 따릅니다. 나에게 해당하는 항목만 <b>+ 버튼</b>으로 추가하세요. 근무 기간은 <b>시작일·종료일</b>만 넣으면 규정 개정 시기별 평정점으로 자동으로 나눠 계산합니다. 평정 기준일 이후 기간은 빠집니다.</p>
+      <div id="bundles"></div>
+      <label class="chk" style="margin-top:12px"><input type="checkbox" data-p="bonusNone">해당하는 가산점이 없습니다</label>
+      <div class="bundle" style="margin-top:12px">
+        <div class="bh"><div class="bt"><b>광주 관내 10년 초과 근무</b><span class="num muted small">2026.3.1.~ 월 0.01 · 1.0</span></div></div>
+        <label class="f" style="margin-top:8px"><span>광주 관내 실근무 누적(개월, 휴직·파견 제외)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="600" inputmode="numeric" data-p="profile.gwangju" placeholder="예: 300"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+        <p class="hint">120개월을 넘긴 뒤 <b>2026.3.1. 이후 근무분부터</b> 쌓입니다. 미래 시뮬레이션에서 자동 계산됩니다. <button class="btn ghost sm" id="gjSame" style="margin-left:4px">교육경력과 같게</button></p>
+      </div>
+    </div>
+  </details>
+  </div><!-- /detailWrap -->
+
+  <details class="acc" id="accPerf">
+    <summary>⑤ 근무성적(선택) <span class="rate">명부 순위용</span><span class="sv" id="svPerf"></span></summary>
+    <div class="in">
+      <label class="f" style="margin-top:12px"><span>근무성적평정점(100점 만점, 최근 5년 중 유리한 3년 환산)</span><input type="number" min="0" max="100" step="0.001" inputmode="decimal" data-p="profile.perf" placeholder="예: 99.5"></label>
+      <p class="hint">서류 기준점에는 들어가지 않습니다. 기준점을 넘은 뒤 '응시대상자 순위 명부(200점 + 가산점)'를 만들 때 쓰입니다. 교사의 근무성적은 전국 공통으로 <b>교감(평정자) 20% + 교장(확인자) 40% + 다면평가 40%</b>(정성 32% + 정량 8%)를 합산합니다.</p>
+    </div>
+  </details>
+
+  <div class="card result" id="calcSummary"></div>
+  <div class="btn-row">
+    <button class="btn" data-go="sim">이 점수로 미래 시뮬레이션 →</button>
+    <button class="btn ghost" data-go="plan">보충 전략 보기</button>
+    <button class="btn ghost" data-print="1">요약 인쇄·PDF</button>
+    <button class="btn danger sm" id="resetBtn" style="margin-left:auto">입력 초기화</button>
+  </div>
+</section>
+
+<!-- ============ SIM ============ -->
+<section class="page" id="p-sim">
+  <h1>미래 시뮬레이션</h1>
+  <p class="lead">칸을 눌러 학년도별 근무 계획을 켜고 끄면 격자 맨 아래 <b>연도별 예상 점수</b>가 바로 바뀝니다. 광주 가산점 규정의 2028·2029년 개정은 날짜에 맞춰 자동 반영됩니다. <span class="gjtag">구 광주광역시교육청 기준</span></p>
+
+  <div class="card tight">
+    <div class="plan-sw" id="planSw"><button data-plan="A">계획 A</button><button data-plan="B">계획 B</button></div>
+    <label class="f" style="margin-top:10px"><span>기준점 연간 상승폭 가정: <b id="incVal" class="num"></b>점/년 <span class="xs muted">(2025→2026 실제 +0.16)</span></span>
+      <input type="range" min="0" max="0.4" step="0.01" id="incRange" style="width:100%;accent-color:var(--acc)">
+    </label>
+  </div>
+
+  <div id="simTop"></div>
+
+  <div class="card" id="gridCard">
+    <h3>학년도별 근무 계획 <span class="pill pri" id="planLabel"></span></h3>
+    <div class="presets"><span class="xs muted">빠르게 채우기</span>
+      <button type="button" class="chip" data-preset="stay">지금 학교 그대로</button>
+      <button type="button" class="chip" data-preset="bojik">보직 계속</button>
+      <button type="button" class="chip" data-preset="rural">내년 농촌학교 전보</button>
+      <button type="button" class="chip" data-preset="credits">연수 학점 매년 6</button>
+      <button type="button" class="chip ghost" data-preset="reset">처음 상태로</button>
+    </div>
+    <p class="hint" style="margin:0 0 8px">칸을 누르면 바뀝니다 · <b>항목 이름</b>을 누르면 모든 연도에 한꺼번에 적용 · <b>연도</b>를 누르면 학급 수·휴직 등 세부 입력</p>
+    <div class="tg-wrap"><table class="tg" id="simGrid"></table></div>
+    <div class="btn-row">
+      <button class="btn ghost sm" id="addYear">+ 학년도 추가</button>
+      <button class="btn ghost sm" id="delYear">마지막 학년도 삭제</button>
+      <button class="btn ghost sm" id="copyPlan">다른 계획으로 복사</button>
+    </div>
+  </div>
+  <div id="yearDetail"></div>
+
+  <div id="simResult"></div>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section class="page" id="p-plan">
+  <h1>보충 전략</h1>
+  <p class="lead">'내 점수 계산'의 결과를 바탕으로, 아직 상한이 남아 있어 점수가 오르는 항목과 이미 상한에 닿아 더 쌓아도 점수가 오르지 않는 항목을 구분합니다. <span class="gjtag">구 광주광역시교육청 기준</span></p>
+  <div id="planOut"></div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section class="page" id="p-rules">
+  <div class="libsw"><button data-tab="cut">기준점·분포</button><button data-tab="rules" class="on">규정·조견표</button></div>
+  <h1>규정 바로 보기</h1>
+  <p class="lead">「2026 초등 교육공무원 인사실무」 제10절과 광주광역시교육청 교육공무원승진규정 제41조 가산점 평정기준(14차 개정, 2025.8.25.)을 요약했습니다.</p>
+  <div class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8597" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input type="text" id="ruleQ" placeholder="검색: 예) 보직, 농촌, 한국사, 동점자">
+  </div>
+  <div id="rules"></div>
+</section>
+
+<footer>구(舊) 광주광역시교육청 초등 승진 규정 기준 · 개략 추정용 도구이며 공식 평정을 대신하지 않습니다.<br>만든이 2026 최창훈</footer>
+</main>
+
+<div class="toast" id="toast" role="status" hidden><span id="toastMsg"></span><button type="button" id="toastUndo">되돌리기</button></div>
+<div id="printSheet" aria-hidden="true"></div>
+<div id="termPop" class="termpop" role="dialog" hidden></div>
+<div class="dock" id="dock">
+  <div class="dock-panel" id="dockPanel"><div class="wrap" id="dockDetail"></div></div>
+  <div class="wrap">
+    <div><div class="lbl" id="dockTotLbl">서류 점수</div><div class="tot num" id="dockTot">0</div></div>
+    <div style="flex:1;min-width:0"><div class="lbl" id="dockCutLbl">기준점</div><div id="dockGap" class="num" style="font-weight:700"></div></div>
+    <button class="btn ghost sm" id="dockToggle" aria-expanded="false">내역 <span id="dockArrow">▲</span></button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ------------------------------------------------------------------
+   데이터: 기준점·분포
+------------------------------------------------------------------ */
+const CUT = {2025:104.80, 2026:104.96};
+const SPECIAL_OFFSET = 104.40 - 104.96;   // 특수(초등) 기준점 차이(2026)
+const DIST26 = [
+  {l:"104.96~105.00", a:104.96, b:105.00, n:14},
+  {l:"105.00~105.05", a:105.00, b:105.05, n:13},
+  {l:"105.05~105.10", a:105.05, b:105.10, n:9},
+  {l:"105.10~105.15", a:105.10, b:105.15, n:6},
+  {l:"105.15~105.20", a:105.15, b:105.20, n:4},
+  {l:"105.20 이상",   a:105.20, b:99999,  n:2}
+];
+const DIST25 = [
+  {l:"104.60 미만",   a:0,      b:104.60, n:13},
+  {l:"104.60~104.65", a:104.60, b:104.65, n:4},
+  {l:"104.65~104.70", a:104.65, b:104.70, n:7},
+  {l:"104.70~104.75", a:104.70, b:104.75, n:11},
+  {l:"104.75~104.80", a:104.75, b:104.80, n:21},
+  {l:"104.80~104.85", a:104.80, b:104.85, n:8},
+  {l:"104.85~104.90", a:104.85, b:104.90, n:11},
+  {l:"104.90~104.95", a:104.90, b:104.95, n:7},
+  {l:"104.95~105.00", a:104.95, b:105.00, n:5},
+  {l:"105.00 이상",   a:105.00, b:99999,  n:6}
+];
+
+// 교원 연수성적 분포 조견표(교육부 교원양성연수과-945): 연수인원 N(1~120)별 순위 1~N의 점수.
+// 문자 a=80점 … u=100점으로 압축
+const TJ = ["k","kk","lkj","lkkj","mlkji","mlkkji","nmlkjih","nmlkkjih","onmlkjihg","onmlkkjihg","ponmlkjihgf","ponmlkkjihgf","qponmlkjihgfe","qponmlkkjihgfe","rqponmlkjihgfed","rqponmlkkjihgfed","srqponmlkjihgfedc","srqponmlkkjihgfedc","tsrqponmlkjihgfedcb","tsrqponmlkkjihgfedcb","tsrqponmlkkkjihgfedcb","tsrqponmllkkjjihgfedcb","tsrqponmllkkkjjihgfedcb","tsrqponmmllkkjjiihgfedcb","tsrqponmmllkkkjjiihgfedcb","tsrqponnmmllkkjjiihhgfedcb","tsrqponnmmllkkkjjiihhgfedcb","tsrqpoonnmmllkkjjiihhggfedcb","tsrqpoonnmmllkkkjjiihhggfedcb","utsrqpoonnmmllkkjjiihhggfedcba","utsrqpoonnmmllkkkjjiihhggfedcba","utsrqppoonnmmllkkjjiihhggffedcba","utsrqppoonnmmllkkkjjiihhggffedcba","utsrqqppoonnmmllkkjjiihhggffeedcba","utsrqqppoonnmmllkkkjjiihhggffeedcba","utsrqqppoonnmmllkkkkjjiihhggffeedcba","utsrqqppoonnmmlllkkkjjjiihhggffeedcba","utsrqqppoonnmmlllkkkkjjjiihhggffeedcba","utsrqqppoonnmmmlllkkkjjjiiihhggffeedcba","utsrqqppoonnmmmlllkkkkjjjiiihhggffeedcba","utsrrqqppoonnmmmlllkkkjjjiiihhggffeeddcba","utsrqqppoonnnmmmlllkkkkjjjiiihhhggffeedcba","utsrrqqppoonnnmmmlllkkkjjjiiihhhggffeeddcba","utsrrqqppoonnnmmmlllkkkkjjjiiihhhggffeeddcba","utsrrqqppooonnnmmmlllkkkjjjiiihhhgggffeeddcba","utsrrqqppooonnnmmmlllkkkkjjjiiihhhgggffeeddcba","utssrrqqppooonnnmmmlllkkkjjjiiihhhgggffeeddccba","utssrrqqppooonnnmmmlllkkkkjjjiiihhhgggffeeddccba","utssrrqqppooonnnmmmlllkkkkkjjjiiihhhgggffeeddccba","utssrrqqpppooonnnmmmlllkkkkjjjiiihhhgggfffeeddccba","utssrrqqpppooonnnmmmlllkkkkkjjjiiihhhgggfffeeddccba","utssrrqqpppooonnnmmmllllkkkkjjjjiiihhhgggfffeeddccba","utssrrqqpppooonnnmmmllllkkkkkjjjjiiihhhgggfffeeddccba","utssrrqqpppooonnnmmmmllllkkkkjjjjiiiihhhgggfffeeddccba","utssrrqqpppooonnnmmmmllllkkkkkjjjjiiiihhhgggfffeeddccba","utssrrqqqpppooonnnmmmmllllkkkkjjjjiiiihhhgggfffeeeddccba","utssrrqqqpppooonnnmmmmllllkkkkkjjjjiiiihhhgggfffeeeddccba","utssrrqqqpppooonnnnmmmmllllkkkkjjjjiiiihhhhgggfffeeeddccba","utssrrqqqpppooonnnnmmmmllllkkkkkjjjjiiiihhhhgggfffeeeddccba","uttssrrqqqpppooonnnnmmmmllllkkkkjjjjiiiihhhhgggfffeeeddccbba","uttssrrqqqpppooonnnnmmmmllllkkkkkjjjjiiiihhhhgggfffeeeddccbba","uttssrrqqqpppoooonnnnmmmmllllkkkkjjjjiiiihhhhggggfffeeeddccbba","uttssrrqqqpppoooonnnnmmmmllllkkkkkjjjjiiiihhhhggggfffeeeddccbba","uttssrrqqqpppoooonnnnmmmmllllkkkkkkjjjjiiiihhhhggggfffeeeddccbba","uttssrrrqqqpppoooonnnnmmmmllllkkkkkjjjjiiiihhhhggggfffeeedddccbba","uttssrrrqqqpppoooonnnnmmmmllllkkkkkkjjjjiiiihhhhggggfffeeedddccbba","uttssrrrqqqpppoooonnnnmmmmlllllkkkkkjjjjjiiiihhhhggggfffeeedddccbba","uttssrrrqqqpppoooonnnnmmmmlllllkkkkkkjjjjjiiiihhhhggggfffeeedddccbba","uttssrrrqqqpppoooonnnnmmmmmlllllkkkkkjjjjjiiiiihhhhggggfffeeedddccbba","uttssrrrqqqpppoooonnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhggggfffeeedddccbba","uttssrrrqqqppppoooonnnnmmmmmlllllkkkkkjjjjjiiiiihhhhggggffffeeedddccbba","uttssrrrqqqppppoooonnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhggggffffeeedddccbba","uttssrrrqqqppppoooonnnnnmmmmmlllllkkkkkjjjjjiiiiihhhhhggggffffeeedddccbba","uttssrrrqqqppppoooonnnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhhggggffffeeedddccbba","uuttssrrrqqqppppoooonnnnnmmmmmlllllkkkkkjjjjjiiiiihhhhhggggffffeeedddccbbaa","uuttssrrrqqqppppoooonnnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhhggggffffeeedddccbbaa","uuttssrrrqqqppppoooonnnnnmmmmmlllllkkkkkkkjjjjjiiiiihhhhhggggffffeeedddccbbaa","uuttssrrrqqqqppppoooonnnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhhggggffffeeeedddccbbaa","uuttssrrrqqqqppppoooonnnnnmmmmmlllllkkkkkkkjjjjjiiiiihhhhhggggffffeeeedddccbbaa","uuttsssrrrqqqqppppoooonnnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhhggggffffeeeedddcccbbaa","uuttssrrrqqqqppppooooonnnnnmmmmmlllllkkkkkkkjjjjjiiiiihhhhhgggggffffeeeedddccbbaa","uuttsssrrrqqqqppppooooonnnnnmmmmmlllllkkkkkkjjjjjiiiiihhhhhgggggffffeeeedddcccbbaa","uuttsssrrrqqqqppppooooonnnnnmmmmmlllllkkkkkkkjjjjjiiiiihhhhhgggggffffeeeedddcccbbaa","uuttsssrrrqqqqppppooooonnnnnmmmmmllllllkkkkkkjjjjjjiiiiihhhhhgggggffffeeeedddcccbbaa","uuttsssrrrqqqqppppooooonnnnnmmmmmllllllkkkkkkkjjjjjjiiiiihhhhhgggggffffeeeedddcccbbaa","uuttsssrrrqqqqppppooooonnnnnmmmmmmllllllkkkkkkjjjjjjiiiiiihhhhhgggggffffeeeedddcccbbaa","uuttsssrrrqqqqppppooooonnnnnmmmmmmllllllkkkkkkkjjjjjjiiiiiihhhhhgggggffffeeeedddcccbbaa","uuttsssrrrqqqqpppppooooonnnnnmmmmmmllllllkkkkkkjjjjjjiiiiiihhhhhgggggfffffeeeedddcccbbaa","uuttsssrrrqqqqpppppooooonnnnnmmmmmmllllllkkkkkkkjjjjjjiiiiiihhhhhgggggfffffeeeedddcccbbaa","uuttsssrrrqqqqpppppooooonnnnnnmmmmmmllllllkkkkkkjjjjjjiiiiiihhhhhhgggggfffffeeeedddcccbbaa","uuttsssrrrqqqqpppppooooonnnnnnmmmmmmllllllkkkkkkkjjjjjjiiiiiihhhhhhgggggfffffeeeedddcccbbaa","uuttsssrrrqqqqpppppooooonnnnnnmmmmmmllllllkkkkkkkkjjjjjjiiiiiihhhhhhgggggfffffeeeedddcccbbaa","uuttsssrrrrqqqqpppppooooonnnnnnmmmmmmllllllkkkkkkkjjjjjjiiiiiihhhhhhgggggfffffeeeeddddcccbbaa","uuttsssrrrrqqqqpppppooooonnnnnnmmmmmmllllllkkkkkkkkjjjjjjiiiiiihhhhhhgggggfffffeeeeddddcccbbaa","uutttsssrrrrqqqqpppppooooonnnnnnmmmmmmllllllkkkkkkkjjjjjjiiiiiihhhhhhgggggfffffeeeeddddcccbbbaa","uuttsssrrrrqqqqpppppooooonnnnnnmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiihhhhhhgggggfffffeeeeddddcccbbaa","uuttsssrrrrqqqqpppppoooooonnnnnnmmmmmmlllllllkkkkkkkjjjjjjjiiiiiihhhhhhggggggfffffeeeeddddcccbbaa","uuttsssrrrrqqqqpppppoooooonnnnnnmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiihhhhhhggggggfffffeeeeddddcccbbaa","uutttsssrrrrqqqqpppppoooooonnnnnnmmmmmmlllllllkkkkkkkjjjjjjjiiiiiihhhhhhggggggfffffeeeeddddcccbbbaa","uutttsssrrrrqqqqpppppoooooonnnnnnmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiihhhhhhggggggfffffeeeeddddcccbbbaa","uutttsssrrrrqqqqpppppoooooonnnnnnmmmmmmmlllllllkkkkkkkjjjjjjjiiiiiiihhhhhhggggggfffffeeeeddddcccbbbaa","uutttsssrrrrqqqqpppppoooooonnnnnnmmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiiihhhhhhggggggfffffeeeeddddcccbbbaa","uutttsssrrrrqqqqqpppppoooooonnnnnnmmmmmmmlllllllkkkkkkkjjjjjjjiiiiiiihhhhhhggggggfffffeeeeeddddcccbbbaa","uutttsssrrrrqqqqqpppppoooooonnnnnnmmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiiihhhhhhggggggfffffeeeeeddddcccbbbaa","uutttsssrrrrqqqqqpppppoooooonnnnnnmmmmmmmlllllllkkkkkkkkkjjjjjjjiiiiiiihhhhhhggggggfffffeeeeeddddcccbbbaa","uutttsssrrrrqqqqqpppppoooooonnnnnnnmmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiiihhhhhhhggggggfffffeeeeeddddcccbbbaa","uutttsssrrrrqqqqqpppppoooooonnnnnnnmmmmmmmlllllllkkkkkkkkkjjjjjjjiiiiiiihhhhhhhggggggfffffeeeeeddddcccbbbaa","uutttsssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiiihhhhhhhggggggffffffeeeeeddddcccbbbaa","uutttsssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmlllllllkkkkkkkkkjjjjjjjiiiiiiihhhhhhhggggggffffffeeeeeddddcccbbbaa","uutttssssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmlllllllkkkkkkkkjjjjjjjiiiiiiihhhhhhhggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmlllllllkkkkkkkkkjjjjjjjiiiiiiihhhhhhhggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmllllllllkkkkkkkkjjjjjjjjiiiiiiihhhhhhhggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmllllllllkkkkkkkkkjjjjjjjjiiiiiiihhhhhhhggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmmllllllllkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppoooooonnnnnnnmmmmmmmmllllllllkkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppooooooonnnnnnnmmmmmmmmllllllllkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhgggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrqqqqqppppppooooooonnnnnnnmmmmmmmmllllllllkkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhgggggggffffffeeeeeddddccccbbbaa","uutttssssrrrrrqqqqqppppppooooooonnnnnnnmmmmmmmmllllllllkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhgggggggffffffeeeeedddddccccbbbaa","uutttssssrrrrrqqqqqppppppooooooonnnnnnnmmmmmmmmllllllllkkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhgggggggffffffeeeeedddddccccbbbaa","uutttssssrrrrrqqqqqppppppooooooonnnnnnnmmmmmmmmllllllllkkkkkkkkkkjjjjjjjjiiiiiiiihhhhhhhgggggggffffffeeeeedddddccccbbbaa"];
+function rankScore(N, r){
+  N=Math.floor(n(N)); r=Math.floor(n(r));
+  if(N<1||N>120||r<1||r>N) return null;
+  return TJ[N-1].charCodeAt(r-1)-97+80;
+}
+function jobConv(x){ return x>95?100: x>90?95: x>85?90: 85; }
+const DIST_PCT = [[100,2.0],[99,2.6],[98,3.2],[97,3.8],[96,4.5],[95,5.1],[94,5.7],[93,6.2],[92,6.6],[91,6.8],[90,7.0],[89,6.8],[88,6.6],[87,6.2],[86,5.7],[85,5.1],[84,4.5],[83,3.8],[82,3.2],[81,2.6],[80,2.0]];
+
+/* ------------------------------------------------------------------
+   상태
+------------------------------------------------------------------ */
+const KEY = "vpNavigator.v1";
+function defRow(){
+  return {work:"school", classes:24, region:"general", rs:"none", prSchool:false, korean:false,
+          bojik:false, sv:false, credits:6, guide:0, medal:"none", coach:1, gwangju:true, leave:0};
+}
+function defPlan(){ const a=[]; for(let i=0;i<6;i++) a.push(defRow()); return a; }
+function defState(){
+  return {
+    v:1, tab:"home",
+    profile:{baseYear:2026, special:false, cert1:"", khist:"", hire:"", excl:"", na:"", gwangju:"", perf:""},
+    train:{jobs:[{s:"",v:""},{s:"",v:""},{s:"",v:""}], qmode:"score", qscore:"", qgrade:""},
+    research:{contests:[], master:"none", doctor:"none"},
+    items:[], seq:0, bonusNone:false,
+    mode:"quick", persona:null,
+    guide:{hireYear:"", leave:"", q1:"95", res:"3", style:"steady", gwangju:true, checks:{}},
+    quick:{eligAll:false, careerFull:false, careerY:"", careerM:"", trainFull:false, trainPts:"", bmode:"bundle",
+           b:{bojik:"",sv:"",region:"",research:"",credits:"",sports:"",addA:"",etc:""}, bonusTotal:"", curRegion:"general", curClasses:""},
+    sim:{inc:0.16, active:"A", sel:null, plans:{A:defPlan(), B:defPlan()}}
+  };
+}
+let S = defState();
+function deepMerge(base, add){
+  if(add===null || typeof add!=="object" || Array.isArray(add)) return add===undefined?base:add;
+  const out = Array.isArray(base)?[]:{...base};
+  for(const k in add){
+    if(base && typeof base[k]==="object" && base[k]!==null && !Array.isArray(base[k])) out[k]=deepMerge(base[k], add[k]);
+    else out[k]=add[k];
+  }
+  return out;
+}
+function fromSaved(obj){
+  const st = migrate(deepMerge(defState(), obj));
+  if(obj && obj.mode===undefined && ((obj.profile&&obj.profile.hire) || (obj.items&&obj.items.length) || obj.b)) st.mode="detail";
+  return st;
+}
+function load(){
+  try{ const t = localStorage.getItem(KEY); if(t){ S = fromSaved(JSON.parse(t)); } }catch(e){}
+}
+// 이전 버전(개월 수 직접 입력) 자료를 '항목' 구조로 옮김
+function migrate(st){
+  if(!Array.isArray(st.items)) st.items=[];
+  const b = st.b, sp = st.sports;
+  if(b && typeof b==="object"){
+    const nn = x=>{ const v=parseFloat(x); return isFinite(v)?v:0; };
+    let id = st.seq||0; const push=o=>{ o.id=++id; st.items.push(o); };
+    [["rsMoe"],["overseas"],["bojik"],["jeonmun"],["addA"],["addB"],["rsEdu"],["prSchool"],["korean"]].forEach(([k])=>{ if(nn(b[k])>0) push({type:k, mode:"months", months:String(nn(b[k])), start:"", end:""}); });
+    [["credits"],["sv"],["prGuide"]].forEach(([k])=>{ if(nn(b[k])>0) push({type:k, count:String(nn(b[k]))}); });
+    const ptsOf = {rural:nn(b.rural1)*.01+nn(b.rural2)*.0075+nn(b.rural3)*.0095, insa:nn(b.insa1)*.003+nn(b.insa2)*.005,
+      small:nn(b.small1)*.003+nn(b.small2)*.005, general:nn(b.gen0)*.002+nn(b.gen1)*.004+nn(b.gen2)*.0035+nn(b.gen3)*.003+nn(b.genSp)*.002,
+      remote:nn(b.remotePts), specialOld:nn(b.specialOldPts)};
+    Object.keys(ptsOf).forEach(c=>{ if(ptsOf[c]>0) push({type:"pts", cat:c, bundle:(c==="specialOld"?"etc":"region"), pts:String(Math.round(ptsOf[c]*1000)/1000)}); });
+    st.seq=id; delete st.b;
+  }
+  if(Array.isArray(sp)){ let id=st.seq||0; sp.forEach(x=>st.items.push({id:++id, type:"sports", medal:x.medal, coach:x.coach})); st.seq=id; delete st.sports; }
+  st.items.forEach(it=>{ if(it.type==="pts" && !it.bundle){ const B=BUNDLES.find(x=>x.cats.includes(it.cat)); it.bundle=B?B.k:"etc"; } });
+  return st;
+}
+let saveT=null;
+function save(){ clearTimeout(saveT); saveT=setTimeout(()=>{ const el=document.getElementById("saveState");
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); if(el){ const d=new Date(); el.textContent="✓ 저장됨 "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); el.classList.remove("err"); } }
+  catch(e){ if(el){ el.textContent="저장 안 됨"; el.classList.add("err"); el.title="브라우저 설정 때문에 이 기기에 저장되지 않습니다. 메뉴의 '파일로 저장'을 쓰세요."; } } },150); }
+
+/* ------------------------------------------------------------------
+   유틸
+------------------------------------------------------------------ */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>Array.from(el.querySelectorAll(s));
+const n = x => { const v = parseFloat(x); return isFinite(v)?v:0; };
+const r3 = x => Math.round(x*1000)/1000;
+const f3 = x => (Math.round(x*1000)/1000).toFixed(3);
+const f2 = x => (Math.round(x*100)/100).toFixed(2);
+const sgn = x => (x>0?"+":x<0?"−":"±") + f3(Math.abs(x));
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function getP(path){ return path.split(".").reduce((o,k)=>o==null?o:o[k], S); }
+function setP(path, val){ const ks=path.split("."); let o=S; for(let i=0;i<ks.length-1;i++) o=o[ks[i]]; o[ks[ks.length-1]]=val; }
+function isLeap(y){ return (y%4===0 && y%100!==0) || y%400===0; }
+function baseDateStr(y){ return y+"-02-"+(isLeap(y)?"29":"28"); }
+function parseD(s){ if(!s) return null; const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s); if(!m) return null; return {y:+m[1],m:+m[2],d:+m[3]}; }
+// 시작일~종료일(포함) 개월 수(일 단위 버림)
+function monthsIncl(s, e){
+  if(!s||!e) return 0;
+  const end = new Date(e.y, e.m-1, e.d+1);
+  const ey=end.getFullYear(), em=end.getMonth()+1, ed=end.getDate();
+  let m = (ey-s.y)*12 + (em-s.m) - (ed < s.d ? 1 : 0);
+  return Math.max(0,m);
+}
+function cutFor(year){
+  const special = S.profile.special===true || S.profile.special==="true";
+  let base;
+  if(CUT[year]!=null && year<=2026) base = CUT[year];
+  else base = CUT[2026] + n(S.sim.inc)*(year-2026);
+  return r3(base + (special && year>=2026 ? SPECIAL_OFFSET : 0));
+}
+
+/* ------------------------------------------------------------------
+   평정 산식
+------------------------------------------------------------------ */
+// 경력: 최근 15년(180월) 기본, 그 전 5년(60월) 초과. '가'경력이 최근이라고 가정
+function careerScore(ga, na){
+  ga=Math.max(0,Math.floor(ga)); na=Math.max(0,Math.floor(na));
+  const bga=Math.min(ga,180), bna=Math.min(na,180-bga);
+  const ega=Math.min(ga-bga,60), ena=Math.min(na-bna,60-ega);
+  let base = (bga===180)?64 : bga*0.3555 + bna*0.3333;
+  base = Math.min(64, base);
+  let over = (ega===60)?6 : ega*0.1 + ena*0.0833;
+  over = Math.min(6, over);
+  return {base:r3(base), over:r3(over), total:r3(base+over), bga,bna,ega,ena};
+}
+function jobScore(j){
+  if(j.s==="none") return 0;
+  if(j.s==="done") return 6;
+  let v;
+  if(j.s==="rank"){ v = rankScore(j.n, j.r); if(v==null) return 0; }
+  else { v=n(j.v); if(v<=0) return 0; }
+  return Math.floor(6*(jobConv(v)/100)*10000)/10000;
+}
+function qualScore(){
+  let x;
+  if(S.train.qmode==="grade"){ x = {A:90,B:85,C:80,D:80}[S.train.qgrade]||0; }
+  else { if(S.train.qscore==="" ) return 0; x = n(S.train.qscore); }
+  const v = 9-(100-x)*0.025;
+  if(v>9) return 9; if(v<=4) return 0;
+  return Math.floor(v*10000)/10000;
+}
+const CONTEST_BASE = {"전국":[1.5,1.25,1], "시도":[1,0.75,0.5]};
+const PEOPLE_F = {1:1, 2:0.7, 3:0.5, 4:0.3};
+function contestPts(c){ return r3((CONTEST_BASE[c.scale]||[0,0,0])[(+c.grade||1)-1] * (PEOPLE_F[c.people]||1)); }
+function trainScore(){
+  const jobs = S.train.jobs.map(jobScore);
+  const jobSum = jobs.reduce((a,b)=>a+b,0);
+  const q = qualScore();
+  const edu = Math.min(27, jobSum + q);
+  const cont = S.research.contests.reduce((a,c)=>a+contestPts(c),0);
+  const deg = ({none:0,job:1.5,etc:1})[S.research.master] + ({none:0,job:3,etc:1.5})[S.research.doctor];
+  const res = Math.min(3, cont+deg);
+  return {jobs, jobSum:r3(jobSum), q, edu:r3(edu), cont:r3(cont), deg, res:r3(res), total:r3(edu+res)};
+}
+const MEDAL = {gold:0.1, silver:0.05, bronze:0.025, none:0};
+const MEDAL_KO = {gold:"금", silver:"은", bronze:"동", none:"없음"};
+const COACH_F = {1:1, 2:0.7, 3:0.5};
+function medalPts(m, c){ return r3((MEDAL[m]||0)*(COACH_F[c]||1)); }
+
+// ---- 가산점 항목 정의 ----
+const CATS = ["lump","rsMoe","rsEdu","prSchool","prGuide","korean","overseas","credits","sv","bojik","jeonmun","addA","addB","remote","rural","insa","small","general","specialOld","sports","gwangju"];
+const CAT_KO = {rsMoe:"교육부 연구학교",rsEdu:"교육감 연구학교",prSchool:"교육실습 대용학교",prGuide:"교육실습생 지도",korean:"한국어학급",overseas:"재외국민기관",credits:"연수학점",sv:"학교폭력 실적",bojik:"보직교사",jeonmun:"교육전문직",addA:"보직 추가 가산점",addB:"보직 추가 나목",remote:"도서벽지·한센병",rural:"농촌지역",insa:"인사특구",small:"소규모학교",general:"일반학교",specialOld:"특수학교·학급(2002년 이전)",sports:"소년체전",gwangju:"광주 관내"};
+const ITYPES = {
+  school:  {label:"학교 근무 경력", kind:"school", hint:"일반·소규모·농촌·인사특구·특수학교. 학교마다 하나씩"},
+  bojik:   {label:"보직교사", kind:"period", rate:.021, cat:"bojik"},
+  jeonmun: {label:"교육전문직 근무", kind:"period", rate:.0168, cat:"jeonmun"},
+  sv:      {label:"학교폭력 예방·대응 실적", kind:"count", unit:"회(연)", rate:.1, cat:"sv", hint:"1년간 실적을 1회로 평정"},
+  rsMoe:   {label:"교육부 지정 연구학교", kind:"period", rate:.018, cat:"rsMoe"},
+  rsEdu:   {label:"교육감 지정 연구학교", kind:"period", rate:.012, cat:"rsEdu"},
+  prSchool:{label:"교육실습 대용학교", kind:"period", rate:.015, cat:"prSchool"},
+  prGuide: {label:"교육실습생 지도", kind:"count", unit:"인정 개월", rate:.012, cat:"prGuide"},
+  korean:  {label:"한국어학급 운영학교", kind:"period", rate:.003, cat:"korean"},
+  credits: {label:"연수이수 실적 학점", kind:"count", unit:"인정 학점", rate:.02, cat:"credits", hint:"연간 인정 상한(2009년 이후 1년 6학점)을 반영한 학점 합계"},
+  sports:  {label:"전국소년체전 입상 지도", kind:"sports", cat:"sports"},
+  addA:    {label:"보직교사 추가 가산점", kind:"period", rate:.01, cat:"addA", from:"2023-03-01", hint:"학폭+보직+전문직 2.0을 채운 뒤의 보직 기간만"},
+  addB:    {label:"보직 추가 나목", kind:"period", rate:.01, cat:"addB", from:"2028-03-01", hint:"추가 가산점(가목) 상한을 채운 뒤의 보직 기간"},
+  overseas:{label:"재외국민교육기관 파견", kind:"period", rate:.015, cat:"overseas"},
+  pts:     {label:"점수 직접 입력", kind:"pts", hint:"평정표에 이미 계산된 점수가 있을 때"}
+};
+const COMMON_TYPES = ["rsMoe","overseas","credits","sv"];   // 공통가산점(전국 공통 항목)
+const BUNDLES = [
+  {k:"g2", label:"학교폭력·보직·전문직", cap:2, note:"보직+전문직 1.75 · 학폭 1.0 · 합계 2.0", types:["bojik","sv","jeonmun"], cats:["bojik","sv","jeonmun"]},
+  {k:"region", label:"학교 근무 경력", cap:1, note:"농촌·인사특구(0.48)·소규모·일반·도서벽지 합계 1.0", types:["school"], cats:["rural","insa","small","general","remote"]},
+  {k:"research", label:"연구학교·교육실습·한국어학급", cap:1, note:"합계 1.0", types:["rsMoe","rsEdu","prSchool","prGuide","korean"], cats:["rsMoe","rsEdu","prSchool","prGuide","korean"]},
+  {k:"credits", label:"연수이수 실적 학점", cap:1, note:"1학점 0.02", types:["credits"], cats:["credits"]},
+  {k:"sportAdd", label:"소년체전 + 보직 추가 가산점", cap:.6, note:"체전 0.55 · 보직 추가 0.5 · 합계 0.6", types:["sports","addA"], cats:["sports","addA"]},
+  {k:"etc", label:"기타", cap:null, note:"재외국민 0.5 · 보직 추가 나목 0.4 · 2002년 이전 특수 1.0", types:["overseas","addB"], cats:["overseas","addB","specialOld"]}
+];
+function addMonthsD(d, k){ return new Date(d.y, d.m-1+k, d.d); }
+function D(y,m,d){ return new Date(y,m-1,d); }
+// 학교 근무 한 달의 평정 (날짜·학교 유형·학급 수별)
+function schoolRate(date, region, cls){
+  if(region==="rural"){ if(date<D(2002,1,1)) return null; if(date<D(2012,1,1)) return ["rural",.01]; if(date<D(2015,3,1)) return ["rural",.0075]; return ["rural",.0095]; }
+  if(region==="insa"){ if(date<D(2004,1,1)) return null; if(date<D(2015,3,1)) return ["insa",.003]; return ["insa",.005]; }
+  if(region==="specialSchool"){ if(date<D(2015,3,1)) return null; return ["general",.002]; }
+  cls = cls||24;
+  const new29 = date>=D(2029,3,1);
+  const smallMax = new29?8:12;
+  if(cls<=smallMax){ if(date<D(2012,3,1)) return null; if(date<D(2015,3,1)) return ["small",.003]; return ["small",.005]; }
+  if(date<D(2015,3,1)) return null;
+  if(date<D(2016,3,1)) return ["general",.002];
+  if(new29){ if(cls<=13) return ["general",.004]; if(cls<=20) return ["general",.0035]; return ["general",.003]; }
+  if(cls<=18) return ["general",.004]; if(cls<=24) return ["general",.0035]; return ["general",.003];
+}
+// 기간을 평정 기준일까지 자르고, 시작 가능일(from) 이전은 제외
+function parseYM(str, isEnd){
+  if(!str) return null;
+  const m=/^(\d{4})-(\d{2})$/.exec(str);
+  if(m){ const y=+m[1], mo=+m[2]; return {y, m:mo, d: isEnd? new Date(y,mo,0).getDate() : 1}; }
+  return parseD(str);
+}
+function clipPeriod(it, from){
+  let s=parseYM(it.start,false), e=(it.current? null : parseYM(it.end,true))||parseD(baseDateStr(+S.profile.baseYear));
+  const bd=parseD(baseDateStr(+S.profile.baseYear));
+  if(!s) return null;
+  if(e.y*10000+e.m*100+e.d > bd.y*10000+bd.m*100+bd.d) e=bd;
+  if(from){ const f=parseD(from); if(s.y*10000+s.m*100+s.d < f.y*10000+f.m*100+f.d) s=f; }
+  const m=monthsIncl(s,e);
+  return {s,e,m};
+}
+// 항목 하나의 원점수 → {cats:{cat:pts}, total, detail}
+function itemCalc(it){
+  const T=ITYPES[it.type]; const out={cats:{}, total:0, detail:""};
+  const add=(c,v)=>{ out.cats[c]=(out.cats[c]||0)+v; out.total+=v; };
+  if(!T) return out;
+  if(T.kind==="period"){
+    if(it.mode==="months"){ const m=Math.max(0,Math.floor(n(it.months))); add(T.cat, m*T.rate); out.detail = m? `${m}개월 × ${T.rate}`:""; }
+    else { const c=clipPeriod(it, T.from); if(c){ add(T.cat, c.m*T.rate); out.detail = `${c.m}개월 인정 × ${T.rate}${T.from && it.start<T.from?` (${T.from.replaceAll("-",".")}. 이후만)`:""}`; } }
+  } else if(T.kind==="school"){
+    const c=clipPeriod(it,null);
+    if(c){ const seg={};
+      for(let k=0;k<c.m;k++){ const r=schoolRate(addMonthsD(c.s,k), it.region||"general", Math.floor(n(it.classes))||24); if(!r) { seg["미인정"]=seg["미인정"]||{m:0,v:0,c:null}; seg["미인정"].m++; continue; }
+        const key=r[0]+" "+r[1]; seg[key]=seg[key]||{m:0,v:0,c:r[0],rate:r[1]}; seg[key].m++; seg[key].v+=r[1]; add(r[0], r[1]); }
+      out.detail = Object.entries(seg).map(([k,g])=> g.c? `${CAT_KO[g.c]} ${g.m}개월×${g.rate}` : `가산점 없는 기간 ${g.m}개월`).join(" · ");
+    }
+  } else if(T.kind==="count"){ const c=Math.max(0,n(it.count)); add(T.cat, c*T.rate); out.detail = c? `${c} × ${T.rate}`:""; }
+  else if(T.kind==="sports"){ add("sports", medalPts(it.medal||"gold", it.coach||1)); }
+  else if(T.kind==="pts"){ if(it.cat) add(it.cat, Math.max(0,n(it.pts))); }
+  out.total=r3(out.total);
+  return out;
+}
+// 가산점 원점수(상한 적용 전)
+function rawFromCalc(){
+  const raw={}; CATS.forEach(c=>raw[c]=0);
+  S.items.forEach(it=>{ const r=itemCalc(it); for(const c in r.cats) raw[c]+=r.cats[c]; });
+  const G = n(S.profile.gwangju), by = +S.profile.baseYear;
+  const after = Math.max(0,(by-2026)*12);
+  raw.gwangju += Math.min(after, Math.max(0, G-120))*0.01;
+  return raw;
+}
+// 상한·합산 규칙 적용
+function bonus(r){
+  const m=Math.min;
+  const rsMoe=m(1,r.rsMoe), rsEdu=m(1,r.rsEdu), prSchool=m(1,r.prSchool), prGuide=m(1,r.prGuide), korean=m(1,r.korean);
+  const research = m(1, rsMoe+rsEdu+prSchool+prGuide+korean);
+  const overseas=m(.5,r.overseas), credits=m(1,r.credits), sv=m(1,r.sv);
+  const bojik=m(1.75,r.bojik), jeonmun=m(1,r.jeonmun);
+  const bj = m(1.75, bojik+jeonmun);
+  const g2 = m(2, bj+sv);
+  const remote=m(1,r.remote), rural=m(1,r.rural), insa=m(.48,r.insa), small=m(1,r.small), general=m(1,r.general);
+  const region = m(1, remote+rural+insa+small+general);
+  const specialOld=m(1,r.specialOld);
+  const sports=m(.55,r.sports), addA=m(.5,r.addA);
+  const sportAdd = m(.6, sports+addA);
+  const addB=m(.4,r.addB);
+  const gwangju=m(1,r.gwangju);
+  const lump = Math.min(15, Math.max(0, r.lump||0));
+  const total = research+overseas+credits+g2+region+specialOld+sportAdd+addB+gwangju+lump;
+  const groups = [
+    {k:"g2", label:"학교폭력 + 보직 + 교육전문직", v:g2, cap:2, items:[["보직교사",r.bojik,1.75],["교육전문직",r.jeonmun,1],["학교폭력 예방·대응",r.sv,1]], note:"보직+전문직 1.75 상한, 학교폭력 1.0 상한, 셋을 합쳐 2.0 상한"},
+    {k:"region", label:"농촌·인사특구·소규모·일반학교·도서벽지", v:region, cap:1, items:[["농촌지역",r.rural,1],["인사특구",r.insa,.48],["소규모학교",r.small,1],["일반학교",r.general,1],["도서벽지·한센병",r.remote,1]], note:"합산 1.0 상한(인사특구는 단독 0.48 상한)"},
+    {k:"research", label:"연구학교·교육실습·한국어학급", v:research, cap:1, items:[["교육부 연구학교",r.rsMoe,1],["교육감 연구학교",r.rsEdu,1],["교육실습 대용학교",r.prSchool,1],["교육실습생 지도",r.prGuide,1],["한국어학급 운영",r.korean,1]], note:"합산 1.0 상한"},
+    {k:"credits", label:"연수이수 실적 학점", v:credits, cap:1, items:[], note:"1학점 0.02점, 1년 6학점까지"},
+    {k:"sportAdd", label:"소년체전 지도 + 보직 추가(가목)", v:sportAdd, cap:.6, items:[["소년체전 지도",r.sports,.55],["보직교사 추가 가산점",r.addA,.5]], note:"합산 0.6 상한"},
+    {k:"addB", label:"보직 추가 나목(2028.3.1.~)", v:addB, cap:.4, items:[], note:"가목 상한을 채운 뒤 월 0.01"},
+    {k:"gwangju", label:"광주 관내 10년 초과 근무(2026.3.1.~)", v:gwangju, cap:1, items:[], note:"월 0.01점"},
+    {k:"overseas", label:"재외국민교육기관", v:overseas, cap:.5, items:[], note:""},
+    {k:"specialOld", label:"특수학교·학급(2002년 이전)", v:specialOld, cap:1, items:[], note:""}
+  ];
+  return {total:r3(total), lump, research, overseas, credits, sv, bojik, jeonmun, bj, g2, region, rural, insa, small, general, remote, specialOld, sports, addA, sportAdd, addB, gwangju, rsMoe, rsEdu, prSchool, prGuide, korean, groups};
+}
+function careerMonths(){
+  const by=+S.profile.baseYear;
+  const hire=parseD(S.profile.hire), bd=parseD(baseDateStr(by));
+  const ga = Math.max(0, monthsIncl(hire,bd) - n(S.profile.excl));
+  return {ga, na:Math.max(0,n(S.profile.na))};
+}
+function isQuick(){ return S.mode==="quick"; }
+function quickRaw(){
+  const q=S.quick, b=q.b, raw={}; CATS.forEach(c=>raw[c]=0);
+  if(q.bmode==="total"){ raw.lump = n(q.bonusTotal); }
+  else {
+    raw.bojik=Math.min(1.75,n(b.bojik)); raw.sv=n(b.sv); raw.remote=n(b.region); raw.prGuide=n(b.research);
+    raw.credits=n(b.credits); raw.sports=n(b.sports); raw.addA=n(b.addA); raw.specialOld=n(b.etc);
+  }
+  const G=n(S.profile.gwangju), by=+S.profile.baseYear;
+  raw.gwangju += Math.min(Math.max(0,(by-2026)*12), Math.max(0,G-120))*0.01;
+  return raw;
+}
+function quickCareerMonths(){ const q=S.quick; return q.careerFull? 240 : Math.max(0, Math.floor(n(q.careerY))*12 + Math.floor(n(q.careerM))); }
+function evaluateNow(){
+  if(isQuick()){
+    const q=S.quick, ga=quickCareerMonths();
+    const cm={ga, na:0};
+    const car = q.careerFull? {base:64, over:6, total:70, bga:180,bna:0,ega:60,ena:0} : careerScore(ga,0);
+    const tt = q.trainFull? 30 : Math.min(30, Math.max(0, n(q.trainPts)));
+    const tr = {quick:true, jobs:[6,6,6], jobSum:18, q:9, edu:Math.min(27,tt), cont:0, deg:0, res:Math.max(0,r3(tt-27)), total:r3(tt)};
+    const raw = quickRaw(), bo = bonus(raw);
+    return {cm, car, tr, raw, bo, total:r3(car.total + tr.total + bo.total)};
+  }
+  const cm = careerMonths();
+  const car = careerScore(cm.ga, cm.na);
+  const tr = trainScore();
+  const raw = rawFromCalc();
+  const bo = bonus(raw);
+  const total = r3(car.total + tr.total + bo.total);
+  return {cm, car, tr, raw, bo, total};
+}
+
+/* ------------------------------------------------------------------
+   시뮬레이션 엔진 (월 단위)
+------------------------------------------------------------------ */
+function generalRate(cls, date){
+  const new29 = date >= new Date(2029,2,1);
+  if(new29){ if(cls<=8) return {k:"small",v:.005}; if(cls<=13) return {k:"general",v:.004}; if(cls<=20) return {k:"general",v:.0035}; return {k:"general",v:.003}; }
+  if(cls<=12) return {k:"small",v:.005}; if(cls<=18) return {k:"general",v:.004}; if(cls<=24) return {k:"general",v:.0035}; return {k:"general",v:.003};
+}
+function simulate(plan){
+  const now = evaluateNow();
+  return simCore(plan, {raw:{...now.raw}, ga:now.cm.ga, na:now.cm.na, G:n(S.profile.gwangju), trTotal:now.tr.total, by:+S.profile.baseYear,
+    start:{total:now.total, career:now.car.total, bonus:now.bo.total}}, cutFor);
+}
+// 공통 엔진: init = {raw, ga, na, G, trTotal, by, start}
+function simCore(plan, init, cutFn){
+  const tr = {total:init.trTotal};
+  const raw = {...init.raw};
+  let ga = init.ga, na = init.na, G = init.G;
+  const by = init.by;
+  const out = [{year:by, label:by+"년", total:init.start.total, cut:cutFn(by), career:init.start.career, train:tr.total, bonus:init.start.bonus, start:true, ga}];
+  plan.forEach((row,i)=>{
+    const Y = by+i;   // 학년도 Y: Y.3.1 ~ Y+1.2.말
+    const worked = 12 - Math.max(0,Math.min(12, Math.floor(n(row.leave))));
+    for(let k=0;k<12;k++){
+      const date = new Date(Y, 2+k, 1);
+      if(k>=worked || row.work==="leave") continue;
+      ga += 1;
+      if(row.gwangju){ G += 1; if(date>=new Date(2026,2,1) && G>120) raw.gwangju += .01; }
+      if(row.work==="jeonmun"){ raw.jeonmun += .0168; continue; }
+      // 학교 근무
+      if(row.region==="rural"){ const g=schoolRate(date,"rural",0); if(g) raw.rural += g[1]; }
+      else if(row.region==="insa"){ const g=schoolRate(date,"insa",0); if(g) raw.insa += g[1]; }
+      else if(row.region==="specialSchool"){ const g=schoolRate(date,"specialSchool",0); if(g) raw.general += g[1]; }
+      else { const g = schoolRate(date, "general", n(row.classes)||24); if(g) raw[g[0]] += g[1]; }
+      if(row.rs==="moe") raw.rsMoe += .018; else if(row.rs==="edu") raw.rsEdu += .012;
+      if(row.prSchool) raw.prSchool += .015;
+      if(row.korean) raw.korean += .003;
+      if(row.bojik){
+        const bo = bonus(raw);
+        if(bo.g2 >= 1.9999 && date>=new Date(2023,2,1)){
+          const capA = Math.max(0, Math.min(.5, .6 - Math.min(.55, raw.sports)));
+          if(raw.addA < capA - 1e-9) raw.addA = Math.min(capA, raw.addA + .01);
+          else if(date>=new Date(2028,2,1)) raw.addB = Math.min(.4, raw.addB+.01);
+        } else raw.bojik += .021;
+      }
+    }
+    if(row.work!=="leave"){
+      if(row.sv) raw.sv += .1;
+      raw.credits += Math.min(6, Math.max(0, n(row.credits)))*.02;
+      raw.prGuide += Math.min(12, Math.max(0, n(row.guide)))*.012;
+      if(row.medal!=="none") raw.sports += medalPts(row.medal, row.coach);
+    }
+    const car = careerScore(ga, na), bo = bonus(raw);
+    const total = r3(car.total + tr.total + bo.total);
+    out.push({year:Y+1, label:(Y+1)+"년", total, cut:cutFn(Y+1), career:car.total, train:tr.total, bonus:bo.total, bo, ga, raw:{...raw}});
+  });
+  return out;
+}
+
+/* ------------------------------------------------------------------
+   차트 (SVG)
+------------------------------------------------------------------ */
+function tipBind(box){
+  let tip = $(".tip", box); if(!tip){ tip=document.createElement("div"); tip.className="tip"; box.appendChild(tip); }
+  const show = (el)=>{ const bb=box.getBoundingClientRect(), r=el.getBoundingClientRect();
+    tip.innerHTML = el.getAttribute("data-tip"); tip.style.left=(r.left+r.width/2-bb.left)+"px"; tip.style.top=(r.top-bb.top)+"px"; tip.classList.add("on"); };
+  $$("[data-tip]", box).forEach(el=>{
+    el.addEventListener("mouseenter",()=>show(el)); el.addEventListener("mouseleave",()=>tip.classList.remove("on"));
+    el.addEventListener("touchstart",()=>show(el),{passive:true});
+  });
+  box.addEventListener("touchend",()=>setTimeout(()=>tip.classList.remove("on"),1600),{passive:true});
+}
+function barChart(box, data, opt){
+  const W=Math.max(300, Math.round(box.clientWidth||640)), H=opt.h||220, pl=30, pr=6, pt=20, pb=opt.rot?62:34;
+  const max = Math.max(...data.map(d=>d.n))*1.15;
+  const bw = (W-pl-pr)/data.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title||"")}">`;
+  const ticks=4; for(let i=0;i<=ticks;i++){ const v=max/ticks*i, y=H-pb-(H-pt-pb)*i/ticks;
+    s+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="#e8ecf2" stroke-width="1"/>`;
+    s+=`<text x="${pl-6}" y="${y+4}" font-size="11" text-anchor="end" fill="#7a8597">${Math.round(v)}</text>`; }
+  data.forEach((d,i)=>{
+    const h=(H-pt-pb)*d.n/max, x=pl+i*bw+3, y=H-pb-h, w=bw-6;
+    const col = d.hl ? "#d9722b" : (d.dim ? "#b9c6db" : "#1f5fbf");
+    const rr=Math.min(4,w/2,h);
+    s+=`<path d="M${x},${H-pb} V${y+rr} Q${x},${y} ${x+rr},${y} H${x+w-rr} Q${x+w},${y} ${x+w},${y+rr} V${H-pb} Z" fill="${col}"/>`;
+    s+=`<rect x="${x-2}" y="${pt}" width="${w+4}" height="${H-pt-pb}" fill="transparent" data-tip="${esc(d.l)}<br><b>${d.n}명</b>${d.hl?" · 내 점수 구간":""}"/>`;
+    s+=`<text x="${x+w/2}" y="${y-5}" font-size="12" font-weight="700" text-anchor="middle" fill="#18212f">${d.n}</text>`;
+    const lx=x+w/2, ly=H-pb+14;
+    if(opt.rot) s+=`<text transform="translate(${lx},${ly}) rotate(-35)" font-size="10.5" text-anchor="end" fill="#4a5568">${esc(d.short||d.l)}</text>`;
+    else s+=`<text x="${lx}" y="${ly}" font-size="${bw<56?10:11}" text-anchor="middle" fill="#4a5568">${esc(d.short||d.l)}</text>`;
+  });
+  if(opt.cutAt!=null){ const x=pl+opt.cutAt*bw; s+=`<line x1="${x}" x2="${x}" y1="${pt-6}" y2="${H-pb}" stroke="#c23b33" stroke-width="2" stroke-dasharray="4 3"/><text x="${x+4}" y="${pt-6}" font-size="11" fill="#c23b33" font-weight="700">기준점 ${opt.cutLabel}</text>`; }
+  s+=`<line x1="${pl}" x2="${W-pr}" y1="${H-pb}" y2="${H-pb}" stroke="#9aa6b8"/></svg>`;
+  box.innerHTML=s; tipBind(box);
+}
+function lineChart(box, series, opt){
+  // series: [{name,color,dash,pts:[{x,y,label}]}]
+  const W=Math.max(300, Math.round(box.clientWidth||640)), H=opt.h||240, pl=46, pr=14, pt=18, pb=30;
+  const xs = series[0].pts.map(p=>p.x);
+  const allY = series.flatMap(s=>s.pts.map(p=>p.y)).filter(v=>v!=null);
+  let ymin=Math.min(...allY), ymax=Math.max(...allY);
+  const pad=Math.max(.08,(ymax-ymin)*.12); ymin-=pad; ymax+=pad;
+  const X = i => pl + (xs.length===1?0.5:(i/(xs.length-1)))*(W-pl-pr);
+  const Y = v => pt + (1-(v-ymin)/(ymax-ymin))*(H-pt-pb);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title||"")}">`;
+  const tk=4; for(let i=0;i<=tk;i++){ const v=ymin+(ymax-ymin)*i/tk, y=Y(v);
+    s+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="#e8ecf2"/><text x="${pl-6}" y="${y+4}" font-size="11" text-anchor="end" fill="#7a8597">${v.toFixed(2)}</text>`; }
+  const step = Math.ceil(xs.length/8);
+  xs.forEach((x,i)=>{ if(i%step===0 && (i===xs.length-1 || xs.length-1-i>=step/2 || i===0)) s+=`<text x="${X(i)}" y="${H-pb+18}" font-size="11" text-anchor="middle" fill="#4a5568">${esc(x)}</text>`; });
+  series.forEach(se=>{
+    let first=true; const d = se.pts.map((p,i)=>{ if(p.y==null) return ""; const c=(first?"M":"L")+X(i)+","+Y(p.y); first=false; return c; }).join(" ");
+    s+=`<path d="${d}" fill="none" stroke="${se.color}" stroke-width="2.2" ${se.dash?'stroke-dasharray="6 4"':''} stroke-linejoin="round" stroke-linecap="round"/>`;
+    se.pts.forEach((p,i)=>{ if(p.hide||p.y==null) return;
+      s+=`<circle cx="${X(i)}" cy="${Y(p.y)}" r="${p.big?6:4.5}" fill="${se.color}" stroke="#fff" stroke-width="2"/>`;
+    });
+  });
+  // hover columns
+  xs.forEach((x,i)=>{
+    const lines = series.filter(se=>se.pts[i].y!=null).map(se=>`${esc(se.name)}: <b>${f3(se.pts[i].y)}</b>`).join("<br>");
+    const cw=(W-pl-pr)/Math.max(1,xs.length-1);
+    s+=`<rect x="${X(i)-cw/2}" y="${pt}" width="${cw}" height="${H-pt-pb}" fill="transparent" data-tip="${esc(x)}<br>${lines}"/>`;
+  });
+  if(opt.labels){ opt.labels.forEach(l=>{ s+=`<text x="${X(l.i)}" y="${Y(l.y)+(l.dy||-10)}" font-size="11.5" font-weight="700" text-anchor="${l.anchor||"middle"}" fill="${l.color||"#18212f"}">${esc(l.t)}</text>`; }); }
+  s+=`</svg>`;
+  box.innerHTML=s; tipBind(box);
+}
+function stackChart(box){
+  const W=Math.max(300, Math.round(box.clientWidth||640)),H=86; const tot=104.96;
+  const parts=[{l:"경력 70",v:70,c:"#1f5fbf"},{l:"연수성적 30",v:30,c:"#5b8fd9"},{l:"가산점 4.96",v:4.96,c:"#d9722b"}];
+  let x=0, s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="2026 기준점 구성">`;
+  parts.forEach(p=>{ const w=(W-2*(parts.length-1))*p.v/tot; s+=`<rect x="${x}" y="10" width="${w}" height="34" rx="4" fill="${p.c}" data-tip="${p.l}점"/>`;
+    s+=`<text x="${x+ (p.v<10? w-2 : 10)}" y="${p.v<10?64:32}" font-size="12.5" font-weight="700" fill="${p.v<10?"#d9722b":"#fff"}" text-anchor="${p.v<10?"end":"start"}">${p.l}</text>`; x+=w+2; });
+  s+=`<text x="${W}" y="82" font-size="11.5" fill="#4a5568" text-anchor="end">합계 104.96점 (2026 기준점)</text></svg>`;
+  box.innerHTML=s; tipBind(box);
+}
+
+/* ------------------------------------------------------------------
+   렌더: 공통 입력 바인딩
+------------------------------------------------------------------ */
+function bindInputs(){
+  $$("[data-p]").forEach(el=>{
+    const v = getP(el.dataset.p);
+    if(el.type==="checkbox") el.checked=!!v; else el.value = (v===undefined||v===null)?"":String(v);
+  });
+}
+function onInput(e){
+  const el=e.target; if(!el.dataset || !el.dataset.p) return;
+  let v = el.type==="checkbox"?el.checked:el.value;
+  if(el.dataset.p==="profile.special") v = (v==="true");
+  if(el.dataset.p==="profile.baseYear") v = +v;
+  setP(el.dataset.p, v);
+  $$(`[data-p="${el.dataset.p}"]`).forEach(o=>{ if(o!==el){ if(o.type==="checkbox") o.checked=!!v; else o.value=v; } });
+  save(); renderCalcOut(); renderDock();
+  if(el.dataset.p==="train.qmode") toggleQ();
+  if(el.dataset.p==="profile.baseYear") renderBundles();
+  if(el.dataset.p.startsWith("guide.") && S.tab==="guide") renderGuide();
+}
+function toggleQ(){ const g=S.train.qmode==="grade"; $("#qScoreWrap").classList.toggle("hide",g); $("#qGradeWrap").classList.toggle("hide",!g); }
+
+/* ---- 직무연수 / 연구대회 / 체전 동적 행 ---- */
+function renderJobRows(){
+  $("#jobRows").innerHTML = S.train.jobs.map((j,i)=>`
+   <div class="fgrid" style="margin-bottom:8px">
+     <label class="f"><span>직무연수 ${i+1}</span>
+       <select data-job="${i}" data-jk="s">
+         <option value=""${j.s===""?" selected":""}>선택하세요</option>
+         <option value="done"${j.s==="done"?" selected":""}>이수 (6점)</option>
+         <option value="score"${j.s==="score"?" selected":""}>성적으로 계산</option>
+         <option value="rank"${j.s==="rank"?" selected":""}>순위·인원으로 계산</option>
+         <option value="none"${j.s==="none"?" selected":""}>미이수</option>
+       </select></label>
+     <label class="f ${j.s==="score"?"":"hide"}"><span>연수 성적</span><input type="number" min="0" max="100" step="0.01" inputmode="decimal" data-job="${i}" data-jk="v" value="${esc(j.v)}" placeholder="점수"></label>
+     ${j.s==="rank"?`<div class="grid2"><label class="f"><span>연수인원</span><input type="number" min="1" max="120" inputmode="numeric" data-job="${i}" data-jk="n" value="${esc(j.n||"")}" placeholder="명"></label><label class="f"><span>내 순위</span><input type="number" min="1" inputmode="numeric" data-job="${i}" data-jk="r" value="${esc(j.r||"")}" placeholder="등"></label></div>`:""}
+     ${j.s==="rank"?`<div class="full small" id="jobRk${i}">${jobRankText(j)}</div>`:""}
+   </div>`).join("");
+}
+function jobRankText(j){
+  const v=rankScore(j.n,j.r);
+  if(v==null) return `<span class="muted">연수인원(1~120명)과 순위를 넣으면 조견표 점수를 찾습니다.</span>`;
+  return `조견표 성적 <b class="num">${v}점</b> → 환산 ${jobConv(v)}점 → 평정점 <b class="num">${f3(Math.floor(6*jobConv(v)/100*10000)/10000)}</b>`;
+}
+function renderContestRows(){
+  const C=S.research.contests;
+  $("#contestRows").innerHTML = C.length? C.map((c,i)=>`
+   <div class="card tight" style="margin:8px 0;box-shadow:none">
+     <div class="grid3">
+      <label class="f"><span>규모</span><select data-ct="${i}" data-ck="scale"><option${c.scale==="전국"?" selected":""}>전국</option><option${c.scale==="시도"?" selected":""}>시도</option></select></label>
+      <label class="f"><span>등급</span><select data-ct="${i}" data-ck="grade">${[1,2,3].map(g=>`<option value="${g}"${+c.grade===g?" selected":""}>${g}등급</option>`).join("")}</select></label>
+      <label class="f"><span>연구자 수</span><select data-ct="${i}" data-ck="people">${[[1,"1인"],[2,"2인"],[3,"3인"],[4,"4인 이상"]].map(p=>`<option value="${p[0]}"${+c.people===p[0]?" selected":""}>${p[1]}</option>`).join("")}</select></label>
+     </div>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="small">평정점 <b class="num">${f3(contestPts(c))}</b></span><button class="btn danger sm" data-ctdel="${i}">삭제</button></div>
+   </div>`).join("") : `<p class="small muted">입상 실적이 없으면 비워 두세요.</p>`;
+}
+/* ---- 가산점 묶음·항목 ---- */
+function bundleVal(bo,k){ return k==="etc"? r3(bo.overseas+bo.addB+bo.specialOld) : bo[k]; }
+function gaugeMini(v,cap){
+  if(cap==null) return `<div class="bstat"><span class="num"><b>${f3(v)}</b>점</span></div>`;
+  const pct=Math.min(100,v/cap*100), full=v>=cap-1e-6;
+  return `<div class="track${full?" full":""}"><div class="fill" style="width:${pct}%"></div></div>
+   <div class="bstat"><span class="num"><b>${f3(v)}</b> / ${cap}</span><span class="${full?"st-full":"st-left"}">${full?"✔ 상한 도달 · 더 쌓아도 0점":"여유 "+f3(cap-v)+"점"}</span></div>`;
+}
+function itemFields(it){
+  const T=ITYPES[it.type]; const id=it.id;
+  const inp=(k,type,ph,extra="")=>`<input type="${type}" data-it="${id}" data-ik="${k}" value="${esc(it[k]??"")}" placeholder="${ph}" ${type==="number"?'inputmode="decimal" min="0"':""} ${extra}>`;
+  const sel=(k,opts)=>`<select data-it="${id}" data-ik="${k}">${opts.map(o=>`<option value="${o[0]}"${String(it[k]??"")===String(o[0])?" selected":""}>${o[1]}</option>`).join("")}</select>`;
+  const ym=(k)=>`<input type="month" data-it="${id}" data-ik="${k}" value="${esc(String(it[k]??"").slice(0,7))}" placeholder="2020-03">`;
+  const stpI=(k,ph,mx)=>`<div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0"${mx?` max="${mx}"`:""} inputmode="numeric" data-it="${id}" data-ik="${k}" value="${esc(it[k]??"")}" placeholder="${ph}"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div>`;
+  const cur=`<label class="chk mini"><input type="checkbox" data-it="${id}" data-ik="current"${it.current?" checked":""}>현재 근무 중</label>`;
+  const endF=(lab)=> it.current? `<label class="f"><span>${lab}</span><div class="nowbox">기준일까지</div></label>` : `<label class="f"><span>${lab}</span>${ym("end")}</label>`;
+  if(T.kind==="school") return `<div class="fgrid">
+      <label class="f"><span>근무 시작(연·월)</span>${ym("start")}</label>
+      ${endF("근무 종료(연·월)")}
+      <div class="full">${cur}</div>
+      <label class="f"><span>학교 유형</span>${sel("region",[["general","일반·소규모"],["rural","농촌지역"],["insa","인사특구"],["specialSchool","특수학교(초등)"]])}</label>
+      <label class="f ${it.region&&it.region!=="general"?"hide":""}"><span>학급 수(일반학급)</span>${stpI("classes","예: 24","60")}</label>
+    </div>`;
+  if(T.kind==="period") return `<div class="seg" role="group">${[["date","기간(연·월)으로"],["months","개월 수로"]].map(m=>`<button type="button" class="${(it.mode||"date")===m[0]?"on":""}" data-itmode="${id}" data-m="${m[0]}">${m[1]}</button>`).join("")}</div>
+    ${(it.mode||"date")==="date"? `<div class="fgrid"><label class="f"><span>시작(연·월)</span>${ym("start")}</label>${endF("종료(연·월)")}<div class="full">${cur}</div></div>`
+      : `<label class="f"><span>인정 개월 수(평정표의 평정월수)</span>${stpI("months","개월","600")}</label>`}`;
+  if(T.kind==="count") return `<label class="f"><span>${T.unit}</span>${stpI("count",T.unit,"")}</label>`;
+  if(T.kind==="sports") return `<div class="fgrid"><label class="f"><span>메달</span>${sel("medal",[["gold","금 (0.1)"],["silver","은 (0.05)"],["bronze","동 (0.025)"]])}</label><label class="f"><span>지도 교사 수</span>${sel("coach",[[1,"1인"],[2,"2인 (70%)"],[3,"3인 이상 (50%)"]])}</label></div>`;
+  if(T.kind==="pts"){ const b=BUNDLES.find(x=>x.k===it.bundle)||BUNDLES[0];
+    return `<div class="fgrid"><label class="f"><span>항목</span>${sel("cat",b.cats.map(c=>[c,CAT_KO[c]]))}</label><label class="f"><span>평정점</span>${inp("pts","number","예: 0.456",'step="0.001"')}</label></div>`; }
+  return "";
+}
+function itemHtml(it){
+  const T=ITYPES[it.type]; const r=itemCalc(it);
+  const title = T.kind==="pts"? `${T.label}` : T.label;
+  return `<div class="item" data-itemid="${it.id}">
+    <div class="ih"><b>${esc(title)} ${it.type==="pts"?"":COMMON_TYPES.includes(it.type)?'<span class="scope c">전국 공통</span>':'<span class="scope g">광주 선택</span>'}</b><span class="ipts num" id="ipts${it.id}">${r.total>0?"+"+f3(r.total):"0"}</span><button type="button" class="x" data-itdel="${it.id}" aria-label="삭제">✕</button></div>
+    ${T.hint && r.total<=0?`<div class="ihint">${esc(T.hint)}</div>`:""}
+    ${itemFields(it)}
+    <div class="idet" id="idet${it.id}">${esc(r.detail)}</div>
+  </div>`;
+}
+function renderBundles(){
+  const bo=evaluateNow().bo;
+  $("#bundles").innerHTML = BUNDLES.map(B=>{
+    const its=S.items.filter(it=> it.type==="pts"? it.bundle===B.k : B.types.includes(it.type));
+    const v=bundleVal(bo,B.k);
+    return `<div class="bundle${its.length?"":" empty"}" id="bd-${B.k}">
+      <div class="bh"><div class="bt"><b>${esc(B.label)}</b><span class="xs muted">${esc(B.note)}</span></div><div id="bg-${B.k}">${gaugeMini(v,B.cap)}</div></div>
+      ${its.map(itemHtml).join("")}
+      <div class="chips">${B.types.map(t=>`<button type="button" class="chip" data-additem="${t}">+ ${esc(ITYPES[t].label)}</button>`).join("")}<button type="button" class="chip ghost" data-additem="pts" data-bundle="${B.k}">+ 점수 직접</button></div>
+    </div>`;
+  }).join("");
+  bonusWarn(bo);
+}
+function bonusWarn(bo){
+  const raw=rawFromCalc(); const w=$("#bonusWarn"); let msg="";
+  if(raw.addA>0 && bo.g2<2-1e-6) msg="보직교사 추가 가산점은 학폭+보직+전문직 2.0점을 채운 뒤에 인정됩니다. 입력 내용을 확인하세요.";
+  const box=$("#bd-sportAdd"); if(!box) return;
+  let el=$("#bonusWarn"); if(!el){ el=document.createElement("div"); el.id="bonusWarn"; box.appendChild(el); }
+  el.innerHTML = msg?`<div class="callout warn small">${msg}</div>`:"";
+}
+// 입력 중에는 다시 그리지 않고 숫자만 갱신(포커스 유지)
+function refreshBonus(){
+  const bo=evaluateNow().bo;
+  S.items.forEach(it=>{ const r=itemCalc(it); const a=$("#ipts"+it.id), d=$("#idet"+it.id); if(a) a.textContent=r.total>0?"+"+f3(r.total):"0"; if(d) d.textContent=r.detail; });
+  BUNDLES.forEach(B=>{ const g=$("#bg-"+B.k); if(g) g.innerHTML=gaugeMini(bundleVal(bo,B.k),B.cap); });
+  bonusWarn(bo);
+}
+
+/* ---- 입력 완성도 ---- */
+function quickBonusFilled(){ const q=S.quick; return q.bmode==="total"? q.bonusTotal!=="" : Object.values(q.b).some(v=>v!==""); }
+function completeness(){
+  const t=S.train;
+  if(isQuick()){ const q=S.quick; return [
+    {k:"응시 요건", ok:!!q.eligAll, acc:"qElig"},
+    {k:"경력평정", ok:q.careerFull || q.careerY!=="", acc:"qCareer"},
+    {k:"연수성적", ok:q.trainFull || q.trainPts!=="", acc:"qTrain"},
+    {k:"가산점", ok:quickBonusFilled() || !!S.bonusNone, acc:"qBonus"}
+  ]; }
+  return [
+    {k:"경력(임용일)", ok:!!S.profile.hire, acc:"accCareer"},
+    {k:"응시 요건(1정·한국사)", ok:!!S.profile.cert1 && S.profile.khist!=="", acc:"accElig"},
+    {k:"직무연수 3회", ok:t.jobs.every(j=>j.s!==""), acc:"accTrain"},
+    {k:"1정 자격연수 성적", ok: t.qmode==="grade"? t.qgrade!=="" : t.qscore!=="", acc:"accTrain"},
+    {k:"가산점", ok:S.items.length>0 || !!S.bonusNone, acc:"accBonus"}
+  ];
+}
+function isComplete(){ return completeness().every(c=>c.ok); }
+function progressHtml(compact){
+  const c=completeness(), done=c.filter(x=>x.ok).length;
+  return `<div class="prog"><div class="prog-top"><b>입력 ${done}/${c.length} 완료</b>${done===c.length?'<span class="pill good">✔ 계산 준비 끝</span>':'<span class="xs muted">빈 항목은 0점으로 계산됩니다</span>'}</div>
+    <div class="prog-bar">${c.map(x=>`<i class="${x.ok?"on":""}"></i>`).join("")}</div>
+    ${done<c.length?`<div class="prog-chips">${c.filter(x=>!x.ok).map(x=>`<button type="button" class="chip warnc" data-goacc="${x.acc}">${esc(x.k)}</button>`).join("")}</div>`:""}</div>`;
+}
+
+/* ---- 계산 결과 ---- */
+function gaugeHtml(label, v, cap, note){
+  const pct = cap>0?Math.min(100, v/cap*100):0, full = v>=cap-1e-6;
+  return `<div class="gauge${full?" full":""}"><div class="lab"><span>${esc(label)}</span><b class="num">${f3(v)} / ${cap}</b></div>
+   <div class="track"><div class="fill" style="width:${pct}%"></div></div>
+   <div class="note">${full?"✔ 상한 도달 — 이 묶음은 더 쌓아도 점수가 오르지 않습니다.":"남은 여유 "+f3(cap-v)+"점"}${note?" · "+esc(note):""}</div></div>`;
+}
+function applyModeUI(){
+  const q=isQuick(), Q=S.quick;
+  $("#quickWrap").classList.toggle("hide", !q);
+  $("#detailWrap").classList.toggle("hide", q);
+  $$(".modesw button").forEach(b=>b.classList.toggle("on", b.dataset.mode===S.mode));
+  $("#qCareerMore").classList.toggle("hide", !!Q.careerFull);
+  $("#qTrainMore").classList.toggle("hide", !!Q.trainFull);
+  $("#qBundleIn").classList.toggle("hide", Q.bmode==="total");
+  $("#qTotalIn").classList.toggle("hide", Q.bmode!=="total");
+  $$("[data-qbm]").forEach(b=>b.classList.toggle("on", b.dataset.qbm===Q.bmode));
+}
+function renderCalcOut(){
+  applyModeUI();
+  const E = evaluateNow();
+  const by=+S.profile.baseYear;
+  if(isQuick()){
+    const Q=S.quick;
+    $("#qvCareer").textContent = (Q.careerFull||Q.careerY!=="")? f3(E.car.total)+"점" : "";
+    $("#qvTrain").textContent = (Q.trainFull||Q.trainPts!=="")? f3(E.tr.total)+"점" : "";
+    $("#qvBonus").textContent = (quickBonusFilled()||S.bonusNone)? f3(E.bo.total)+"점" : "";
+    $$("#quickWrap .qcard").forEach(c=>{ const it=completeness().find(x=>x.acc===c.id); c.classList.toggle("done", !!(it&&it.ok)); });
+  }
+  // 자격
+  const el = eligibility(E);
+  $("#svElig").innerHTML = el.ok? `<span class="pill good">✔ 충족</span>` : `<span class="pill warn">확인 필요</span>`;
+  $("#eligOut").innerHTML = el.html;
+  // 경력
+  $("#svCareer").textContent = f3(E.car.total)+"점";
+  const c=E.car;
+  $("#careerOut").innerHTML = S.profile.hire? `
+    <div class="rowline"><span>'가'경력 인정 개월</span><b class="num">${E.cm.ga}개월 (${Math.floor(E.cm.ga/12)}년 ${E.cm.ga%12}개월)</b></div>
+    <div class="rowline"><span>기본경력(최근 15년) ${c.bga+c.bna}/180개월</span><b class="num">${f3(c.base)} / 64</b></div>
+    <div class="rowline"><span>초과경력(그 전 5년) ${c.ega+c.ena}/60개월</span><b class="num">${f3(c.over)} / 6</b></div>
+    ${c.total<70?`<div class="callout small">만점(70점)까지 <b>${E.cm.ga+E.cm.na>=240?0:240-E.cm.ga-E.cm.na}개월</b> 남았습니다. 경력점은 근무하는 동안 자동으로 오릅니다.</div>`:`<div class="callout good small">경력평정 만점입니다.</div>`}`
+    : `<p class="small muted">임용일을 넣으면 경력평정점을 계산합니다.</p>`;
+  // 연수
+  const t=E.tr;
+  $("#svTrain").textContent = f3(t.total)+"점";
+  // 가산점
+  $("#svBonus").textContent = f3(E.bo.total)+"점";
+  refreshBonus();
+  $("#progCard").innerHTML = progressHtml();
+  const comp = isComplete();
+  $("#svPerf").textContent = S.profile.perf!==""? f3(n(S.profile.perf))+"점":"";
+  // 요약
+  const cut = cutFor(by), gap = r3(E.total-cut);
+  const roster = S.profile.perf!==""? r3(E.car.total + n(S.profile.perf) + t.total + E.bo.total):null;
+  $("#calcSummary").innerHTML = `
+    <h3>${by}.2.${isLeap(by)?29:28}. 기준 계산 결과 ${comp?"":'<span class="pill warn">임시</span>'}</h3>
+    <div class="grid3">
+      <div class="stat"><div class="k">경력평정</div><div class="v num">${f3(E.car.total)}</div></div>
+      <div class="stat"><div class="k">연수성적평정</div><div class="v num">${f3(t.total)}</div></div>
+      <div class="stat"><div class="k">가산점</div><div class="v num">${f3(E.bo.total)}</div></div>
+    </div>
+    ${t.quick? `<div class="rowline" style="margin-top:10px"><span>입력 방식</span><span>빠른 입력(평정표 점수)</span></div>` : `<div class="rowline" style="margin-top:10px"><span>└ 교육성적(직무 ${f3(t.jobSum)} + 자격 ${f3(t.q)})</span><span class="num">${f3(t.edu)} / 27</span></div>
+    <div class="rowline"><span>└ 연구실적(대회 ${f3(t.cont)} + 학위 ${f3(t.deg)})</span><span class="num">${f3(t.res)} / 3</span></div>`}
+    <div class="rowline" style="font-size:16px"><b>서류 점수 합계${comp?"":" (임시)"}</b><b class="num">${f3(E.total)}</b></div>
+    <div class="rowline"><span>${by}년 기준점${by>2026?" (추정)":""}</span><span class="num">${f2(cut)}</span></div>
+    <div class="rowline"><span>차이</span><b class="num" style="color:${gap>=0?"var(--good)":"var(--bad)"}">${sgn(gap)}</b></div>
+    ${roster!=null?`<div class="rowline"><span>참고: 순위 명부 점수(200점+가산점)</span><span class="num">${f3(roster)}</span></div>`:""}
+    ${!comp?`<div class="callout warn small" style="margin-top:10px">아직 입력하지 않은 항목이 있어 <b>임시 합계</b>입니다. 위쪽 '입력 진행' 표시에서 빈 항목을 채우면 정확해집니다.</div>`:`<div class="callout ${gap>=0?"good":"bad"} small" style="margin-top:10px">${gap>=0?`기준점을 <b>${f3(gap)}점</b> 넘습니다. 서류 제출 대상에 해당할 가능성이 높습니다.`:`기준점까지 <b>${f3(-gap)}점</b>이 부족합니다. '미래 시뮬레이션'과 '보충 전략'에서 채울 방법을 확인하세요.`}</div>`}`;
+}
+function eligibility(E){
+  if(isQuick()) return {ok:!!S.quick.eligAll, html:""};
+  const by=+S.profile.baseYear; const bd=parseD(baseDateStr(by)); const c1=parseD(S.profile.cert1);
+  const items=[];
+  let ok=true;
+  if(c1){ const mo = monthsIncl(c1,bd); const pass = mo>=36; ok=ok&&pass;
+    items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill ${pass?"good":"bad"}">${pass?"✔ 충족":"✖ 미충족"} · ${Math.floor(mo/12)}년 ${mo%12}개월</span></div>`);
+  } else { ok=false; items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill">취득일 입력</span></div>`); }
+  const kh = S.profile.khist==="exam"||S.profile.khist==="course"; ok=ok&&kh;
+  items.push(`<div class="rowline"><span>한국사능력검정 3급 이상 또는 한국사 연수 60시간</span><span class="pill ${S.profile.khist===""?"":kh?"good":"bad"}">${S.profile.khist===""?"선택 필요":kh?"✔ 충족":"✖ 필요"}</span></div>`);
+  items.push(`<div class="rowline"><span>현직 공립 초등학교 교사(${by}.2.말 기준)</span><span class="pill">본인 확인</span></div>`);
+  return {ok, html: items.join("") + (S.profile.khist==="none"?`<div class="callout warn small">한국사 요건은 점수와 상관없이 반드시 갖춰야 합니다. 원격 직무연수(60시간)로도 충족할 수 있어 가장 먼저 챙길 항목입니다.</div>`:"")};
+}
+
+/* ---- 하단 도크 ---- */
+function renderDock(){
+  const on = ["calc","sim"].includes(S.tab);
+  $("#dock").classList.toggle("on", on);
+  if(!on) return;
+  if(S.tab==="sim"){
+    $("#dock").classList.remove("open");
+    const sim=simulate(S.sim.plans[S.sim.active]); const hit=sim.find(r=>r.total>=r.cut-1e-9); const last=sim[sim.length-1];
+    $("#dockTotLbl").textContent = "계획 "+S.sim.active+" 예상 도달";
+    $("#dockTot").textContent = hit? hit.year+"년" : "미도달";
+    $("#dockCutLbl").textContent = last.year+"년 평정 시";
+    const g=r3(last.total-last.cut);
+    $("#dockGap").innerHTML = `<span style="color:${g>=0?"var(--good)":"var(--bad)"}">${f2(last.total)} (${g>=0?"+":"−"}${f2(Math.abs(g))})</span>`;
+    $("#dockToggle").innerHTML = "그래프 ↓";
+    return;
+  }
+  $("#dockToggle").innerHTML = `내역 <span id="dockArrow">${$("#dock").classList.contains("open")?"▼":"▲"}</span>`;
+  const E=evaluateNow(), by=+S.profile.baseYear, cut=cutFor(by), gap=r3(E.total-cut);
+  const comp=isComplete(), c=completeness();
+  $("#dockTotLbl").textContent = comp? "서류 점수" : "임시 합계";
+  $("#dockTot").textContent = f3(E.total);
+  $("#dockCutLbl").textContent = by+"년 기준점 "+f2(cut);
+  $("#dockGap").innerHTML = comp? `<span style="color:${gap>=0?"var(--good)":"var(--bad)"}">${gap>=0?"✔ ":"✖ "}${sgn(gap)}점</span>`
+    : `<span class="muted" style="font-weight:500;font-size:13px">입력 ${c.filter(x=>x.ok).length}/${c.length} · ${sgn(gap)}</span>`;
+  if($("#dock").classList.contains("open")) renderDockDetail(E,cut,gap);
+}
+function bar(v,cap){ const pct=cap?Math.min(100,v/cap*100):0; return `<span class="mbar${v>=cap-1e-6?" full":""}"><i style="width:${pct}%"></i></span>`; }
+function renderDockDetail(E,cut,gap){
+  const t=E.tr, bo=E.bo;
+  const row=(lab,v,cap,ind)=>`<div class="drow${ind?" ind":""}"><span>${lab}</span>${cap!=null?bar(v,cap):"<span></span>"}<span class="num">${f3(v)}${cap!=null?`<small>/${cap}</small>`:""}</span></div>`;
+  $("#dockDetail").innerHTML = `
+    ${row("경력평정",E.car.total,70)}
+    ${t.quick? row("연수성적평정",t.total,30) : row("교육성적(직무+자격)",t.edu,27)+row("연구실적",t.res,3)}
+    <div class="drow"><span><b>가산점</b></span><span></span><span class="num"><b>${f3(bo.total)}</b></span></div>
+    ${BUNDLES.map(B=>{ const v=bundleVal(bo,B.k); return (v>0||B.cap!=null)? row(B.label,v,B.cap,true):""; }).join("")}
+    ${bo.gwangju>0?row("광주 관내 10년 초과",bo.gwangju,1,true):""}
+    ${bo.lump>0?row("가산점 합계(직접 입력)",bo.lump,null,true):""}
+    <div class="drow tot"><span>합계 / 기준점</span><span class="num" style="grid-column:2/4"><b>${f3(E.total)}</b> / ${f2(cut)}</span></div>`;
+}
+
+/* ------------------------------------------------------------------
+   홈
+------------------------------------------------------------------ */
+function hasData(){ if(isQuick()){ const q=S.quick; return q.careerFull || q.careerY!=="" || q.trainFull || q.trainPts!=="" || quickBonusFilled(); } return !!S.profile.hire; }
+function renderHome(){
+  const E=evaluateNow(), by=+S.profile.baseYear, cut=cutFor(by), gap=r3(E.total-cut);
+  const el = eligibility(E);
+  $$("[data-persona]").forEach(b=>b.classList.toggle("on", b.dataset.persona===S.persona));
+  $("#persona").classList.toggle("chosen", !!S.persona);
+  const g=S.guide;
+  if(S.persona==="new" && !hasData()){
+    if(g.hireYear){ const R=longRun(g.style); const hy=+g.hireYear;
+      $("#homeStatus").innerHTML = `<div class="card result"><div class="muted small">${hy}년 임용 · ${STYLES[g.style].label} 가정</div>
+        <h3 style="margin:4px 0 8px">교감 자격연수 지원 예상 ${R.early? `<span class="num">${R.early.year}년${R.late&&R.late.year!==R.early.year?"~"+R.late.year+"년":""}</span>`:"— 이 방식으로는 어려움"}</h3>
+        <div class="grid3"><div class="stat"><div class="k">경력 만점</div><div class="v num" style="font-size:17px">${R.full?R.full.year+"년":"-"}</div></div>
+        <div class="stat"><div class="k">1정 자격연수</div><div class="v num" style="font-size:17px">${hy+3}년 무렵</div></div>
+        <div class="stat"><div class="k">지금 할 일</div><div class="v num" style="font-size:17px">${Object.values(g.checks||{}).filter(Boolean).length}/10 체크</div></div></div>
+        <div class="btn-row"><button class="btn" data-go="guide">입문 화면에서 자세히 →</button></div></div>`;
+    } else $("#homeStatus").innerHTML = `<div class="card"><h3>승진 점수, 어렵지 않아요</h3><p class="small muted">점수가 어떻게 생겼는지 그림으로 보고, 임용 연도만 넣으면 교감 자격연수가 언제쯤 가능한지 미리 그려 볼 수 있어요.</p><div class="btn-row"><button class="btn" data-go="guide">승진 입문 시작 →</button><button class="btn ghost" id="demoBtn2">예시로 둘러보기</button></div></div>`;
+  } else if(hasData() && !isComplete()){
+    $("#homeStatus").innerHTML = `<div class="card">
+      <h3>내 위치를 계산하는 중이에요</h3>
+      ${progressHtml()}
+      <p class="small muted" style="margin-top:10px">아직 입력하지 않은 항목은 0점으로 계산돼 실제보다 낮게 나옵니다. 모두 채우면 이 자리에 내 점수와 예상 도달 연도가 나타납니다. <span class="num">(임시 합계 ${f2(E.total)}점)</span></p>
+      <div class="btn-row"><button class="btn" data-go="calc">이어서 입력하기 →</button></div></div>`;
+  } else if(hasData()){
+    const sim = simulate(S.sim.plans[S.sim.active]);
+    const hit = sim.find(r=>r.total>=r.cut-1e-9);
+    $("#homeStatus").innerHTML = `
+     <div class="card hero">
+       <div class="muted small">${by}.2.말 기준 내 서류 점수</div>
+       <div class="big num">${f2(E.total)}</div>
+       <div class="small" style="margin:4px 0 12px">${by}년 기준점 ${f2(cut)}점 대비 <b>${(gap>=0?"+":"−")+f2(Math.abs(gap))}점</b></div>
+       <div class="grid3">
+         <div class="stat"><div class="k">내 가산점</div><div class="v num">${f2(E.bo.total)}</div></div>
+         <div class="stat"><div class="k">필요 가산점</div><div class="v num">${f2(Math.max(0,cut-E.car.total-E.tr.total))}</div></div>
+         <div class="stat"><div class="k">예상 도달</div><div class="v num">${hit? hit.year+"년":"미도달"}</div></div>
+       </div>
+     </div>`;
+  } else {
+    $("#homeStatus").innerHTML = S.persona? `<div class="card"><h3>먼저 내 점수를 넣어 보세요</h3><p class="small muted">${tm("평정표")}의 점수만 옮겨 적으면 1~2분이면 끝납니다(빠른 입력). 경력·연수가 만점이면 체크 한 번이면 됩니다.</p><div class="btn-row"><button class="btn" data-go="calc">내 점수 입력 시작 →</button><button class="btn ghost" id="demoBtn2">예시로 둘러보기</button></div></div>` : "";
+  }
+  // 로드맵
+  const steps = [
+    {t:"2급 정교사로 임용", d:"교직 시작. 경력이 쌓이기 시작하고, 연수 학점은 해마다 6학점까지 가산점으로 쌓을 수 있어요."},
+    {t:"1급 정교사 + 3년, 한국사 요건", d:"1정 취득 후 교육경력 3년 이상, 한국사능력검정 3급 이상 또는 한국사 연수 60시간"},
+    {t:"서류 기준점 도달", d:"경력(70) + 연수성적(30) + "+tm("가산점")+" ≥ "+tm("기준점")+" (2026년 104.96점, 특수 104.40점) · 근무성적 제외"},
+    {t:"응시대상자 "+tm("순위 명부"), d:"경력 70 + 근무성적 100 + 연수성적 30 = 200점 + 가산점 순으로 명부 작성"},
+    {t:"면접시험 → 연수대상자 확정", d:"명부 순위에 따라 면접을 거쳐 교감 자격연수 대상자 확정"},
+    {t:"교감 자격연수 이수 → 교감 자격 취득", d:"자격 취득 후 승진후보자 명부(3월 31일 기준) 등재"},
+    {t:"교감 승진 임용", d:"명부 고순위자순, 승진예정인원 3배수 범위에서 임용"}
+  ];
+  let now = -1;
+  if(hasData()){ now = el.ok ? (gap>=0 && isComplete()?3:2) : 1; }
+  else if(S.persona==="new" && g.hireYear){ now = (new Date().getFullYear() - (+g.hireYear)) >= 7 ? 1 : 0; }
+  const on = now>=0;
+  $("#road").innerHTML = steps.map((s,i)=>`<li class="${on&&i<now?"done":""} ${on&&i===now?"now":""}"><span class="dot">${on&&i<now?"✓":i}</span><div class="t">${s.t}${on&&i===now?' <span class="pill pri">지금 여기</span>':""}</div><div class="d">${s.d}</div></li>`).join("");
+}
+
+/* ------------------------------------------------------------------
+   기준점·분포
+------------------------------------------------------------------ */
+function renderCut(){
+  stackChart($("#chStack"));
+  const yrs=[2025,2026,2027,2028,2029,2030];
+  const inc=n(S.sim.inc);
+  const real = yrs.map(y=>({x:y+"년", y: y<=2026?CUT[y]:null}));
+  const proj = yrs.map(y=>({x:y+"년", y: y<2026?null: r3(CUT[2026]+inc*(y-2026)), hide:y===2026}));
+  lineChart($("#chCut"), [
+    {name:"추세 연장(가정)", color:"#d9722b", dash:true, pts:proj},
+    {name:"공고 기준점", color:"#1f5fbf", pts:real}
+  ], {h:220, title:"연도별 기준점", labels:[{i:0,y:104.80,t:"104.80"},{i:1,y:104.96,t:"104.96"},{i:5,y:proj[5].y,t:f2(proj[5].y)+"(가정)",anchor:"end",color:"#d9722b"}]});
+  const E=evaluateNow(); const my=E.total;
+  const mark = (arr)=>arr.map(d=>({...d, hl: hasData() && my>=d.a && my<d.b, short:d.l.replace("104.","").replace("105.","5.")}));
+  const d26 = mark(DIST26).map(d=>({...d, short:d.l.split("~")[0].replace(" 이상","↑")}));
+  barChart($("#chD26"), d26, {h:220, title:"2026 분포"});
+  const d25 = mark(DIST25).map(d=>({...d, short:d.l.split("~")[0].replace(" 미만","↓").replace(" 이상","↑"), dim:d.b<=104.80}));
+  barChart($("#chD25"), d25, {h:230, rot:true, cutAt:5, cutLabel:"104.80", title:"2025 분포"});
+  if(hasData()){
+    let above = DIST26.filter(d=>d.a>=my+1e-9 && d.a>my).reduce((a,d)=>a+d.n,0);
+    const inBin = DIST26.find(d=>my>=d.a && my<d.b);
+    $("#myPos26").innerHTML = my<104.96 ? `<div class="callout bad small">내 점수 <b>${f3(my)}</b>는 2026년 기준점(104.96)보다 <b>${f3(104.96-my)}점</b> 낮아 서류 제출 대상에 들지 않습니다.</div>`
+      : `<div class="callout good small">내 점수 <b>${f3(my)}</b>를 2026년 분포에 넣으면 나보다 높은 구간에 <b>${above}명</b>${inBin?`, 같은 구간에 ${inBin.n}명`:""}이 있습니다. (서류 점수 기준, 근무성적 제외)</div>`;
+  } else $("#myPos26").innerHTML = `<p class="small muted">내 점수를 계산하면 이 분포에서 위치를 보여 줍니다.</p>`;
+}
+
+/* ------------------------------------------------------------------
+   시뮬레이션 화면
+------------------------------------------------------------------ */
+function rowTags(r){
+  const t=[];
+  if(r.work==="leave") return `<span class="tag">휴직(전체)</span>`;
+  if(r.work==="jeonmun") t.push(`<span class="tag p">교육전문직</span>`);
+  else {
+    t.push(`<span class="tag">${({general:"일반",rural:"농촌",insa:"인사특구",specialSchool:"특수학교"})[r.region]}${r.region==="general"?" "+(n(r.classes)||24)+"학급":""}</span>`);
+    if(r.rs!=="none") t.push(`<span class="tag p">${r.rs==="moe"?"교육부":"교육감"} 연구학교</span>`);
+    if(r.prSchool) t.push(`<span class="tag p">실습대용</span>`);
+    if(r.korean) t.push(`<span class="tag">한국어학급</span>`);
+    if(r.bojik) t.push(`<span class="tag p">보직</span>`);
+  }
+  if(r.sv) t.push(`<span class="tag p">학폭 실적</span>`);
+  if(n(r.credits)>0) t.push(`<span class="tag">학점 ${n(r.credits)}</span>`);
+  if(n(r.guide)>0) t.push(`<span class="tag">실습생 ${n(r.guide)}월</span>`);
+  if(r.medal!=="none") t.push(`<span class="tag p">체전 ${MEDAL_KO[r.medal]}</span>`);
+  if(n(r.leave)>0) t.push(`<span class="tag">휴직 ${n(r.leave)}월</span>`);
+  if(!r.gwangju) t.push(`<span class="tag">관외</span>`);
+  return t.join("");
+}
+function rowForm(r,i){
+  const sel=(k,opts)=>`<select data-r="${i}" data-rk="${k}">${opts.map(o=>`<option value="${o[0]}"${String(r[k])===String(o[0])?" selected":""}>${o[1]}</option>`).join("")}</select>`;
+  const chk=(k,l)=>`<label class="chk"><input type="checkbox" data-r="${i}" data-rk="${k}"${r[k]?" checked":""}>${l}</label>`;
+  const Y=+S.profile.baseYear+i;
+  return `<div class="fgrid" style="margin-top:10px">
+    <label class="f"><span>근무 형태</span>${sel("work",[["school","학교 근무"],["jeonmun","교육전문직"],["leave","1년 전체 휴직"]])}</label>
+    <label class="f"><span>학교 유형</span>${sel("region",[["general","일반·소규모"],["rural","농촌지역 학교"],["insa","인사특구 학교"],["specialSchool","특수학교(초등)"]])}</label>
+    <label class="f"><span>학급 수(일반학급 기준)</span><input type="number" min="1" inputmode="numeric" data-r="${i}" data-rk="classes" value="${esc(r.classes)}"></label>
+    <label class="f"><span>연구학교 지정</span>${sel("rs",[["none","없음"],["moe","교육부 지정 (월 0.018)"],["edu","교육감 지정 (월 0.012)"]])}</label>
+    <label class="f"><span>연수 학점(0~6)</span><input type="number" min="0" max="6" inputmode="numeric" data-r="${i}" data-rk="credits" value="${esc(r.credits)}"></label>
+    <label class="f"><span>휴직 개월(0~12)</span><input type="number" min="0" max="12" inputmode="numeric" data-r="${i}" data-rk="leave" value="${esc(r.leave)}"></label>
+    ${chk("bojik","보직교사")}
+    ${chk("sv","학교폭력 예방 실적")}
+    ${chk("prSchool","교육실습 대용학교")}
+    ${chk("korean","한국어학급 운영교")}
+    <label class="f"><span>교육실습생 지도(인정 월)</span><input type="number" min="0" max="12" inputmode="numeric" data-r="${i}" data-rk="guide" value="${esc(r.guide)}"></label>
+    <label class="f"><span>소년체전 입상 지도</span>${sel("medal",[["none","없음"],["gold","금 (0.1)"],["silver","은 (0.05)"],["bronze","동 (0.025)"]])}</label>
+    <label class="f"><span>체전 지도 교사 수</span>${sel("coach",[[1,"1인"],[2,"2인 (70%)"],[3,"3인 이상 (50%)"]])}</label>
+    ${chk("gwangju","광주 관내 근무")}
+  </div>
+  <p class="hint">${Y>=2029?"이 학년도는 바뀐 학급 기준이 적용됩니다(소규모 8학급 이하, 일반 9~13 / 14~20 / 21학급 이상). ":"2028학년도까지는 소규모 12학급 이하, 일반 13~18 / 19~24 / 25학급 이상 기준입니다. "}${Y>=2028?"보직 추가 나목이 적용될 수 있습니다. ":""}휴직 개월은 학년도 끝 쪽에서 빠지는 것으로 계산합니다.</p>`;
+}
+const GRID_ROWS = [
+  {k:"work", label:"근무", type:"cycle", vals:[["school","학교"],["jeonmun","전문직"],["leave","휴직"]]},
+  {k:"region", label:"학교 유형", type:"cycle", school:true, vals:[["general","일반"],["rural","농촌"],["insa","특구"],["specialSchool","특수"]]},
+  {k:"classes", label:"학급 수", type:"num", school:true},
+  {k:"bojik", label:"보직", type:"bool", school:true},
+  {k:"sv", label:"학폭 실적", type:"bool"},
+  {k:"rs", label:"연구학교", type:"cycle", school:true, vals:[["none","–"],["moe","교육부"],["edu","교육감"]]},
+  {k:"prSchool", label:"실습 대용", type:"bool", school:true},
+  {k:"korean", label:"한국어학급", type:"bool", school:true},
+  {k:"credits", label:"연수 학점", type:"cycle", vals:[["0","0"],["2","2"],["4","4"],["6","6"]]},
+  {k:"medal", label:"소년체전", type:"cycle", school:true, vals:[["none","–"],["gold","금"],["silver","은"],["bronze","동"]]},
+  {k:"gwangju", label:"광주 관내", type:"bool"},
+  {k:"leave", label:"휴직(월)", type:"num"}
+];
+function cycleNext(row, cur){
+  const vs=row.vals.map(v=>v[0]);
+  if(row.k==="credits"){ const c=n(cur); const nx=vs.map(Number).find(v=>v>c); return String(nx===undefined?0:nx); }
+  const i=vs.indexOf(String(cur)); return vs[(i+1)%vs.length];
+}
+function cellView(row, r){
+  const off = row.school && r.work!=="school";
+  if(off) return {txt:"", cls:"na"};
+  if(row.type==="bool") return {txt: r[row.k]?"●":"", cls: r[row.k]?"on":""};
+  if(row.type==="num"){ const v = row.k==="classes"? (n(r.classes)||24) : n(r[row.k]); return {txt: row.k==="leave" && !v ? "" : String(v), cls: row.k==="leave"&&v?"on":""}; }
+  const v=String(r[row.k]); const f=row.vals.find(x=>x[0]===v) || (row.k==="credits"?[v,v]:row.vals[0]);
+  const isDefault = row.k==="work"? v==="school" : row.k==="region"? v==="general" : row.k==="credits"? n(v)===0 : v===row.vals[0][0];
+  return {txt:f[1], cls:isDefault?"":"on"};
+}
+function renderSimRows(){
+  const plan = S.sim.plans[S.sim.active];
+  const by=+S.profile.baseYear;
+  const sim = simulate(plan);
+  const hit = sim.find(r=>!r.start && r.total>=r.cut-1e-9);
+  const sel = S.sim.sel;
+  let h = `<thead><tr><th class="rl">학년도</th>${plan.map((r,i)=>`<th><button type="button" class="yh${sel===i?" sel":""}" data-ysel="${i}">${by+i}<small>→${String(by+i+1).slice(2)}평정</small></button></th>`).join("")}</tr></thead><tbody>`;
+  GRID_ROWS.forEach(row=>{
+    h += `<tr><th class="rl"><button type="button" data-grow="${row.k}" title="모든 연도에 적용">${row.label}</button></th>`;
+    plan.forEach((r,i)=>{ const v=cellView(row,r);
+      h += `<td class="${v.cls}${hit&&sim[i+1]===hit?" hitc":""}"><button type="button" class="gc" data-gc="${i}" data-gk="${row.k}" ${v.cls==="na"?"disabled":""} aria-label="${by+i}학년도 ${row.label}">${v.txt}</button></td>`; });
+    h += `</tr>`;
+  });
+  h += `</tbody><tfoot><tr><th class="rl">예상 점수</th>${plan.map((r,i)=>`<td class="num${hit&&sim[i+1]===hit?" hitc":""}">${f2(sim[i+1].total)}</td>`).join("")}</tr>
+    <tr><th class="rl">기준점 대비</th>${plan.map((r,i)=>{ const g=r3(sim[i+1].total-sim[i+1].cut); return `<td class="num ${g>=0?"pos":"neg"}${hit&&sim[i+1]===hit?" hitc":""}">${g>=0?"+":"−"}${f2(Math.abs(g))}</td>`; }).join("")}</tr></tfoot>`;
+  $("#simGrid").innerHTML = h;
+  $("#planLabel").textContent = "계획 "+S.sim.active;
+  $$("#planSw button").forEach(b=>b.classList.toggle("on", b.dataset.plan===S.sim.active));
+  $("#incRange").value = S.sim.inc; $("#incVal").textContent = f2(n(S.sim.inc));
+  // 세부 입력
+  const yd=$("#yearDetail");
+  if(sel!=null && plan[sel]){
+    const keep = yd.querySelector(`[data-ydi="${sel}"]`);
+    if(!keep) yd.innerHTML = `<div class="card" data-ydi="${sel}"><div style="display:flex;align-items:center;gap:8px"><h3 style="margin:0;flex:1">${by+sel}학년도 세부 입력 <span class="xs muted">→ ${by+sel+1}년 평정</span></h3><button type="button" class="x" data-yclose="1" aria-label="닫기">✕</button></div>${rowForm(plan[sel],sel)}</div>`;
+  } else yd.innerHTML="";
+}
+function renderSimResult(){
+  const box=$("#simResult"); box.innerHTML="";
+  const A = simulate(S.sim.plans.A), B = simulate(S.sim.plans.B);
+  const cur = S.sim.active==="A"?A:B, oth = S.sim.active==="A"?B:A;
+  const hit = cur.find(r=>r.total>=r.cut-1e-9), hitO = oth.find(r=>r.total>=r.cut-1e-9);
+  const card=document.createElement("div"); card.className="card result"; card.id="simOut";
+  card.innerHTML = `
+    <h3>계획 ${S.sim.active} 결과 그래프와 표</h3>
+    <div class="legend"><span><i style="background:#1f5fbf"></i>계획 ${S.sim.active} 예상 점수</span><span><i style="background:#8fa3c2"></i>계획 ${S.sim.active==="A"?"B":"A"}</span><span><i class="dash"></i>예상 기준점</span></div>
+    <div class="chart" id="chSim"></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>평정 연도</th><th>경력</th><th>연수</th><th>가산점</th><th>합계</th><th>기준점</th><th>차이</th></tr></thead>
+      <tbody>${cur.map(r=>{ const g=r3(r.total-r.cut); return `<tr class="${hit&&r.year===hit.year?"hit":""}"><td>${r.year}${r.start?" (현재)":""}</td><td class="num">${f3(r.career)}</td><td class="num">${f3(r.train)}</td><td class="num">${f3(r.bonus)}</td><td class="num"><b>${f3(r.total)}</b></td><td class="num">${f2(r.cut)}</td><td class="num" style="color:${g>=0?"var(--good)":"var(--bad)"}">${g>=0?"✔ ":""}${sgn(g)}</td></tr>`;}).join("")}</tbody>
+    </table></div>
+    <p class="hint">기준점은 ${S.profile.special===true?"특수(초등) 기준(2026년 104.40)에서 ":""}연 ${f2(n(S.sim.inc))}점씩 오른다고 가정했습니다. 직무연수·자격연수·연구실적은 현재 값이 유지된다고 봅니다(직무연수는 최근 10년 이내 3회가 유지되어야 합니다).</p>`;
+  box.appendChild(card);
+  $("#simTop").innerHTML = (startNotice?`<div class="callout small" style="margin:0 0 10px">${startNotice}</div>`:"") + (isComplete()?"":`<div class="card tight">${progressHtml()}<p class="xs muted" style="margin:8px 0 0">입력이 끝나지 않아 실제보다 낮은 점수에서 출발한 결과입니다.</p></div>`) +
+    `<div class="card result tight"><div class="callout ${hit?"good":"bad"}" style="margin:0">${hit? (hit.start?`이미 <b>${hit.year}년</b> 기준점을 넘습니다.`:`<span><b>${hit.year}년 교감 자격연수</b>에서 기준점 도달 예상<br><span class="small">점수 ${f2(hit.total)} / 기준점 ${f2(hit.cut)} · ${hit.year}.2.말 평정</span></span>`) : `<span>이 계획(${cur[cur.length-1].year}년 평정까지)으로는 기준점에 닿지 않습니다.<br><span class="small">칸을 바꾸거나 학년도를 추가해 보세요.</span></span>`}</div>
+     <p class="xs muted" style="margin:8px 0 0">비교: 계획 ${S.sim.active==="A"?"B":"A"} → ${hitO? hitO.year+"년 도달":"계획 내 미도달"}</p></div>`;
+  renderDock();
+  const len = Math.max(cur.length, oth.length);
+  const pad = arr => { const a=arr.slice(); while(a.length<len) a.push({...a[a.length-1]}); return a; };
+  const c2=pad(cur), o2=pad(oth);
+  const labels = c2.map(r=>String(r.year));
+  const lbls=[]; if(hit){ const i=c2.indexOf(hit); lbls.push({i, y:hit.total, t:"도달", dy:-12, color:"#1e8e5a"}); }
+  lineChart($("#chSim"), [
+    {name:"예상 기준점", color:"#d9722b", dash:true, pts:c2.map((r,i)=>({x:labels[i], y:r.cut}))},
+    {name:"계획 "+(S.sim.active==="A"?"B":"A"), color:"#8fa3c2", pts:o2.map((r,i)=>({x:labels[i], y:r.total}))},
+    {name:"계획 "+S.sim.active, color:"#1f5fbf", pts:c2.map((r,i)=>({x:labels[i], y:r.total, big: hit && r===hit}))}
+  ], {h:250, title:"시뮬레이션", labels:lbls});
+}
+
+/* ------------------------------------------------------------------
+   보충 전략
+------------------------------------------------------------------ */
+function renderPlan(){
+  const E=evaluateNow(), bo=E.bo, by=+S.profile.baseYear;
+  const cut=cutFor(by), gap=r3(cut-E.total), cutN=cutFor(by+1);
+  const G=n(S.profile.gwangju);
+  const capA = Math.max(0, Math.min(.5, .6 - bo.sports));
+  const m=Math.min;
+  const resHead = 1-bo.research, regHead = 1-bo.region;
+  const acts = [
+    {n:"보직교사 1년", d:"월 0.021점 · 보직+전문직 1.75, 학폭 포함 2.0 상한", rate:.252, head:m(1.75-bo.bj, 2-bo.g2), lock: bo.g2>=2-1e-6?"2.0 달성 → 이제부터 보직 경력은 '보직교사 추가 가산점'으로 쌓입니다":(bo.bj>=1.75-1e-6?"보직+전문직 1.75 상한 → 2.0을 채우려면 학교폭력 실적이 필요합니다":null)},
+    {n:"보직교사 추가 가산점 1년", d:"2.0 달성 후 보직 경력 월 0.01점 · 체전과 합산 0.6", rate:.12, head: bo.g2>=2-1e-6? Math.max(0,capA-bo.addA):0, lock: bo.g2<2-1e-6?`학폭+보직+전문직 2.0을 먼저 채워야 합니다(현재 ${f3(bo.g2)})`:null},
+    {n:"보직 추가 나목 1년 (2028.3.1.~)", d:"가목 상한을 채운 뒤 월 0.01점 · 0.4 상한", rate:.12, head: (bo.g2>=2-1e-6 && bo.addA>=capA-1e-6)? .4-bo.addB:0, lock: !(bo.g2>=2-1e-6 && bo.addA>=capA-1e-6)?"보직 추가 가산점(가목) 상한을 먼저 채워야 합니다":null},
+    {n:"학교폭력 예방·대응 실적", d:"연 1회 0.1점 · 단독 1.0, 보직과 합산 2.0", rate:.1, head:m(1-bo.sv, 2-bo.g2)},
+    {n:"연수이수 학점 6학점/년", d:"1학점 0.02점 · 1.0 상한", rate:.12, head:1-bo.credits},
+    {n:"광주 관내 10년 초과 근무 1년", d:"2026.3.1. 이후 근무분 월 0.01점 · 1.0 상한", rate:.12, gj:true, head:1-bo.gwangju, lock: G<=120 && G>0 ? `관내 근무 ${120-G}개월 더 채운 뒤부터 쌓입니다`: (G===0?"'광주 관내 실근무 누적(개월)'을 입력하면 판단합니다":null)},
+    {n:"교육부 지정 연구학교 근무 1년", d:"월 0.018점 · 연구학교 묶음 1.0", rate:.216, head:m(1-bo.rsMoe, resHead), link:"rschools"},
+    {n:"교육실습 대용학교 근무 1년", d:"월 0.015점 · 연구학교 묶음 1.0", rate:.18, head:m(1-bo.prSchool, resHead)},
+    {n:"교육감 지정 연구학교 근무 1년", d:"월 0.012점 · 연구학교 묶음 1.0", rate:.144, head:m(1-bo.rsEdu, resHead), link:"rschools"},
+    {n:"한국어학급 운영학교 근무 1년", d:"월 0.003점 · 연구학교 묶음 1.0", rate:.036, head:m(1-bo.korean, resHead)},
+    {n:"농촌지역 학교 근무 1년", d:"월 0.0095점 · 학교근무 묶음 1.0", rate:.114, head:m(1-bo.rural, regHead)},
+    {n:"소규모학교 근무 1년", d:"월 0.005점 · 12학급 이하(2029.3.1.~ 8학급 이하)", rate:.06, head:m(1-bo.small, regHead)},
+    {n:"인사특구 학교 근무 1년", d:"월 0.005점 · 단독 0.48 상한", rate:.06, head:m(.48-bo.insa, regHead)},
+    {n:"일반학교(13~18학급) 근무 1년", d:"월 0.004점 · 2029.3.1.~ 9~13학급", rate:.048, head:m(1-bo.general, regHead)},
+    {n:"일반학교(19~24학급) 근무 1년", d:"월 0.0035점 · 2029.3.1.~ 14~20학급", rate:.042, head:m(1-bo.general, regHead)},
+    {n:"전국소년체전 금메달 지도(1인)", d:"1회 0.1점 · 0.55 상한, 보직 추가와 합산 0.6", rate:.1, head:m(.55-bo.sports, .6-bo.sportAdd), once:true}
+  ].map(a=>{ const head=Math.max(0,r3(a.head)); let rate=a.rate;
+      if(a.gj){ rate = G===0 ? 0 : Math.max(0, Math.min(12, G+12-120))*0.01; }
+      return {...a, head, gain: Math.max(0, Math.min(rate, head))}; });
+  const live = acts.filter(a=>a.gain>0).sort((a,b)=>b.gain-a.gain);
+  const dead = acts.filter(a=>a.gain<=0);
+
+  // 연수성적·자격 보충
+  const t=E.tr, basics=[];
+  if(t.quick){
+    if(t.total<30) basics.push(`연수성적 ${f3(t.total)}/30점 → 직무연수 3회(18점), 1정 자격연수(9점), 연구실적(3점) 중 빈 곳을 확인하세요. 직무연수·연구실적(석사 직무관련 1.5점, 연구대회 입상)은 지금도 보충할 수 있습니다. <button type="button" class="linkbtn" data-mode="detail">자세히 입력으로 계산 →</button>`);
+    if(E.car.total<70 && hasData()) basics.push(`경력평정 ${f3(E.car.total)}/70점 → 근무하는 동안 자동으로 오릅니다(기본경력 구간은 1년에 약 4.27점).`);
+    if(!S.quick.eligAll) basics.unshift(`<b>응시 요건 확인 필요</b> → 1정 취득 후 3년, 한국사(검정 3급 이상 또는 연수 60시간)는 점수와 별개로 반드시 갖춰야 합니다.`);
+    if(S.quick.bmode==="total" && S.quick.bonusTotal!=="") basics.push(`가산점을 합계로만 입력해 묶음별 상한을 알 수 없습니다. 아래 '점수가 오르는 항목'은 상한을 반영하지 못하니 <b>묶음별로 입력</b>하면 더 정확해집니다.`);
+  }
+  const missJobs = t.quick? 0 : t.jobs.filter(v=>v<6).length;
+  if(missJobs) basics.push(`직무연수 ${missJobs}회 부족(또는 감점) → 이수하면 최대 <b>+${f3(18-t.jobSum)}점</b>. 최근 10년 이내 연수만 인정되므로 오래된 연수가 빠지는 시점도 확인하세요.`);
+  if(!t.quick && t.res<3) basics.push(`연구실적 ${f3(t.res)}/3점 → 석사(직무관련 1.5점)나 연구대회 입상(전국 1등급 1인 1.5점)으로 최대 <b>+${f3(3-t.res)}점</b>.`);
+  if(!t.quick && t.q<9 && (S.train.qscore!==""||S.train.qmode==="grade")) basics.push(`1급 정교사 자격연수 성적 ${f3(t.q)}/9점 → 이미 확정된 점수라 바꿀 수 없습니다.`);
+  if(!t.quick && E.car.total<70 && hasData()) basics.push(`경력평정 ${f3(E.car.total)}/70점 → 근무하는 동안 자동으로 오릅니다(기본경력 구간은 1년에 약 4.27점).`);
+  if(!t.quick && S.profile.khist==="none") basics.unshift(`<b>한국사 요건 미충족</b> → 점수와 별개로 반드시 필요합니다(한국사능력검정 3급 이상 또는 한국사 연수 60시간).`);
+
+  // 최단 경로(그리디)
+  const path = fastest(E);
+
+  const earlyMonths = isQuick()? (S.quick.careerFull? 240 : quickCareerMonths()) : E.cm.ga;
+  const early = (hasData() && earlyMonths < 120) || (!hasData() && S.persona==="new");
+  const earlyCard = early? `<div class="card result"><h3>교직 초반이라면 지금 이것부터</h3>
+     <p class="small">• <b>연수 학점 매년 6학점</b> — 1년 0.12점, 상한 1.0점까지 약 9년. 늦게 시작하면 따라잡을 수 없어요.</p>
+     <p class="small">• <b>1정 자격연수 성적</b> — 평생 고정되는 9점. 성적 10점 차이 = 0.25점.</p>
+     <p class="small">• <b>한국사 요건 · 연구실적 계획</b> — 미리 해 두면 나중에 부담이 없어요.</p>
+     <p class="small muted">보직·학교 선택·직무연수·근무성적은 지원 10년 전부터 챙겨도 늦지 않아요.</p>
+     <button type="button" class="linkbtn" data-go="guide">입문 화면에서 내 교직 생애로 보기 →</button></div>` : "";
+  $("#planOut").innerHTML = earlyCard + (isComplete()?"":`<div class="card tight">${progressHtml()}<p class="xs muted" style="margin:8px 0 0">빈 항목이 있으면 '점수가 오르는 항목'이 실제보다 많게 나올 수 있습니다.</p></div>`) + `
+   <div class="card result">
+     <div class="grid3">
+       <div class="stat"><div class="k">현재 서류 점수</div><div class="v num">${f3(E.total)}</div></div>
+       <div class="stat"><div class="k">${by}년 기준점</div><div class="v num">${f2(cut)}</div></div>
+       <div class="stat"><div class="k">${gap>0?"부족":"여유"}</div><div class="v num" style="color:${gap>0?"var(--bad)":"var(--good)"}">${f3(Math.abs(gap))}</div></div>
+     </div>
+     <p class="small muted" style="margin-top:8px">다음 해(${by+1}년) 예상 기준점 ${f2(cutN)}점 · 기준점이 해마다 ${f2(n(S.sim.inc))}점씩 오른다고 가정하면, 1년에 그보다 많이 올려야 따라잡을 수 있습니다.</p>
+   </div>
+   ${basics.length?`<h2>먼저 챙길 기본 항목</h2><div class="card">${basics.map(b=>`<p class="small">• ${b}</p>`).join("")}</div>`:""}
+   <h2>점수가 오르는 항목 <span class="pill good">${live.length}개</span></h2>
+   <p class="small muted">1년 동안 했을 때 실제로 오르는 점수(상한 반영) 순입니다. 학교 유형(농촌·일반 등)은 한 곳만, 연구학교·보직·학폭·학점·관내 근무는 함께 쌓을 수 있습니다.</p>
+   <div class="card">${live.length? live.map(a=>`<div class="act"><div class="g"><b class="num">+${f3(a.gain)}</b><span>${a.once?"1회":"1년"}</span></div><div class="b"><div class="n">${esc(a.n)}</div><div class="d">${esc(a.d)} · 남은 여유 ${f3(a.head)}${a.rate>0&&!a.once?` (약 ${Math.ceil(a.head/a.rate*12)}개월이면 채움)`:""}</div>${a.lock?`<div class="d" style="color:var(--warn)">${esc(a.lock)}</div>`:""}${a.link?`<button type="button" class="linkbtn" style="font-size:12.5px" data-go="rules" data-rule="${a.link}">서부 관내 연구학교 목록 →</button>`:""}</div></div>`).join("") : `<p class="small muted">추가로 올릴 수 있는 항목이 없습니다.</p>`}</div>
+   <h2>더 쌓아도 0점인 항목 <span class="pill">${dead.length}개</span></h2>
+   <div class="card">${dead.map(a=>`<div class="act off"><div class="g"><b class="num">0</b><span>상한</span></div><div class="b"><div class="n">${esc(a.n)}</div><div class="d">${a.lock?esc(a.lock):"이미 상한(또는 묶음 상한)에 도달"}</div></div></div>`).join("")}</div>
+   <h2>가장 빠른 경로(이론상 최대)</h2>
+   <div class="card">${path}</div>
+   <div class="callout warn small">'가장 빠른 경로'는 해마다 가능한 항목을 모두 최대로 했을 때의 이론값입니다. 실제로는 보직 배정, 연구학교 지정, 전보 등 여건에 따라 달라지므로 '미래 시뮬레이션'에서 현실적인 계획으로 다시 확인하세요.</div>`;
+}
+function fastest(E){
+  if(!hasData()) return `<p class="small muted">'내 점수 계산'에서 자료를 넣으면 계산합니다.</p>`;
+  const raw={...E.raw}; let ga=E.cm.ga, na=E.cm.na, G=n(S.profile.gwangju);
+  const by=+S.profile.baseYear, trT=E.tr.total;
+  // 직무연수 즉시 보충 가정
+  const jobAdd = 18-E.tr.jobSum;
+  let total = E.total, rows=[];
+  if(total>=cutFor(by)) return `<div class="callout good small">이미 ${by}년 기준점을 넘었습니다.</div>`;
+  for(let y=0;y<15;y++){
+    const Y=by+y, before=bonus(raw); const did=[];
+    const take=(k,amt,cap,label)=>{ const v=Math.max(0,Math.min(amt,cap)); if(v>1e-6){ raw[k]+=v; did.push(label); } return v; };
+    // 연구 묶음: 가장 큰 것
+    const rh=1-before.research;
+    const rc=[["rsMoe",.216,1-before.rsMoe,"교육부 연구학교"],["prSchool",.18,1-before.prSchool,"교육실습 대용학교"],["rsEdu",.144,1-before.rsEdu,"교육감 연구학교"]].map(c=>({...c, g:Math.min(c[1],c[2],rh)})).sort((a,b)=>b.g-a.g)[0];
+    if(rc.g>1e-6) take(rc[0],rc.g,99,rc[3]);
+    const gh=1-before.region;
+    const gc=[["rural",.114,1-before.rural,"농촌학교"],["small",.06,1-before.small,"소규모학교"],["general",.048,1-before.general,"일반학교"]].map(c=>({...c,g:Math.min(c[1],c[2],gh)})).sort((a,b)=>b.g-a.g)[0];
+    if(gc.g>1e-6) take(gc[0],gc.g,99,gc[3]);
+    if(before.g2<2-1e-6){ take("bojik", Math.min(.252, 1.75-before.bj, 2-before.g2), 99, "보직"); }
+    let b2=bonus(raw);
+    take("sv", Math.min(.1, 1-b2.sv, 2-b2.g2), 99, "학폭 실적");
+    b2=bonus(raw);
+    if(b2.g2>=2-1e-6){ const capA=Math.max(0,Math.min(.5,.6-Math.min(.55,raw.sports)));
+      if(raw.addA<capA-1e-6) take("addA", Math.min(.12, capA-raw.addA), 99, "보직 추가");
+      else if(Y>=2028) take("addB", Math.min(.12,.4-raw.addB), 99, "보직 추가 나목"); }
+    take("credits", Math.min(.12, 1-before.credits), 99, "연수 6학점");
+    // 관내
+    let gw=0; for(let k=0;k<12;k++){ G++; if(new Date(Y,2+k,1)>=new Date(2026,2,1) && G>120) gw+=.01; }
+    take("gwangju", Math.min(gw, 1-before.gwangju), 99, "관내 10년 초과");
+    ga+=12;
+    const car=careerScore(ga,na); const bo=bonus(raw);
+    total = r3(car.total + trT + bo.total + jobAdd);
+    const cut=cutFor(Y+1);
+    rows.push({year:Y+1, total, cut, did});
+    if(total>=cut) break;
+    if(!did.length && y>0){ rows[rows.length-1].stop=true; break; }
+  }
+  const last=rows[rows.length-1]; const ok=last && last.total>=last.cut;
+  return `${jobAdd>0?`<p class="small">※ 부족한 직무연수를 첫해에 모두 채운다고 가정했습니다(+${f3(jobAdd)}).</p>`:""}
+   <div class="callout ${ok?"good":"bad"} small">${ok?`모든 항목을 최대로 하면 <b>${last.year}년 교감 자격연수</b>에서 기준점 도달이 가능합니다(약 ${rows.length}년).`:(last&&last.stop?`가산점 상한을 모두 채워도 최고 <b>${f3(last.total)}점</b>에 머뭅니다. 기준점이 해마다 ${f2(n(S.sim.inc))}점씩 오른다면 따라잡기 어렵습니다. 상승 가정을 조정하거나 연구실적·직무연수 등 다른 항목을 확인해 보세요.`:`15년 안에 기준점을 따라잡기 어렵습니다. 기준점 상승 가정(${f2(n(S.sim.inc))}점/년)을 조정해 보세요.`)}</div>
+   <div class="tbl-wrap"><table><thead><tr><th>평정 연도</th><th class="l">그해 쌓은 항목</th><th>예상 점수</th><th>기준점</th></tr></thead>
+   <tbody>${rows.map(r=>`<tr class="${r.total>=r.cut?"hit":""}"><td>${r.year}</td><td class="l small">${r.did.join(" · ")||(r.stop?"더 오를 항목 없음(모든 상한 도달)":"경력만")}</td><td class="num">${f3(r.total)}</td><td class="num">${f2(r.cut)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+/* ------------------------------------------------------------------
+   규정
+------------------------------------------------------------------ */
+const RULES = [
+ {t:"전국 공통과 시·도별 차이 (이 도구의 적용 범위)", id:"region", h:`
+  <div class="callout warn small" style="margin-top:8px">이 도구는 <b>구(舊) 광주광역시교육청 초등</b> 승진 규정·자료를 기준으로 만들었습니다. 다른 시·도에서는 아래 '지역마다 다른 점'이 달라 결과를 그대로 쓸 수 없습니다.</div>
+  <p class="small" style="margin-top:12px"><b>전국이 같은 점</b> — 대통령령 「교육공무원 승진규정」</p>
+  <ul class="clean">
+   <li><b>평정 영역과 배점</b>: 경력평정 70점 + 근무성적평정 100점 + 연수성적평정 30점(교감) + 가산점</li>
+   <li><b>경력평정 기간</b>: 기본경력 15년 + 초과경력 5년 = 20년을 채우면 만점(70점)</li>
+   <li><b>교사 근무성적평정</b>: 교감(평정자) 20% + 교장(확인자) 40% = 근무성적평정점 60점, 다면평가 40점(정성 32% + 정량 8%)을 합산해 100점 (승진규정 제28조의7)</li>
+   <li><b>공통가산점 상한</b>: 교육부 지정 연구학교 1.0, 재외국민교육기관 파견 0.5, 연수이수 실적 학점 1.0, 학교폭력 예방·대응 실적 1.0</li>
+  </ul>
+  <p class="small" style="margin-top:12px"><b>지역(시·도 교육청)마다 다른 점</b> — 교육감이 정함</p>
+  <div class="tbl-wrap"><table><thead><tr><th class="l">구분</th><th class="l">차이</th><th class="l">이 도구(구 광주)</th></tr></thead><tbody>
+   <tr><td class="l"><b>선택 가산점 항목·배점</b></td><td class="l" style="white-space:normal">지역 여건에 따라 비중이 다름. 섬·농어촌이 많은 지역은 도서벽지·농어촌 근무, 대도시는 보직교사·학교폭력 실적 등의 비중이 상대적으로 큼. 다자녀 가산점처럼 일부 지역에만 있는 항목도 있음</td><td class="l" style="white-space:normal">광주 승진규정 제41조 가산점 평정기준 14차 개정(2025.8.25.) 적용</td></tr>
+   <tr><td class="l"><b>면접(역량평가) 방식</b></td><td class="l" style="white-space:normal">면접, 동료 교원 평판도, 현장 실사 등 역량평가 방식과 그 점수를 합산하는지, 통과(Pass/Fail) 기준으로만 쓰는지가 지역마다 다름</td><td class="l" style="white-space:normal">응시대상자 순위 명부 → 면접시험 → 연수대상자 확정 (점수 계산에는 면접 미포함)</td></tr>
+   <tr><td class="l"><b>기준점(커트라인)</b></td><td class="l" style="white-space:normal">교사 수와 교감 자리 비율이 달라 지역마다 크게 다름. 경쟁이 치열한 지역은 소수점 셋째 자리까지 경쟁</td><td class="l" style="white-space:normal">광주 초등 2025년 104.80점, 2026년 104.96점(특수 104.40점)</td></tr>
+  </tbody></table></div>
+  <p class="small muted">다른 시·도 선생님은 경력평정·연수성적평정 계산과 공통가산점, 조견표 정도만 그대로 참고할 수 있습니다.</p>`},
+ {t:"교감 자격연수 대상 요건 (2026년)", h:`
+  <ul class="clean">
+   <li><b>2026.2.28.자 기준</b> 현직 공립 초등학교 초등교사 또는 교육전문직원으로서 <b>정교사(1급) 자격 취득 후 3년 이상</b>의 교육경력이 있는 자</li>
+   <li><b>한국사능력검정 3급 이상</b> 또는 <b>한국사 연수 60시간 이상</b> 이수자</li>
+   <li>교사: 경력 평정점, 연수성적 평정점, 가산점 평정점의 합이 <b>104.96점 이상</b>인 자</li>
+   <li>특수(초등)교사: <b>104.40점 이상</b>인 자</li>
+   <li>교육전문직원: 2026.2.28.자 기준 교육전문직원 실경력 4년 이상인 자</li>
+  </ul>
+  <p class="small muted">참고: 교장 자격연수는 1966.3.1. 이후 출생, 교감 자격 취득 후 3년 이상 교육경력, 교감(교육전문직) 실경력 2년 이상인 희망자.</p>
+  <p class="small"><b>문의</b>: 서부교육지원청 초등인사 장학사 김원덕 <a class="tel" href="tel:062-600-9616">062-600-9616</a> (2026.9.1. 기준) · <button type="button" class="linkbtn" data-go="rules" data-rule="contact">업무별 담당자 전체 보기</button></p>`},
+ {t:"승진·자격연수 문의처 (서부교육지원청, 2026.9.1.)", id:"contact", h:`
+  <p class="small">서부교육지원청 유초등교육지원과 업무분장(2026.9.1.자) 기준입니다. 전화번호 앞자리는 <b>062</b>이며, 휴대폰에서는 번호를 누르면 바로 전화가 걸립니다. 팩스 600-9620.</p>
+  <div class="tbl-wrap"><table class="contact"><thead><tr><th class="l">업무</th><th class="l">담당</th><th>전화</th></tr></thead><tbody><tr class="key"><td class="l" style="white-space:normal">교감 자격연수 대상자 추천 · 교감 근무성적 평정 · 교장·교감 인사</td><td class="l">장학사 김원덕</td><td><a class="tel" href="tel:062-600-9616">600-9616</a></td></tr><tr class="key"><td class="l" style="white-space:normal">교감 승진, 교장 자격 및 승진 대상자 추천 지원</td><td class="l">장학사 박우연<br>장학사 김원덕</td><td><a class="tel" href="tel:062-600-9611">600-9611</a><br><a class="tel" href="tel:062-600-9616">600-9616</a></td></tr><tr><td class="l" style="white-space:normal">교감 승진 대상자 추천</td><td class="l">장학사 김정미</td><td><a class="tel" href="tel:062-600-9613">600-9613</a></td></tr><tr><td class="l" style="white-space:normal">교장 승진 대상자 추천</td><td class="l">장학사 정만호</td><td><a class="tel" href="tel:062-600-9612">600-9612</a></td></tr><tr><td class="l" style="white-space:normal">교장 자격 대상자 추천</td><td class="l">장학사 유명진</td><td><a class="tel" href="tel:062-600-9614">600-9614</a></td></tr><tr><td class="l" style="white-space:normal">초등 1급 정교사 자격연수 대상자 추천 · 교사 인사(전보·복무·초빙)</td><td class="l">장학사 윤청하</td><td><a class="tel" href="tel:062-600-9617">600-9617</a></td></tr><tr><td class="l" style="white-space:normal">교사 근무성적 평정(다면평가) 대상자 선정·확인 · 교원 휴·복직 · 교원 연수 안내</td><td class="l">주무관 구형영</td><td><a class="tel" href="tel:062-600-9618">600-9618</a></td></tr><tr><td class="l" style="white-space:normal">연구학교·연구회 운영 · 수업혁신사례연구대회(연구실적)</td><td class="l">장학사 정만호</td><td><a class="tel" href="tel:062-600-9612">600-9612</a></td></tr><tr><td class="l" style="white-space:normal">유초등교육지원과 총괄</td><td class="l">과장 김유미</td><td><a class="tel" href="tel:062-600-9610">600-9610</a></td></tr></tbody></table></div>
+  <p class="small muted">음영 표시는 교감 자격연수와 직접 관련된 업무입니다. 2026년 교감 자격연수 공고의 문의처(9616)와 같은 번호이며, 2026.9.1. 인사로 담당자가 바뀌었습니다. 동부교육지원청 관내 학교는 동부교육지원청 담당자에게 문의하세요. 담당자는 인사 이동에 따라 바뀔 수 있습니다.</p>`},
+ {t:"서부 관내 연구학교 (2026.9.1. 업무분장 기준)", id:"rschools", h:`
+  <p class="small">연구학교 근무 경력은 가산점(교육부 지정 월 0.018, 교육감 지정 월 0.012, 연구학교 묶음 1.0 상한) 대상입니다. 서부교육지원청 업무분장에 실린 초등 연구학교는 다음과 같습니다(괄호는 연구 주제).</p>
+  <div class="tbl-wrap"><table><thead><tr><th class="l">지구</th><th class="l">연구학교</th></tr></thead><tbody><tr><td class="l">첨단·송정지구</td><td class="l" style="white-space:normal">송정서(경제금융교육), 도산(교육과정), 송정(교원역량), 송정동(교육과정), 비아(학교폭력예방), 송우(디지털)</td></tr><tr><td class="l">풍암·상무지구</td><td class="l" style="white-space:normal">금당(수업), 본량(학생평가), 임곡(인성교육)</td></tr><tr><td class="l">봉선·하남지구</td><td class="l" style="white-space:normal">월곡(수업), 대반(다문화)</td></tr><tr><td class="l">수완·광천지구</td><td class="l" style="white-space:normal">성덕(교육과정), 동곡(교원역량), 큰별(생활교육)</td></tr><tr><td class="l">신창·금호지구</td><td class="l" style="white-space:normal">송학(학생평가), 목련(생활교육)</td></tr></tbody></table></div>
+  <div class="callout warn small">업무분장에는 <b>지정 주체(교육부·교육감)와 지정 기간이 나와 있지 않습니다.</b> 가산점 월평정점과 인정 기간은 연구학교 지정 공문과 학교의 가산점 평정표로 꼭 확인하세요. 유치원 연구학교(불로초병설)는 초등 승진 가산점과 별개입니다.</div>`},
+ {t:"서류 기준점과 응시대상자 순위 명부", h:`
+  <ul class="clean">
+   <li>서류 제출 기준점 = <b>경력평정 + 연수성적평정 + 가산점</b> (근무성적 제외)</li>
+   <li>2025년 104.80점 → 2026년 104.96점. 2027년 기준점은 추후 안내 예정</li>
+   <li>교감 자격연수 순위 명부: <b>200점(가산점 별도)</b> — 경력평정 70 + 근무성적평정 100 + 연수성적평정 30을 각각 최고점으로 평정·합산한 점수에 가산점을 더한 순</li>
+   <li>절차: 승진후보자 명부에 준하는 <b>응시대상자 순위 명부 작성 → 면접시험 → 연수대상자 확정</b></li>
+   <li>승진후보자 명부는 매년 <b>3월 31일</b> 기준으로 작성</li>
+  </ul>`},
+ {t:"동점자 순위 결정 (승진규정 제45조)", h:`
+  <ol class="clean"><li>근무성적이 우수한 자</li><li>현 직위에 장기근무한 자</li><li>교육공무원으로 계속 장기근무한 자</li></ol>
+  <p class="small">위 기준으로도 정해지지 않으면 명부작성권자가 결정합니다.</p>`},
+ {t:"경력평정 산식 (70점)", h:`
+  <ul class="clean"><li>평정 기간: 기본경력 15년 + 초과경력 5년 (기준일 ~2026.2.28.)</li></ul>
+  <div class="tbl-wrap"><table><thead><tr><th>구분</th><th>가경력</th><th>나경력</th><th>다경력</th></tr></thead><tbody>
+   <tr><td>기본경력 (180월)</td><td>월 0.3555 · 만점 64</td><td>월 0.3333 · 60</td><td>월 0.3111 · 56</td></tr>
+   <tr><td>일 평정점</td><td>0.0118</td><td>0.0111</td><td>0.0103</td></tr>
+   <tr><td>초과경력 (60월)</td><td>월 0.1 · 만점 6</td><td>월 0.0833 · 5</td><td>월 0.0666 · 4</td></tr>
+   <tr><td>일 평정점</td><td>0.0033</td><td>0.0027</td><td>0.0022</td></tr></tbody></table></div>
+  <p class="small muted">교사의 경우 교사·교감·교장·교육전문직·임용 전 군 경력 등은 '가'경력, 기간제교사 경력은 '나'경력(엑셀 평정표 기준). 휴직은 종류에 따라 0%·50%·100% 인정.</p>`},
+ {t:"연수성적평정 산식 (30점)", h:`
+  <div class="tbl-wrap"><table><thead><tr><th>구분</th><th>상한</th><th class="l">내용</th></tr></thead><tbody>
+   <tr><td>직무연수</td><td>18 (교감)</td><td class="l">최근 10년 내(2016.1.1.~2026.2.28.) 직무연수 3회. 회당 6점</td></tr>
+   <tr><td>자격연수</td><td>9</td><td class="l">~2026.2.28. 관련 직위. 9 − (100 − 성적) × 0.025 (교감 자격연수 대상자 산식, 엑셀 평정표 기준)</td></tr>
+   <tr><td>연구실적</td><td>3</td><td class="l">연구대회 입상 + 학위. 해당 직위, 전직 이전 직위 포함</td></tr></tbody></table></div>
+  <p class="small"><b>연구대회 입상(1인 기준)</b> 전국 1·2·3등급 1.5·1.25·1.0 / 시도 1·2·3등급 1.0·0.75·0.5. 2인 70%, 3인 50%, 4인 이상 30%. 1년 1회 인정.</p>
+  <p class="small"><b>학위</b> 박사 직무관련 3 · 기타 1.5 / 석사 직무관련 1.5 · 기타 1.0</p>
+  <p class="small muted">직무연수 성적 환산(성적이 있는 경우): 95 초과→100, 90 초과→95, 85 초과→90, 그 외→85 → 6 × 환산점/100</p>`},
+ {t:"교원 연수성적 산출방식(상대평가 조견표)", id:"lookup", h:`
+  <p class="small muted">관련: 교육부 교원양성연수과-945(2006.2.6.) · 「교원 연수성적 산출방식 개선방향」</p>
+  <ul class="clean">
+   <li><b>적용 과정</b>: 60시간 이상의 직무연수 및 자격연수. 단, 정교사(1급)·전문상담교사(1급)·사서교사(1급)·보건교사(1급)·영양교사(1급) 자격연수는 조견표 상대평가를 적용하지 않음</li>
+   <li><b>적용 기관</b>: 「교원연수 이수실적의 기록 및 관리요령」 제2조에 따라 학점화 대상 연수과정을 운영하는 모든 연수기관</li>
+   <li><b>적용 시기</b>: 2020년 5월 1일 이후 시작되는 교원연수부터(이전 연수는 종전 방식·연수원 지침)</li>
+   <li>점수는 <b>정수</b>로 산출하며, 연수인원과 순위에 따라 아래 조견표로 정해짐(80~100점)</li>
+  </ul>
+  <div class="card tight" style="box-shadow:none;background:var(--pri-l);border-color:#cfe0f7">
+   <b class="small">조견표 찾기</b>
+   <div class="grid2" style="margin-top:6px">
+    <label class="f"><span>연수인원(1~120명)</span><input type="number" id="lkN" min="1" max="120" inputmode="numeric" placeholder="예: 30"></label>
+    <label class="f"><span>순위</span><input type="number" id="lkR" min="1" inputmode="numeric" placeholder="예: 5"></label>
+   </div>
+   <div id="lkOut" class="small" style="margin-top:8px"></div>
+  </div>
+  <div id="lkGrid"></div>
+  <p class="small" style="margin-top:12px"><b>연수성적 분포(백분율 기준)</b></p>
+  <div class="tbl-wrap"><table><thead><tr><th>성적</th>${DIST_PCT.slice(0,11).map(d=>`<th>${d[0]}</th>`).join("")}</tr></thead><tbody><tr><td>비율(%)</td>${DIST_PCT.slice(0,11).map(d=>`<td>${d[1]}</td>`).join("")}</tr></tbody></table></div>
+  <div class="tbl-wrap"><table><thead><tr><th>성적</th>${DIST_PCT.slice(11).map(d=>`<th>${d[0]}</th>`).join("")}</tr></thead><tbody><tr><td>비율(%)</td>${DIST_PCT.slice(11).map(d=>`<td>${d[1]}</td>`).join("")}</tr></tbody></table></div>
+  <p class="small muted">90점이 7.0%로 가장 많고 양 끝(100점·80점)이 각 2.0%인 정규분포 형태입니다. 승진 평정의 직무연수 환산(95 초과→100, 90 초과→95, 85 초과→90, 그 외→85)을 거치면, 조견표 91~95점은 모두 95점, 86~90점은 90점으로 같아집니다.</p>`},
+ {t:"가산점 총괄표 — 공통가산점", h:`
+  <div class="tbl-wrap"><table><thead><tr><th class="l">항목</th><th>월평정점</th><th>상한</th><th class="l">비고</th></tr></thead><tbody>
+   <tr><td class="l">가. 교육부장관 지정 연구학교(시범·실험학교)</td><td>0.018 (일 0.0006)</td><td>1.0</td><td class="l">'04.2.29.까지 대용부설학교 포함. 연구학교(교육감)·교육실습·한국어학급과 합산 1.0</td></tr>
+   <tr><td class="l">나. 재외국민기관 파견</td><td>0.015</td><td>0.5</td><td class="l"></td></tr>
+   <tr><td class="l">다. 연수이수 실적 학점</td><td>1학점 0.02</td><td>1.0</td><td class="l">'98~'08 1년 4학점(총 0.4) · '09~'15 1년 6학점(총 0.84) · '16.1.1.~'17.2.28. 1년 6학점(총 0.12) · '17.3.1. 이후 1년 6학점, 학년도 평정</td></tr>
+   <tr><td class="l">라. 학교폭력 예방 및 대응 실적</td><td>연 0.1</td><td>1.0</td><td class="l">'13.1.1.부터 1년간 실적을 하나의 평정으로. 보직·전문직과 합산 2.0</td></tr></tbody></table></div>`},
+ {t:"가산점 총괄표 — 선택가산점", h:`
+  <div class="tbl-wrap"><table><thead><tr><th class="l">항목</th><th>월평정점</th><th>상한</th><th class="l">비고</th></tr></thead><tbody>
+   <tr><td class="l">정교사(1급) 보직교사 경력</td><td>0.021</td><td>1.75</td><td class="l">전문직 경력과 합산 1.75, 학폭과 합산 2.0</td></tr>
+   <tr><td class="l">보직교사 추가 가산점(가목)</td><td>0.01 (일 0.00033)</td><td>0.5</td><td class="l">2.0 취득 후 보직 경력, 2023.3.1. 이후 경력부터. 소년체전과 합산 0.6</td></tr>
+   <tr><td class="l">보직교사 추가 가산점(나목, 신설)</td><td>0.01</td><td>0.4</td><td class="l"><span class="badge-date">2028.3.1.</span> 초등, 가목 상한 취득 후 근무 경력</td></tr>
+   <tr><td class="l">교육전문직원 근무경력</td><td>0.0168</td><td>1.0</td><td class="l">보직과 합산 1.75</td></tr>
+   <tr><td class="l">도서·벽지 근무경력</td><td>가 0.042 / 나 0.034 / 다 0.025 / 라 0.017</td><td>1.0</td><td class="l">'97.12.31.까지 경력. 학교근무 묶음 1.0</td></tr>
+   <tr><td class="l">한센병 환자 자녀 학급 담당</td><td>0.021</td><td>1.0</td><td class="l">'97.12.31.까지. 학교근무 묶음 1.0</td></tr>
+   <tr><td class="l">농촌지역 학교(기관)</td><td>'02~'11 0.010 / '12~'15.2 0.0075 / '15.3~ 0.0095</td><td>1.0</td><td class="l">학교근무 묶음 1.0</td></tr>
+   <tr><td class="l">특수학교(급) 담당</td><td>0.021 / 0.0105</td><td>1.0</td><td class="l">'02.12.31.까지</td></tr>
+   <tr><td class="l">교육감 지정 연구학교(시범·실험)</td><td>0.012</td><td>1.0</td><td class="l">연구학교 묶음 1.0</td></tr>
+   <tr><td class="l">인사특구 학교</td><td>'04~'15.2 0.003 / '15.3~ 0.005</td><td>0.48</td><td class="l">학교근무 묶음 1.0. <span class="badge-date">2029.3.1.</span> 대촌중앙초 추가</td></tr>
+   <tr><td class="l">소규모 학교</td><td>'12.3~'15.2 0.003 / '15.3~ 0.005</td><td>1.0</td><td class="l">12학급 이하 → <span class="badge-date">2029.3.1.</span> 8학급 이하</td></tr>
+   <tr><td class="l">전국소년체전 지도실적</td><td>금 0.1 · 은 0.05 · 동 0.025</td><td>0.55</td><td class="l">1년 1회. 2인 70%, 3인 이상 50%. 보직 추가와 합산 0.6</td></tr>
+   <tr><td class="l">교육실습 대용학교</td><td>0.015</td><td>1.0</td><td class="l">연구학교 묶음 1.0</td></tr>
+   <tr><td class="l">일반학교 근무경력</td><td>'15.3~'16.2 0.002 / 13~18학급 0.004 / 19~24학급 0.0035 / 25학급↑ 0.003 / 특수학교(초등) 0.002</td><td>1.0</td><td class="l"><span class="badge-date">2029.3.1.</span> 9~13학급 0.004 / 14~20학급 0.0035 / 21학급↑ 0.003</td></tr>
+   <tr><td class="l">교육실습생 지도 교원</td><td>0.012</td><td>1.0</td><td class="l">초등특수 '12.1.1.~, 초등보건 '22.4.1.~. 연구학교 묶음 1.0</td></tr>
+   <tr><td class="l">한국어학급 운영 학교</td><td>0.003</td><td>1.0</td><td class="l">연구학교 묶음 1.0</td></tr>
+   <tr><td class="l">광주 관내 10년 초과 근무(신설)</td><td>0.01 (일 0.00033)</td><td>1.0</td><td class="l"><span class="badge-date">2026.3.1.</span> 이후 근무분부터. 휴직·파견 등 실제 근무하지 않은 기간 제외(관내 파견은 포함)</td></tr>
+   <tr><td class="l">교감 자격 취득 후 교사 근무(신설)</td><td>0.02</td><td>0.5</td><td class="l">교장 승진 관련 · 이미 교감 자격이 있는 교사 대상</td></tr>
+  </tbody></table></div>`},
+ {t:"합산 상한 묶음 정리", h:`
+  <ul class="clean">
+   <li><b>2.0 묶음</b>: 학교폭력 실적(단독 1.0) + 보직교사 + 교육전문직(둘이 1.75)</li>
+   <li><b>학교근무 1.0 묶음</b>: 도서벽지 + 한센병 + 농촌 + 인사특구(단독 0.48) + 소규모 + 일반학교</li>
+   <li><b>연구학교 1.0 묶음</b>: 교육부 연구학교 + 교육감 연구학교 + 교육실습 대용학교 + 교육실습생 지도 + 한국어학급</li>
+   <li><b>0.6 묶음</b>: 전국소년체전(단독 0.55) + 보직교사 추가 가산점(단독 0.5)</li>
+   <li>단독: 연수학점 1.0, 재외국민 0.5, 광주 관내 10년 초과 1.0, 보직 추가 나목 0.4</li>
+  </ul>
+  <p class="small muted">묶음이 상한에 닿으면 그 안의 어느 항목을 더 쌓아도 점수가 오르지 않습니다.</p>`},
+ {t:"14차 개정(2025.8.25.) 핵심과 시행일", h:`
+  <ul class="clean">
+   <li><span class="badge-date">2026.3.1.</span> 규정 시행. 광주 관내 교육기관 10년 초과 근무 가산점 신설(월 0.01, 1.0 상한, 2026.3.1. 이후 근무분부터)</li>
+   <li><span class="badge-date">2026.3.1.</span> 교감·원감 자격 취득 후 교사 근무 가산점 신설(유초등 월 0.02, 0.5 상한)</li>
+   <li><span class="badge-date">2028.3.1.</span> 보직교사 추가 가산점 나목 신설(초등, 가목 상한 취득 후 월 0.01, 0.4 상한). 소년체전 가산점이 없으면 가목 상한은 0.5</li>
+   <li><span class="badge-date">2029.3.1.</span> 소규모학교 12학급 → 8학급 이하, 일반학교 학급 구간 변경, 36학급 이상 초등 교감 경력 월 0.01 신설, 인사특구에 대촌중앙초 추가</li>
+   <li>경과조치: 2029.3.1. 이후 근무 경력부터 적용하고, 그 이전 경력은 13차 개정 규정으로 평정</li>
+   <li>교육실습생 지도: 7명 이상 담당 교감에 원감 포함 / 장학사·교육연구사 → '교육전문직원'으로 용어 정비</li>
+  </ul>`},
+ {t:"승진 임용 방법과 우선 임용", h:`
+  <ul class="clean">
+   <li>승진후보자명부 고순위자순으로 임용하되, 승진예정인원 3배수 범위에서 우선 임용 가능(승진예정자의 40% 범위 내)</li>
+   <li>우선 고려: 한 성이 30% 미만인 성 / 명부 3회 이상 등재자 / 해당 자격 선 취득자 / 정년 잔여 2년 이내(교감 승진에 한함)</li>
+   <li>승진예정일 현재 정년 잔여기간 6개월 이하인 자는 원칙적으로 제외</li>
+  </ul>`},
+ {t:"승진 임용의 제한 (교육공무원임용령 제16조)", h:`
+  <ul class="clean">
+   <li>징계의결요구·징계처분·직위해제 또는 휴직 중인 경우(공무상 질병·부상 휴직의 특별승진 예외)</li>
+   <li>징계처분 집행이 끝난 날부터 <b>강등·정직 18개월, 감봉 12개월, 견책 6개월</b>이 지나지 않은 경우</li>
+   <li>금품·향응, 음주운전, 성폭력·성희롱·성매매, 상습폭행, 학생성적 관련 비위 등은 각각 6개월 가산</li>
+   <li>훈장·포장·모범공무원포상·국무총리 이상 표창 등을 받은 경우 가장 중한 징계의 제한기간 1/2 단축 가능</li>
+  </ul>`},
+ {t:"평정자와 확인자", h:`
+  <p class="small">교사의 경력평정·연수성적·가산점: 평정자 교(원)감, 확인자 교(원)장 / 근무성적: 평정자 교(원)감, 확인자 교(원)장. 근무성적은 최근 5년 중 유리한 3년(34%·33%·33%) 반영.</p>`},
+ {t:"출처와 유의사항", h:`
+  <ul class="clean">
+   <li><b>적용 지역: 구(舊) 광주광역시교육청 초등</b>. 다른 시·도에는 그대로 적용되지 않습니다.</li>
+   <li>서부교육지원청 유초등교육지원과 업무분장(2026.9.1.자) — 문의처, 관내 연구학교</li>
+   <li>교육공무원 승진규정(대통령령) 제28조의7 — 근무성적평정·다면평가 합산 비율</li>
+   <li>광주광역시교육청 「2026 초등 교육공무원 인사실무」 제10절 승진(33~44쪽)</li>
+   <li>2025·2026년 초등 교감 자격연수 대상자 선발 서류 점수 분포 안내</li>
+   <li>산식 일부는 기존 승진 평정표(엑셀) 계산식을 참고했습니다.</li>
+   <li>이 프로그램은 개략 추정용이며, 공식 평정은 학교 평정자와 교육청 확인을 따릅니다.</li>
+  </ul>`}
+];
+function renderRules(){
+  const q=$("#ruleQ").value.trim();
+  const hl = (html)=>{ if(!q) return html; const re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","g");
+    return html.replace(/>([^<]+)</g,(m,txt)=>">"+txt.replace(re,"<mark>$1</mark>")+"<"); };
+  const items = RULES.map(r=>({...r, hit: !q || (r.t+r.h.replace(/<[^>]+>/g,"")).includes(q)}));
+  const shown = items.filter(r=>r.hit);
+  const lk = { n: $("#lkN")?$("#lkN").value:"", r: $("#lkR")?$("#lkR").value:"" };
+  $("#rules").innerHTML = shown.length? shown.map((r,i)=>`<details class="acc"${q||(openRule&&r.id===openRule)?" open":""}${r.id?` id="rule-${r.id}"`:""}><summary>${hl(">"+esc(r.t)+"<").slice(1,-1)}</summary><div class="in rule-body">${hl(r.h)}</div></details>`).join("")
+     : `<p class="muted small">'${esc(q)}'에 해당하는 내용이 없습니다.</p>`;
+  if($("#lkN")){ $("#lkN").value=lk.n; $("#lkR").value=lk.r; renderLookup(); }
+  if(openRule){ const d=$("#rule-"+openRule); openRule=null; if(d) setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-10}); },60); }
+}
+let openRule=null;
+let startNotice="";
+function renderLookup(){
+  const out=$("#lkOut"), grid=$("#lkGrid"); if(!out) return;
+  const N=Math.floor(n($("#lkN").value)), R=Math.floor(n($("#lkR").value));
+  if(N<1||N>120){ out.innerHTML=`<span class="muted">연수인원을 넣으면 순위별 점수표가 나타납니다.</span>`; grid.innerHTML=""; return; }
+  const v=rankScore(N,R);
+  out.innerHTML = v==null? `<span class="muted">순위는 1~${N} 사이로 넣으세요.</span>`
+    : `${N}명 중 ${R}등 → 연수성적 <b class="num" style="font-size:16px">${v}점</b> · 승진 평정 환산 ${jobConv(v)}점 → 직무연수 평정점 <b class="num">${f3(Math.floor(6*jobConv(v)/100*10000)/10000)}</b> / 6`;
+  let h=`<p class="small" style="margin:12px 0 6px"><b>${N}명 연수의 순위별 성적</b></p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:4px">`;
+  for(let r=1;r<=N;r++){ const sc=rankScore(N,r); h+=`<div class="num" style="font-size:12.5px;text-align:center;padding:4px 2px;border-radius:7px;background:${r===R?"var(--acc)":"var(--grey-l)"};color:${r===R?"#fff":"var(--ink)"}"><span style="opacity:.75">${r}등</span> <b>${sc}</b></div>`; }
+  grid.innerHTML=h+`</div>`;
+}
+
+
+
+/* ------------------------------------------------------------------
+   용어 풀이
+------------------------------------------------------------------ */
+const GLOSS = {
+  "서류 점수":"교감 자격연수에 지원할 수 있는지 가르는 점수. 경력평정(70) + 연수성적평정(30) + 가산점의 합이며 근무성적은 들어가지 않습니다.",
+  "기준점":"그해 서류를 낼 수 있는 최소 서류 점수(커트라인). 광주 초등은 2025년 104.80점, 2026년 104.96점이었습니다.",
+  "순위 명부":"기준점을 넘은 사람끼리 순위를 매기는 명부. 경력 70 + 근무성적 100 + 연수성적 30 = 200점에 가산점을 더하고, 이 순서로 면접을 거쳐 대상자를 확정합니다.",
+  "경력평정":"교육경력을 점수로 바꾼 것. 최근 15년(기본) + 그 전 5년(초과), 모두 20년을 채우면 만점 70점입니다.",
+  "연수성적평정":"직무연수 3회(18점) + 1급 정교사 자격연수 성적(9점) + 연구실적(3점) = 30점 만점.",
+  "근무성적평정":"교감 20% + 교장 40% + 동료 다면평가 40%로 매기는 100점짜리 평가. 서류 점수에는 없고 순위 명부에만 들어갑니다. 지원 직전 5년 중 유리한 3년이 반영됩니다.",
+  "가산점":"특정 근무·실적에 붙는 추가 점수. 대부분 '근무 1개월마다 0.0○점'처럼 시간이 지나며 쌓이고, 항목·묶음마다 상한이 있습니다. 실제 당락은 여기서 갈립니다.",
+  "공통가산점":"전국이 같은 가산점(교육부 연구학교, 재외국민기관, 연수 학점, 학교폭력 실적).",
+  "선택가산점":"시·도 교육감이 정하는 가산점(보직, 농촌·소규모 학교, 교육감 연구학교 등). 지역마다 다릅니다.",
+  "상한":"그 항목이나 묶음에서 받을 수 있는 최대 점수. 상한에 닿으면 더 쌓아도 점수가 오르지 않습니다.",
+  "묶음":"여러 가산점 항목을 합쳐 상한을 함께 적용하는 단위. 예) 농촌·소규모·일반학교·인사특구 근무는 합쳐서 1.0점까지.",
+  "월평정점":"근무 1개월마다 붙는 가산점. 예) 보직교사 월 0.021점 → 1년이면 0.252점.",
+  "평정표":"학교에서 매년 작성하는 경력·연수성적·가산점 평정 서류. 교감(평정자)과 교장(확인자)이 확인하며, 교감 선생님께 요청하면 볼 수 있습니다.",
+  "1정":"1급 정교사 자격. 2급 정교사로 교육경력 3년 이상이면 자격연수를 거쳐 받습니다. 이때 자격연수 성적이 승진 점수(최대 9점)로 평생 남습니다.",
+  "직무연수":"교원이 받는 일반 연수. 승진에는 60시간 이상 연수 중 지원 시점 기준 최근 10년 안의 3회(18점)가 반영됩니다.",
+  "연수이수 학점":"이수한 연수 시간을 학점으로 바꾼 것. 1학점 0.02점, 1년 6학점까지, 최대 1.0점(공통가산점).",
+  "자격연수":"자격을 받기 위한 연수. 1급 정교사 자격연수, 교감 자격연수, 교장 자격연수가 있습니다.",
+  "보직교사":"부장교사. 보직 경력은 월 0.021점, 교육전문직과 합쳐 1.75점, 학교폭력 실적과 합쳐 2.0점까지.",
+  "연구학교":"교육부·교육감이 지정해 특정 주제를 연구하는 학교. 근무하면 월 0.018(교육부) 또는 0.012(교육감)점.",
+  "인사특구":"교육청이 지정한 학교(광주는 별표 학교 목록). 근무하면 월 0.005점, 단독 상한 0.48점.",
+  "다면평가":"동료 교사들이 함께 평가하는 방식. 근무성적평정의 40%(정성 32% + 정량 8%)를 차지합니다.",
+  "가경력":"경력평정에서 가장 높게 쳐 주는 경력(교사·교감·교장·교육전문직 등). 기간제 교사 경력은 '나'경력.",
+  "교육전문직":"장학사·교육연구사. 교육청에서 근무하며, 이 경력도 가산점이 되고 교감 자격연수 대상이 될 수 있습니다.",
+  "수석교사":"수업·연구 전문성으로 동료를 지원하는 교사. 교육경력 15년 이상 교사 중 선발하며, 승진규정을 적용하지 않습니다."
+};
+let termShownAt=0;
+function tm(word, key){ const k=key||word; return GLOSS[k]? `<span class="term" data-term="${esc(k)}" tabindex="0" role="button">${esc(word)}</span>` : esc(word); }
+function showTerm(el){
+  const k=el.dataset.term, pop=$("#termPop"); if(!pop) return;
+  pop.innerHTML = `<b>${esc(k)}</b><p>${esc(GLOSS[k]||"")}</p><button type="button" class="linkbtn" data-go="rules" data-rule="gloss">용어 사전 전체 →</button>`;
+  pop.hidden=false; termShownAt=Date.now();
+  const r=el.getBoundingClientRect(), pw=Math.min(300, window.innerWidth-24);
+  pop.style.width=pw+"px";
+  let left=Math.min(Math.max(12, r.left + r.width/2 - pw/2), window.innerWidth-pw-12);
+  pop.style.left=left+"px";
+  const below = r.bottom + 8, ph = pop.offsetHeight;
+  pop.style.top = (below+ph < window.innerHeight-10 ? below : Math.max(10, r.top-ph-8)) + "px";
+}
+
+/* ------------------------------------------------------------------
+   입문: 장기 설계
+------------------------------------------------------------------ */
+const STYLES = {
+  steady:{label:"꾸준히형", desc:"연수 학점 매년 6학점, 8년 차부터 보직교사와 학교폭력 실적, 일반학교 근무"},
+  intense:{label:"집중형", desc:"연수 학점 매년, 5년 차부터 보직·학폭 실적, 5~12년 차 농촌학교, 13~16년 차 교육감 연구학교"},
+  minimal:{label:"최소형", desc:"연수 학점만 매년 6학점, 보직 없이 일반학교 근무"}
+};
+function q1Score(x){ x=n(x); if(!x) return 0; const v=9-(100-x)*0.025; if(v>9) return 9; if(v<=4) return 0; return Math.floor(v*10000)/10000; }
+function guidePlan(style, years){
+  const g=S.guide; let left=Math.max(0, Math.floor(n(g.leave)));
+  const rows=[];
+  for(let i=0;i<years;i++){
+    const r=defRow(); r.credits=6; r.gwangju=!!g.gwangju; r.classes=24; r.region="general";
+    if(style==="steady"){ r.bojik=i>=7; r.sv=i>=7; }
+    if(style==="intense"){ r.bojik=i>=4; r.sv=i>=4; if(i>=4&&i<=11) r.region="rural"; if(i>=12&&i<=15) r.rs="edu"; }
+    if(i>=1 && left>0){ r.leave=Math.min(12,left); left-=r.leave; }
+    rows.push(r);
+  }
+  return rows;
+}
+const SP_OFF = ()=> (S.profile.special===true||S.profile.special==="true")? SPECIAL_OFFSET : 0;
+function cutLow(y){ return r3((y<2026? (CUT[y]||104.8) : 104.96) + SP_OFF()); }
+function cutHigh(y){ return r3((y<2026? (CUT[y]||104.8) : Math.min(106, 104.96 + .16*(y-2026))) + SP_OFF()); }
+function longRun(style){
+  const g=S.guide, hy=+g.hireYear; const tr = 18 + q1Score(g.q1) + n(g.res);
+  const raw={}; CATS.forEach(c=>raw[c]=0);
+  const rows=guidePlan(style, 34);
+  const out=simCore(rows, {raw, ga:0, na:0, G:0, trTotal:r3(tr), by:hy, start:{total:r3(tr), career:0, bonus:0}}, cutLow);
+  const eligFrom = hy+7;
+  const early = out.find(r=>!r.start && r.year>=eligFrom && r.total>=cutLow(r.year)-1e-9);
+  const late  = out.find(r=>!r.start && r.year>=eligFrom && r.total>=cutHigh(r.year)-1e-9);
+  const full  = out.find(r=>!r.start && r.career>=70-1e-9);
+  const credFull = out.find(r=>!r.start && r.raw && r.raw.credits>=1-1e-9);
+  const best = out.reduce((m,r)=>Math.max(m,r.total),0);
+  return {out, early, late, full, credFull, best, tr:r3(tr), rows};
+}
+function yrsOf(year){ return year - (+S.guide.hireYear); }
+
+function renderGuide(){
+  const g=S.guide;
+  // ① 점수 구조
+  const seg=(lab,w,cls)=>`<div class="sg ${cls}" style="flex:${w}"><span>${lab}</span></div>`;
+  $("#gStruct").innerHTML = `
+    <p class="small">교감 자격연수는 <b>두 번의 관문</b>을 거칩니다. 먼저 ${tm("서류 점수")}로 지원 자격을 가리고, 그다음 ${tm("근무성적평정","근무성적평정")}까지 더한 ${tm("순위 명부")}로 순위를 정합니다.</p>
+    <div class="sbar-t"><b>관문 1. 서류 점수</b><span class="xs muted">${tm("기준점")} 이상이어야 지원 가능 (2026년 104.96점)</span></div>
+    <div class="sbar">${seg("경력 70",70,"c1")}${seg("연수 30",30,"c2")}${seg("가산점",8,"c4")}</div>
+    <div class="sbar-t" style="margin-top:14px"><b>관문 2. 순위 명부</b><span class="xs muted">200점 + 가산점 → 면접 → 대상자 확정</span></div>
+    <div class="sbar">${seg("경력 70",70,"c1")}${seg("근무성적 100",100,"c3")}${seg("연수 30",30,"c2")}${seg("가산점",8,"c4")}</div>
+    <div class="glist">
+      <div><i class="dot c1"></i><b>${tm("경력평정")} 70점</b><span>시간이 해결해요. 경력 20년이면 누구나 만점.</span></div>
+      <div><i class="dot c2"></i><b>${tm("연수성적평정")} 30점</b><span>${tm("직무연수")} 3회 18 + ${tm("1정")} 자격연수 성적 9 + 연구실적 3. 대부분 거의 만점이지만 <b>1정 성적은 평생 고정</b>이에요.</span></div>
+      <div><i class="dot c3"></i><b>${tm("근무성적평정")} 100점</b><span>교감 20% + 교장 40% + ${tm("다면평가")} 40%. 지원 직전 5년 중 3년만 반영돼요.</span></div>
+      <div><i class="dot c4"></i><b>${tm("가산점")}</b><span>실제 당락은 여기서 갈려요. 경력·연수가 만점이면 <b>가산점 4.96점 이상</b>이 필요해요(2026년). 근무 개월마다 조금씩 쌓이고 ${tm("묶음")}마다 ${tm("상한")}이 있어요.</span></div>
+    </div>`;
+  // 임용 연도 선택
+  const sel=$("#gHireSel"); if(!sel.options.length){ sel.innerHTML=`<option value="">선택하세요</option>`+Array.from({length:23},(_,i)=>2008+i).map(y=>`<option value="${y}">${y}년</option>`).join(""); }
+  sel.value = g.hireYear||"";
+  $("#gStyles").innerHTML = Object.entries(STYLES).map(([k,v])=>`<button type="button" class="style${g.style===k?" on":""}" data-gstyle="${k}"><b>${v.label}</b><span>${v.desc}</span></button>`).join("");
+  // ② 결과
+  const outBox=$("#gLongOut"), tlBox=$("#gTimeline");
+  if(!g.hireYear){ outBox.innerHTML=`<div class="card ref small">임용 연도를 고르면 경력 만점 시기, 교감 자격연수 지원 가능 시기를 계산해 드립니다.</div>`; tlBox.innerHTML=""; }
+  else {
+    const runs={}; Object.keys(STYLES).forEach(k=>runs[k]=longRun(k));
+    const R=runs[g.style], hy=+g.hireYear;
+    const rangeTxt = (r)=> r.early? `${r.early.year}년${r.late&&r.late.year!==r.early.year?` ~ ${r.late.year}년`:(r.late?"":"~ (상승 시 어려움)")}` : "도달 어려움";
+    outBox.innerHTML = `<div class="card result">
+      <h3>${STYLES[g.style].label}으로 쌓으면</h3>
+      ${R.early? `<div class="callout good" style="margin:6px 0 10px"><span>교감 자격연수 지원 예상 <b>${rangeTxt(R)}</b><br><span class="small">임용 ${yrsOf(R.early.year)+1}년 차${R.late&&R.late.year!==R.early.year?`~${yrsOf(R.late.year)+1}년 차`:""}(경력 약 ${yrsOf(R.early.year)}년) · ${hy}년 임용 기준${R.late?"":"<br>기준점이 106점까지 오르면 이 방식으로는 닿기 어려워요"}</span></span></div>`
+               : `<div class="callout bad" style="margin:6px 0 10px"><span>이 방식으로는 기준점(104.96점)에 닿기 어렵습니다.<br><span class="small">최고 예상 점수 ${f2(R.best)}점 · 다른 방식을 눌러 비교해 보세요.</span></span></div>`}
+      <div class="grid3">
+        <div class="stat"><div class="k">경력 만점(70점)</div><div class="v num" style="font-size:17px">${R.full? R.full.year+"년":"-"}</div></div>
+        <div class="stat"><div class="k">연수성적 가정</div><div class="v num" style="font-size:17px">${f2(R.tr)}</div></div>
+        <div class="stat"><div class="k">최고 예상 점수</div><div class="v num" style="font-size:17px">${f2(R.best)}</div></div>
+      </div>
+      <div class="legend" style="margin-top:12px"><span><i style="background:#1f5fbf"></i>내 예상 서류 점수</span><span><i class="dash"></i>기준점(현재 유지 ~ 106점까지 상승)</span></div>
+      <div class="chart" id="chLong"></div>
+      <div class="tbl-wrap"><table><thead><tr><th class="l">방식</th><th>지원 예상 시기</th><th>최고 점수</th></tr></thead><tbody>
+        ${Object.entries(runs).map(([k,r])=>`<tr class="${k===g.style?"hit":""}"><td class="l"><button type="button" class="linkbtn" data-gstyle="${k}">${STYLES[k].label}</button></td><td>${rangeTxt(r)}</td><td class="num">${f2(r.best)}</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="hint">기준점은 <b>현재(104.96점) 그대로</b>일 때를 이른 시기로, <b>해마다 0.16점씩 올라 106점</b>에서 멈출 때를 늦은 시기로 잡았습니다. 20년 뒤 기준점은 아무도 알 수 없으니 <b>범위로만</b> 보세요. 1정 취득 후 3년이 지나야 응시 자격이 생기므로 임용 7년 차 이전은 제외했습니다. 실제로는 보직 배정, 전보, 연구학교 지정 같은 여건에 따라 더 늦어질 수 있어요.</p>
+    </div>`;
+    const pts=R.out.filter(r=>!r.start && r.year>=hy+12 && r.total>=97);
+    if(pts.length) lineChart($("#chLong"), [
+      {name:"기준점(106까지 상승)", color:"#d9722b", dash:true, pts:pts.map(r=>({x:String(r.year), y:cutHigh(r.year), hide:true}))},
+      {name:"기준점(현재 유지)", color:"#e8a878", dash:true, pts:pts.map(r=>({x:String(r.year), y:cutLow(r.year), hide:true}))},
+      {name:"내 예상 점수", color:"#1f5fbf", pts:pts.map(r=>({x:String(r.year), y:r.total, big: R.early&&r.year===R.early.year, hide: !(R.early&&r.year===R.early.year)}))}
+    ], {h:230, title:"장기 설계"});
+    // 타임라인
+    const T=[]; const st=g.style;
+    T.push({y:hy, t:"임용 (2급 정교사)", d:`${tm("연수이수 학점")}을 해마다 6학점씩 채우기 시작하고, 한국사 요건도 미리 갖춰 두세요.`});
+    T.push({y:hy+3, t:`${tm("1정")} 자격연수 (2급 + 경력 3년 이상)`, d:"이때 성적이 승진 점수 9점으로 평생 남아요. 10점 차이 = 0.25점 차이.", key:true});
+    T.push({y:hy+7, t:"교감 자격연수 응시 자격 생김 (1정 + 3년)", d:"자격만 생길 뿐, 점수가 모자라 실제 지원은 한참 뒤예요."});
+    if(R.credFull) T.push({y:R.credFull.year, t:"연수 학점 가산점 1.0점 채움", d:"매년 6학점(0.12점)씩 약 9년. 늦게 시작하면 한꺼번에 채울 수 없어요."});
+    if(st==="steady") T.push({y:hy+7, t:"보직교사·학교폭력 실적 시작 (꾸준히형 가정)", d:"보직 1년 0.252점. 학폭 실적과 합쳐 2.0점까지."});
+    if(st==="intense"){ T.push({y:hy+4, t:"보직·학폭 실적 + 농촌학교 근무 시작 (집중형 가정)", d:"서로 다른 묶음이라 동시에 쌓여요. 농촌 근무는 월 0.0095점."}); T.push({y:hy+12, t:"교육감 지정 연구학교 근무 (집중형 가정)", d:"연구학교 묶음 1.0점을 따로 채워요."}); }
+    if(g.gwangju) T.push({y:Math.max(hy+10, 2026), t:"광주 관내 10년 초과 가산점 시작", d:"관내 근무 10년을 넘긴 뒤 2026.3.1. 이후 근무분부터 월 0.01점(최대 1.0)."});
+    if(R.full) T.push({y:R.full.year, t:`${tm("경력평정")} 만점(70점)`, d:"휴직 등 경력에서 빠지는 기간이 있으면 그만큼 늦어져요."});
+    const anchor = R.early? R.early.year : (R.full? R.full.year+3 : hy+25);
+    T.push({y:anchor-10, t:`${tm("직무연수")} 3회 반영 구간 시작`, d:"지원 시점 기준 최근 10년 안의 연수만 인정돼요. 이보다 너무 일찍 받은 연수는 빠져요."});
+    T.push({y:anchor-5, t:`${tm("근무성적평정")} 반영 구간 시작`, d:"지원 직전 5년 중 유리한 3년만 반영돼요. 초임 시절 결과는 들어가지 않아요."});
+    if(R.early) T.push({y:R.early.year, t:"교감 자격연수 지원 가능(예상)", d:`${rangeTxt(R)} · 기준점 변화에 따라 달라져요.`, goal:true});
+    T.sort((a,b)=>a.y-b.y);
+    tlBox.innerHTML = `<div class="card"><h3>내 교직 생애 타임라인 <span class="xs muted">${STYLES[st].label} 가정</span></h3>
+      <ol class="tline">${T.map(x=>`<li class="${x.key?"key":""}${x.goal?" goal":""}"><span class="ty num">${x.y}<small>${x.y-hy+1}년 차</small></span><div><b>${x.t}</b><p>${x.d}</p></div></li>`).join("")}</ol></div>`;
+  }
+  // ③ 체크리스트
+  const NOW=[
+    ["t1","연수이수 학점, 매년 6학점 채우기","1년에 6학점(0.12점)까지만 인정되고 상한은 1.0점이라 다 채우는 데 약 9년이 걸려요. 늦게 시작하면 몰아서 채울 수 없어요."],
+    ["t2","1정 자격연수 성적 관리","성적이 승진 점수(9점)로 평생 남아요. 성적 10점 차이가 0.25점 차이인데, 기준점 경쟁은 0.01점 단위예요."],
+    ["t3","한국사 요건 미리 갖추기","한국사능력검정 3급 이상 또는 한국사 연수 60시간. 점수와 별개로 반드시 있어야 지원할 수 있어요."],
+    ["t4","연구실적 계획 세우기","석사(직무관련 1.5점)나 연구대회 입상으로 3점까지. 연구대회는 1년에 1회만 인정돼요."],
+    ["t5","근무 학교와 보직 기록 모아 두기","가산점은 근무 개월로 쌓여요. 학교 유형(농촌·소규모 등)과 근무 기간을 기록해 두면 나중에 평정표 확인이 쉬워요."]];
+  const LATER=[
+    ["l1","직무연수 3회(60시간 이상)","지원 시점 기준 최근 10년 안의 것만 인정돼요. 너무 일찍 받으면 기간이 지나 빠져요."],
+    ["l2","근무성적·다면평가","지원 직전 5년 중 유리한 3년만 반영돼요. 초임 시절 결과는 들어가지 않으니 부담 갖지 않아도 돼요."],
+    ["l3","보직교사·학교폭력 실적","둘이 합쳐 2.0점까지. 보직 1년이면 0.252점이에요."],
+    ["l4","학교 선택(농촌·소규모·연구학교 등)","묶음마다 상한 1.0점이 있어, 한 종류만 계속 쌓기보다 비어 있는 묶음을 채우는 게 유리해요."],
+    ["l5","해마다 평정표 확인","교감 선생님께 평정표를 요청해 확인하고 '내 점수'의 빠른 입력에 옮겨 적어 보세요."]];
+  const ck=g.checks||{};
+  const li=(a)=>`<label class="todo${ck[a[0]]?" done":""}"><input type="checkbox" data-gcheck="${a[0]}"${ck[a[0]]?" checked":""}><span><b>${a[1]}</b><small>${a[2]}</small></span></label>`;
+  const doneN=[...NOW,...LATER].filter(a=>ck[a[0]]).length;
+  $("#gTodo").innerHTML = `<div class="card"><div class="todo-h"><b>지금 할 일</b><span class="pill good">교직 초반</span><span class="xs muted" style="margin-left:auto">체크 ${doneN}/10</span></div>${NOW.map(li).join("")}</div>
+    <div class="card"><div class="todo-h"><b>나중에 해도 되는 일</b><span class="pill">지원 10년 전부터</span></div>${LATER.map(li).join("")}</div>`;
+  // ④ 진로 갈래
+  const P=[
+    ["교감·교장 승진","교사 → 교감 자격연수(서류 기준점 → 순위 명부 → 면접) → 교감 → 교장 자격연수 → 교장","경력 20년, 연수성적, 가산점, 근무성적","학교 경영과 교육과정 운영을 책임져요. 이 사이트가 다루는 길이에요."],
+    [tm("교육전문직")+"(장학사·교육연구사)","시·도교육청 공개 전형으로 선발(응시 요건·방식은 해마다 공고 확인)","전형별 교육경력 요건, 정책·장학 역량","교육청에서 일해요. 전문직 경력은 가산점(월 0.0168)이 되고, 전문직 실경력 4년 이상이면 교감 자격연수 대상이 돼요(2026년 공고 기준)."],
+    [tm("수석교사"),"교육경력 15년 이상 교사 중 선발 → 수업·연구 지원","수업 전문성, 연구 실적","교실을 떠나지 않고 동료의 수업을 돕는 길. 교육공무원 승진규정을 적용하지 않아요."],
+    ["교사로서 전문성","연구회·학습공동체, 석·박사, 수업 혁신, 강사 활동 등","관심 분야의 꾸준한 실천","승진 점수 관리 부담 없이 전문성을 키우는 길. 나중에 승진으로 방향을 바꿔도 연수·연구 실적은 그대로 쓸 수 있어요."]];
+  $("#gPaths").innerHTML = `<div class="paths">${P.map(p=>`<div class="pathc"><b>${p[0]}</b><div class="pr"><span>경로</span><p>${p[1]}</p></div><div class="pr"><span>필요한 것</span><p>${p[2]}</p></div><p class="pd">${p[3]}</p></div>`).join("")}</div>
+    <p class="hint">교육전문직 선발 요건과 방식은 교육청 공고마다 다르니 해당 연도 공고를 꼭 확인하세요.</p>`;
+}
+
+/* ------------------------------------------------------------------
+   편의 기능: 되돌리기 · 인쇄 · 예시 · 시뮬레이션 채우기
+------------------------------------------------------------------ */
+let toastT=null, undoFn=null;
+function toast(msg, undo){
+  const t=$("#toast"); $("#toastMsg").textContent=msg; undoFn=undo||null;
+  $("#toastUndo").classList.toggle("hide", !undo); t.hidden=false; t.classList.toggle("withdock", $("#dock").classList.contains("on"));
+  clearTimeout(toastT); toastT=setTimeout(()=>{ t.hidden=true; undoFn=null; }, 6000);
+}
+function snapshot(){ return JSON.stringify(S); }
+function restore(snap){ const tab=S.tab; S=fromSaved(JSON.parse(snap)); S.tab=tab; save(); rerenderAll(); }
+function rerenderAll(){ bindInputs(); toggleQ(); renderJobRows(); renderContestRows(); renderBundles(); $("#yearDetail").innerHTML=""; renderTab(S.tab); updateDemoBar(); }
+
+const DEMO = {
+  v:1, mode:"quick", demo:true,
+  profile:{baseYear:2026, special:false, cert1:"", khist:"", hire:"", excl:"", na:"", gwangju:"300", perf:"99.5"},
+  quick:{eligAll:true, careerFull:true, careerY:"", careerM:"", trainFull:false, trainPts:"29.7625", bmode:"bundle",
+         b:{bojik:"1.386",sv:"0.3",region:"0.648",research:"1",credits:"0.8",sports:"",addA:"",etc:""}, bonusTotal:"", curRegion:"general", curClasses:"22"},
+  sim:{inc:0.16, active:"A", sel:null, plans:{
+    A:[0,1,2,3,4,5].map(i=>({work:"school",classes:22,region:"general",rs:"none",prSchool:false,korean:false,bojik:true,sv:i<2,credits:6,guide:0,medal:"none",coach:1,gwangju:true,leave:0})),
+    B:[0,1,2,3,4,5].map(i=>({work:"school",classes:22,region:"general",rs:"none",prSchool:false,korean:false,bojik:false,sv:false,credits:6,guide:0,medal:"none",coach:1,gwangju:true,leave:0}))}}
+};
+const BKEY = KEY+".backup";
+function startDemo(){
+  if(!S.demo){ try{ localStorage.setItem(BKEY, JSON.stringify(S)); }catch(e){ if(!confirm("이 기기에 보관할 수 없어 예시를 보면 지금 입력이 사라집니다. 계속할까요? (메뉴에서 먼저 파일로 저장할 수 있습니다)")) return; } }
+  const tab=S.tab; S=fromSaved(JSON.parse(JSON.stringify(DEMO))); S.tab=tab; save(); rerenderAll(); show("home",true);
+  toast("예시 자료를 불러왔습니다. 화면 위 띠에서 언제든 내 자료로 돌아갈 수 있습니다.");
+}
+function exitDemo(){
+  let back=null; try{ back=localStorage.getItem(BKEY); }catch(e){}
+  const tab=S.tab; S = back? fromSaved(JSON.parse(back)) : defState(); S.demo=false; S.tab=tab;
+  try{ localStorage.removeItem(BKEY); }catch(e){}
+  save(); rerenderAll(); toast("내 자료로 돌아왔습니다.");
+}
+function updateDemoBar(){ $("#demoBar").classList.toggle("hide", !S.demo); }
+
+function currentSchool(){
+  if(isQuick()) return {region:S.quick.curRegion||"general", classes:n(S.quick.curClasses)||24};
+  const sc=S.items.filter(x=>x.type==="school");
+  if(!sc.length) return null;
+  const key=x=> x.current? 999999 : (()=>{ const e=parseYM(x.end,true); return e? e.y*100+e.m : 0; })();
+  const last=sc.slice().sort((a,b)=>key(b)-key(a))[0];
+  return {region:last.region||"general", classes:n(last.classes)||24};
+}
+function applyPreset(k){
+  const plan=S.sim.plans[S.sim.active]; const snap=snapshot(); let msg="";
+  if(k==="stay"){ const c=currentSchool(); if(!c){ toast("'내 점수'에 학교 근무 경력이 없어 일반학교 24학급으로 채웠습니다."); }
+    const cc=c||{region:"general",classes:24}; plan.forEach(r=>{ r.work="school"; r.region=cc.region; r.classes=cc.classes; }); msg="모든 학년도를 지금 학교 조건으로 채웠습니다."; }
+  if(k==="bojik"){ plan.forEach(r=>r.bojik=true); msg="모든 학년도에 보직을 켰습니다."; }
+  if(k==="rural"){ plan.forEach((r,i)=>{ if(i>0){ r.work="school"; r.region="rural"; } }); msg="둘째 학년도부터 농촌지역 학교로 바꿨습니다."; }
+  if(k==="credits"){ plan.forEach(r=>r.credits="6"); msg="매년 연수 학점 6을 넣었습니다."; }
+  if(k==="reset"){ S.sim.plans[S.sim.active]=defPlan(); msg="계획 "+S.sim.active+"를 처음 상태로 되돌렸습니다."; }
+  S.sim.sel=null; $("#yearDetail").innerHTML=""; save(); renderSimRows(); renderSimResult();
+  if(msg) toast(msg, ()=>restore(snap));
+}
+
+function buildPrint(){
+  const E=evaluateNow(), by=+S.profile.baseYear, cut=cutFor(by), gap=r3(E.total-cut), bo=E.bo, comp=isComplete();
+  const A=simulate(S.sim.plans.A), B=simulate(S.sim.plans.B);
+  const hA=A.find(r=>r.total>=r.cut-1e-9), hB=B.find(r=>r.total>=r.cut-1e-9);
+  const rows = BUNDLES.map(b=>{ const v=bundleVal(bo,b.k); return `<tr><td class="l">${b.label}</td><td>${f3(v)}</td><td>${b.cap??"-"}</td><td>${b.cap==null?"-":(v>=b.cap-1e-6?"상한 도달":"여유 "+f3(b.cap-v))}</td></tr>`; }).join("")
+    + (bo.gwangju>0?`<tr><td class="l">광주 관내 10년 초과</td><td>${f3(bo.gwangju)}</td><td>1</td><td></td></tr>`:"")
+    + (bo.lump>0?`<tr><td class="l">가산점 합계(직접 입력)</td><td>${f3(bo.lump)}</td><td>-</td><td>묶음 구분 없음</td></tr>`:"");
+  const d=new Date();
+  $("#printSheet").innerHTML = `
+    <h1>교감 자격연수 서류 점수 요약</h1>
+    <p class="ps-sub">구(舊) 광주광역시교육청 초등 기준 · ${by}.2.${isLeap(by)?29:28}. 평정 기준 · 작성 ${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()}.${comp?"":" · <b>입력 미완료(임시)</b>"}${S.demo?" · 예시 자료":""}</p>
+    <table><tr><th>경력평정</th><th>연수성적평정</th><th>가산점</th><th>합계</th><th>${by}년 기준점</th><th>차이</th></tr>
+      <tr><td>${f3(E.car.total)}</td><td>${f3(E.tr.total)}</td><td>${f3(bo.total)}</td><td><b>${f3(E.total)}</b></td><td>${f2(cut)}</td><td><b>${sgn(gap)}</b></td></tr></table>
+    <h2>가산점 묶음별 현황</h2>
+    <table><tr><th class="l">묶음</th><th>점수</th><th>상한</th><th>상태</th></tr>${rows}</table>
+    <h2>미래 시뮬레이션 (기준점 연 +${f2(n(S.sim.inc))} 가정)</h2>
+    <table><tr><th>계획</th><th>예상 도달</th><th>마지막 평정 연도 점수</th></tr>
+      <tr><td>계획 A</td><td>${hA?hA.year+"년":"계획 내 미도달"}</td><td>${f3(A[A.length-1].total)} (${A[A.length-1].year}년)</td></tr>
+      <tr><td>계획 B</td><td>${hB?hB.year+"년":"계획 내 미도달"}</td><td>${f3(B[B.length-1].total)} (${B[B.length-1].year}년)</td></tr></table>
+    ${S.profile.perf!==""?`<p>참고: 순위 명부 점수(200점 + 가산점) ${f3(E.car.total+n(S.profile.perf)+E.tr.total+bo.total)}</p>`:""}
+    <p class="ps-note">이 요약은 개략 추정치이며 공식 평정을 대신하지 않습니다. 교감 자격연수 문의: 서부교육지원청 초등인사 062-600-9616(2026.9.1. 기준). 만든이 2026 최창훈</p>`;
+}
+function doPrint(){ buildPrint(); $("#menuPop").hidden=true; setTimeout(()=>window.print(), 50); }
+
+/* ------------------------------------------------------------------
+   탭 · 내비게이션 (해시 없이 history 사용)
+------------------------------------------------------------------ */
+const TABS=["home","guide","cut","calc","sim","plan","rules"];
+function show(tab, push){
+  if(!TABS.includes(tab)) tab="home";
+  S.tab=tab; save();
+  $$("section.page").forEach(p=>p.classList.toggle("on", p.id==="p-"+tab));
+  $$("#tabs button").forEach(b=>b.classList.toggle("on", b.dataset.tab===tab || b.dataset.also===tab));
+  $$(".libsw button").forEach(b=>b.classList.toggle("on", b.dataset.tab===tab));
+  const btn=$(`#tabs button[data-tab="${tab}"]`); if(btn && btn.scrollIntoView) btn.scrollIntoView({block:"nearest",inline:"center"});
+  if(push){ try{ history.pushState({tab}, "", location.pathname+location.search); }catch(e){} }
+  window.scrollTo(0,0);
+  renderTab(tab);
+}
+function renderTab(tab){
+  if(tab==="home") renderHome();
+  if(tab==="guide") renderGuide();
+  if(tab==="cut") renderCut();
+  if(tab==="calc"){ renderCalcOut(); }
+  if(tab==="sim"){ const st=evaluateNow().total;
+    if(S.sim.lastStart!=null && Math.abs(st-S.sim.lastStart)>1e-6) startNotice=`'내 점수'가 바뀌어 출발 점수가 <b>${f2(S.sim.lastStart)} → ${f2(st)}</b>점으로 반영되었습니다.`; else startNotice="";
+    S.sim.lastStart=st; save(); renderSimRows(); renderSimResult(); }
+  if(tab==="plan") renderPlan();
+  if(tab==="rules") renderRules();
+  renderDock();
+}
+
+/* ------------------------------------------------------------------
+   이벤트
+------------------------------------------------------------------ */
+function init(){
+  load();
+  const sel=$("#baseYearSel");
+  for(let y=2026;y<=2032;y++){ const o=document.createElement("option"); o.value=y; o.textContent=`${y}.2.${isLeap(y)?29:28}. (${y}년 자격연수)`; sel.appendChild(o); }
+  bindInputs(); toggleQ(); renderJobRows(); renderContestRows(); renderBundles();
+
+  document.addEventListener("input", e=>{
+    const el=e.target;
+    if(el.dataset.p){ onInput(e); return; }
+    if(el.dataset.job!=null){ const j=S.train.jobs[+el.dataset.job]; j[el.dataset.jk]=el.value; save(); if(el.dataset.jk==="s") renderJobRows(); else { const t=$("#jobRk"+el.dataset.job); if(t) t.innerHTML=jobRankText(j); } renderCalcOut(); renderDock(); return; }
+    if(el.id==="lkN"||el.id==="lkR"){ renderLookup(); return; }
+    if(el.dataset.gcheck){ S.guide.checks=S.guide.checks||{}; S.guide.checks[el.dataset.gcheck]=el.checked; save(); renderGuide(); return; }
+    if(el.dataset.ct!=null){ S.research.contests[+el.dataset.ct][el.dataset.ck]=el.value; save(); renderContestRows(); renderCalcOut(); renderDock(); return; }
+    if(el.dataset.it!=null){
+      const it=S.items.find(x=>x.id===+el.dataset.it); if(!it) return;
+      it[el.dataset.ik]= el.type==="checkbox"? el.checked : el.value; save();
+      if((el.tagName==="SELECT" && el.dataset.ik==="region") || el.dataset.ik==="current") renderBundles();
+      renderCalcOut(); renderDock(); return; }
+    if(el.dataset.r!=null){
+      const r=S.sim.plans[S.sim.active][+el.dataset.r]; const k=el.dataset.rk;
+      r[k] = el.type==="checkbox"? el.checked : (["classes","credits","leave","guide","coach"].includes(k)? el.value : el.value);
+      save();
+      if(el.dataset.rk==="work"||el.dataset.rk==="region"){ $("#yearDetail").innerHTML=""; }
+      renderSimRows(); renderSimResult(); return;
+    }
+    if(el.id==="incRange"){ S.sim.inc=+el.value; $("#incVal").textContent=f2(S.sim.inc); save(); renderSimRows(); renderSimResult(); return; }
+    if(el.id==="ruleQ"){ renderRules(); return; }
+  });
+
+  document.addEventListener("click", e=>{
+    const mp=$("#menuPop"); if(!mp.hidden && !e.target.closest(".tools")) mp.hidden=true;
+    const tp=$("#termPop"); const tmEl=e.target.closest(".term");
+    if(tmEl){ showTerm(tmEl); return; }
+    if(!tp.hidden && !e.target.closest("#termPop")) tp.hidden=true;
+    const t=e.target.closest("button"); if(!t) return;
+    if(t.dataset.tab){ show(t.dataset.tab,true); return; }
+    if(t.dataset.go){ if(t.dataset.rule){ openRule=t.dataset.rule; $("#ruleQ").value=""; } show(t.dataset.go,true); return; }
+    if(t.dataset.plan){ S.sim.active=t.dataset.plan; S.sim.sel=null; save(); renderSimRows(); renderSimResult(); return; }
+    if(t.dataset.gc!=null){
+      const i=+t.dataset.gc, k=t.dataset.gk, r=S.sim.plans[S.sim.active][i], row=GRID_ROWS.find(x=>x.k===k);
+      if(row.type==="bool") r[k]=!r[k];
+      else if(row.type==="cycle") r[k]=cycleNext(row, r[k]);
+      else { S.sim.sel=i; save(); $("#yearDetail").innerHTML=""; renderSimRows(); const f=$(`#yearDetail [data-rk="${k}"]`); if(f){ f.scrollIntoView({block:"center",behavior:"smooth"}); setTimeout(()=>{ try{f.focus({preventScroll:true}); f.select&&f.select();}catch(e){} },300);} return; }
+      if(S.sim.sel===i) $("#yearDetail").innerHTML="";
+      save(); renderSimRows(); renderSimResult(); return; }
+    if(t.dataset.grow){
+      const k=t.dataset.grow, row=GRID_ROWS.find(x=>x.k===k), plan=S.sim.plans[S.sim.active];
+      if(row.type==="bool"){ const allOn=plan.every(r=>r[k]); plan.forEach(r=>r[k]=!allOn); }
+      else if(row.type==="cycle"){ const nv=cycleNext(row, plan[0][k]); plan.forEach(r=>r[k]=nv); }
+      else { const v=prompt(`${row.label}: 모든 학년도에 같은 값을 넣습니다.`, String(plan[0][k]??"")); if(v===null) return; plan.forEach(r=>r[k]=v); }
+      $("#yearDetail").innerHTML=""; save(); renderSimRows(); renderSimResult(); return; }
+    if(t.dataset.ysel!=null){ const i=+t.dataset.ysel; S.sim.sel = S.sim.sel===i? null : i; $("#yearDetail").innerHTML=""; save(); renderSimRows(); if(S.sim.sel!=null) $("#yearDetail").scrollIntoView({block:"nearest",behavior:"smooth"}); return; }
+    if(t.dataset.yclose){ S.sim.sel=null; save(); renderSimRows(); return; }
+    if(t.dataset.ctdel!=null){ const snap=snapshot(); S.research.contests.splice(+t.dataset.ctdel,1); save(); renderContestRows(); renderCalcOut(); renderDock(); toast("연구대회 입상을 삭제했습니다.", ()=>restore(snap)); return; }
+    if(t.dataset.additem){
+      const type=t.dataset.additem; const it={id:++S.seq, type};
+      if(type==="pts"){ it.bundle=t.dataset.bundle; it.cat=(BUNDLES.find(b=>b.k===it.bundle)||BUNDLES[0]).cats[0]; it.pts=""; }
+      else if(type==="school"){ it.region="general"; it.classes=""; it.start=""; it.end=""; it.current=false;
+        const prev=S.items.filter(x=>x.type==="school" && (x.end||x.current)).map(x=>x.current? null : parseYM(x.end,true)).filter(Boolean)
+          .sort((a,b)=>(b.y*100+b.m)-(a.y*100+a.m))[0];
+        if(prev){ const d=new Date(prev.y, prev.m, 1); it.start=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); } }
+      else if(type==="sports"){ it.medal="gold"; it.coach=1; }
+      else if(ITYPES[type].kind==="count"){ it.count=""; }
+      else { it.mode="date"; it.start=""; it.end=""; it.months=""; }
+      S.items.push(it); S.bonusNone=false; save(); bindInputs(); renderBundles(); renderCalcOut(); renderDock();
+      const box=$(`[data-itemid="${it.id}"]`); if(box){ box.scrollIntoView({block:"center",behavior:"smooth"}); box.classList.add("flash"); const f=box.querySelector("input,select"); if(f) setTimeout(()=>{ try{f.focus({preventScroll:true});}catch(e){} },350); }
+      return; }
+    if(t.dataset.itdel){ const snap=snapshot(); const gone=S.items.find(x=>x.id===+t.dataset.itdel); S.items=S.items.filter(x=>x.id!==+t.dataset.itdel); save(); renderBundles(); renderCalcOut(); renderDock(); toast(`'${gone?ITYPES[gone.type].label:"항목"}'을 삭제했습니다.`, ()=>restore(snap)); return; }
+    if(t.dataset.itmode){ const it=S.items.find(x=>x.id===+t.dataset.itmode); if(it){ it.mode=t.dataset.m; save(); renderBundles(); renderCalcOut(); renderDock(); } return; }
+    if(t.dataset.persona){ S.persona=t.dataset.persona; save(); if(S.persona==="new") show("guide",true); else show("calc",true); return; }
+    if(t.dataset.gstyle){ S.guide.style=t.dataset.gstyle; save(); renderGuide(); return; }
+    if(t.dataset.scroll){ const el=document.getElementById(t.dataset.scroll); if(el){ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); } return; }
+    if(t.dataset.mode){ S.mode=t.dataset.mode; save(); if(S.tab!=="calc") show("calc",true); else { renderCalcOut(); renderDock(); } window.scrollTo({top:0}); toast(S.mode==="quick"?"빠른 입력으로 바꿨습니다. 자세히 입력한 내용은 그대로 보관됩니다.":"자세히 입력으로 바꿨습니다. 빠른 입력 내용은 그대로 보관됩니다."); return; }
+    if(t.dataset.qbm){ S.quick.bmode=t.dataset.qbm; save(); renderCalcOut(); renderDock(); return; }
+    if(t.dataset.stepd){ const box=t.closest(".stepper"); const inp=box&&box.querySelector("input"); if(inp){ const mn=inp.min!==""?+inp.min:-Infinity, mx=inp.max!==""?+inp.max:Infinity;
+        let v=Math.round(n(inp.value))+(+t.dataset.stepd); if(inp.value==="" && +t.dataset.stepd>0 && mn>0) v=mn; v=Math.min(mx,Math.max(mn,v)); inp.value=String(v); inp.dispatchEvent(new Event("input",{bubbles:true})); } return; }
+    if(t.dataset.help){ const h=$("#help-"+t.dataset.help); if(h){ h.hidden=!h.hidden; t.classList.toggle("on",!h.hidden); } return; }
+    if(t.dataset.preset){ applyPreset(t.dataset.preset); return; }
+    if(t.dataset.print){ doPrint(); return; }
+    if(t.dataset.goacc){ const id=t.dataset.goacc; const go=()=>{ const d=$("#"+id); if(d){ d.open=true; const hdrH=($("header.top")||{}).offsetHeight||100; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hdrH-8, behavior:"smooth"}); } };
+      if(S.tab!=="calc"){ show("calc",true); setTimeout(go,60); } else go(); return; }
+    switch(t.id){
+      case "logoBtn": show("home",true); break;
+      case "moreBtn": { const m=$("#menuPop"); m.hidden=!m.hidden; t.setAttribute("aria-expanded",!m.hidden); e.stopPropagation(); break; }
+      case "resetBtn2": $("#menuPop").hidden=true; $("#resetBtn").click(); break;
+      case "printBtn": doPrint(); break;
+      case "demoBtn": case "demoBtn2": $("#menuPop").hidden=true; startDemo(); break;
+      case "demoExit": exitDemo(); break;
+      case "toastUndo": { const f=undoFn; $("#toast").hidden=true; undoFn=null; if(f) f(); break; }
+      case "addContest": S.research.contests.push({scale:"시도",grade:1,people:1}); save(); renderContestRows(); renderCalcOut(); renderDock(); break;
+      case "dockToggle": { if(S.tab==="sim"){ const o=$("#simOut"); if(o) window.scrollTo({top:o.getBoundingClientRect().top+window.scrollY-110,behavior:"smooth"}); break; } const d=$("#dock"); const o=!d.classList.contains("open"); d.classList.toggle("open",o); t.setAttribute("aria-expanded",o); renderDock(); break; }
+      case "gjSame": { const cm=careerMonths(); S.profile.gwangju=String(cm.ga); bindInputs(); save(); renderCalcOut(); break; }
+      case "addYear": { const p=S.sim.plans[S.sim.active]; p.push({...(p[p.length-1]||defRow())}); save(); renderSimRows(); renderSimResult(); break; }
+      case "delYear": { const p=S.sim.plans[S.sim.active]; if(p.length>1){ const snap=snapshot(); setTimeout(()=>toast("마지막 학년도를 삭제했습니다.", ()=>restore(snap)),0); p.pop(); if(S.sim.sel>=p.length){ S.sim.sel=null; $("#yearDetail").innerHTML=""; } save(); renderSimRows(); renderSimResult(); } break; }
+      case "copyPlan": { const o=S.sim.active==="A"?"B":"A"; if(confirm(`계획 ${S.sim.active}의 내용을 계획 ${o}에 덮어쓸까요?`)){ S.sim.plans[o]=JSON.parse(JSON.stringify(S.sim.plans[S.sim.active])); save(); renderSimResult(); } break; }
+      case "resetBtn": if(confirm("입력한 내용을 모두 지울까요? 지운 직후에는 '되돌리기'로 복구할 수 있습니다.")){ const snap=snapshot(); setTimeout(()=>toast("입력을 모두 지웠습니다.", ()=>restore(snap)),0); const tab=S.tab; S=defState(); S.tab=tab; save(); bindInputs(); toggleQ(); renderJobRows(); renderContestRows(); renderBundles(); renderTab(tab); } break;
+      case "saveBtn": {
+        const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+        const a=document.createElement("a"); a.href=URL.createObjectURL(blob); const d=new Date();
+        a.download=`교감자격연수_내자료_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}.json`;
+        document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500); $("#menuPop").hidden=true; break; }
+      case "loadBtn": $("#menuPop").hidden=true; $("#fileIn").click(); break;
+    }
+  });
+  $("#fileIn").addEventListener("change", e=>{
+    const f=e.target.files[0]; if(!f) return; const rd=new FileReader();
+    rd.onload=()=>{ try{ const tab=S.tab; S=fromSaved(JSON.parse(rd.result)); S.tab=tab; save(); bindInputs(); toggleQ(); renderJobRows(); renderContestRows(); renderBundles(); renderTab(tab); alert("불러왔습니다."); }catch(err){ alert("파일을 읽을 수 없습니다."); } };
+    rd.readAsText(f); e.target.value="";
+  });
+  let rz=null; let lastW=window.innerWidth;
+  window.addEventListener("resize", ()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(Math.abs(window.innerWidth-lastW)<20) return; lastW=window.innerWidth; if(S.tab==="cut") renderCut(); if(S.tab==="sim") renderSimResult(); },200); });
+  updateDemoBar();
+  try{ if(localStorage.getItem(KEY)) $("#saveState").textContent="✓ 자동 저장"; }catch(e){}
+  document.addEventListener("keydown", e=>{ if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("term")){ e.preventDefault(); showTerm(e.target); } if(e.key==="Escape"){ $("#termPop").hidden=true; } });
+  window.addEventListener("scroll", ()=>{ const tp=$("#termPop"); if(tp && !tp.hidden && Date.now()-termShownAt>400) tp.hidden=true; }, {passive:true});
+  // 용어 사전
+  RULES.push({t:"용어 사전 (가나다순)", id:"gloss", h:`<dl class="gloss">${Object.keys(GLOSS).sort((a,b)=>a.localeCompare(b,"ko")).map(k=>`<dt>${esc(k)}</dt><dd>${esc(GLOSS[k])}</dd>`).join("")}</dl>`});
+  window.addEventListener("popstate", e=>{ const tab=(e.state&&e.state.tab)||"home"; show(tab,false); });
+
+  let start = "home";
+  try{ start = sessionStorage.getItem("vpTab") || "home"; }catch(e){}
+  try{ history.replaceState({tab:start}, "", location.pathname+location.search); }catch(e){}
+  show(start,false);
+  window.addEventListener("pagehide", ()=>{ try{ sessionStorage.setItem("vpTab", S.tab); }catch(e){} });
+  document.addEventListener("visibilitychange", ()=>{ try{ sessionStorage.setItem("vpTab", S.tab); }catch(e){} });
+}
+init();
+})();
+</script>
+</body>
+</html>
