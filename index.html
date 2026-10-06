@@ -242,6 +242,12 @@ table.tg tfoot td.hitc{outline:2px solid var(--good)}
 .stepper.sm .sb{flex-basis:36px;font-size:17px}
 .stepper.sm input{min-height:38px;padding:6px 4px}
 .psub{font-size:13px;font-weight:800;color:var(--ink2);margin:14px 0 2px;display:flex;gap:6px;align-items:baseline}
+details.rare{margin-top:12px;border:1px dashed var(--line2);border-radius:10px;padding:0 10px;background:#fafbfd}
+details.rare > summary{list-style:none;cursor:pointer;padding:10px 0;font-weight:700;font-size:14px;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+details.rare > summary::-webkit-details-marker{display:none}
+details.rare > summary::before{content:"＋";color:var(--pri);font-weight:800}
+details.rare[open] > summary::before{content:"－"}
+details.rare[open]{padding-bottom:10px}
 /* ---- 입문 ---- */
 .persona{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:12px 0;box-shadow:var(--sh)}
 .persona-q{font-weight:800;font-size:16px;margin-bottom:10px}
@@ -666,7 +672,13 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
         <div class="psub">점수로 넣는 항목</div>
         <div class="prow"><div class="ph"><b>학교 근무 경력</b><span class="rate">연도·학교마다 달라 점수로</span><span class="pv num" id="pv-region"></span></div><div class="pin"><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.p.region" placeholder="평정표 점수 예: 0.648"></div><label class="chk mini" style="margin-top:6px"><input type="checkbox" data-p="quick.p.regionFull">이미 1.0 다 채웠어요</label></div>
         <div class="prow"><div class="ph"><b>전국소년체전 지도</b><span class="rate">금 0.1 · 은 0.05 · 동 0.025</span><span class="pv num" id="pv-sports"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.gold" placeholder="0" aria-label="금"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>금</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.silver" placeholder="0" aria-label="은"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>은</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.bronze" placeholder="0" aria-label="동"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>동</span></div></div><p class="hint" style="margin:4px 0 0">1인 지도 기준. 공동 지도는 '점수로 입력'을 쓰세요.</p></div>
-        <div class="prow"><div class="ph"><b>기타(재외국민 등)</b><span class="rate">점수</span><span class="pv num" id="pv-etc"></span></div><div class="pin"><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.p.etc" placeholder="평정점"></div></div>
+        <details class="rare" id="qRare"><summary>드문 항목 더 보기 <span class="rate">재외국민·한국어학급·교육실습생 지도 등</span><span class="pv num" id="pv-rare"></span></summary>
+          <div class="prow"><div class="ph"><b>재외국민교육기관 파견</b><span class="rate">1년 0.18 · 상한 0.5</span><span class="pv num" id="pv-ov"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.ovY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.ovM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+          <div class="prow"><div class="ph"><b>한국어학급 운영학교</b><span class="rate">1년 0.036 · 연구학교 묶음</span><span class="pv num" id="pv-ko"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.koY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.koM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+          <div class="prow"><div class="ph"><b>교육실습생 지도</b><span class="rate">인정 1개월 0.012 · 연구학교 묶음</span><span class="pv num" id="pv-guide"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="120" inputmode="numeric" data-p="quick.p.guideN" placeholder="0" aria-label="인정 개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>인정 개월</span></div></div></div>
+          <div class="prow"><div class="ph"><b>특수학교·특수학급 담당(2002.12.31.까지)</b><span class="rate">점수 · 상한 1.0</span><span class="pv num" id="pv-spOld"></span></div><div class="pin"><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.p.spOld" placeholder="평정표 점수"></div></div>
+          <p class="hint" style="margin:8px 0 0">도서·벽지 근무와 한센병 환자 자녀 학급 담당(1997년 이전 경력)은 '학교 근무 경력' 점수에 포함해 넣으세요(같은 묶음 1.0). 보직 추가 가산점 나목은 2028.3.1.부터 생기는 항목이라 지금은 0점입니다.</p>
+        </details>
         <div id="qWarn"></div>
       </div>
       <div id="qBundleIn">
@@ -678,9 +690,11 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
           <label class="f"><span>연수이수 실적 학점 <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.credits" placeholder="예: 0.8"></label>
           <label class="f"><span>전국소년체전 지도 <span class="rate">≤0.55</span></span><input type="number" min="0" max="0.55" step="0.001" inputmode="decimal" data-p="quick.b.sports" placeholder=""></label>
           <label class="f"><span>보직교사 추가 가산점 <span class="rate">≤0.5</span></span><input type="number" min="0" max="0.5" step="0.001" inputmode="decimal" data-p="quick.b.addA" placeholder=""></label>
-          <label class="f"><span>기타(재외국민 등) <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.etc" placeholder=""></label>
+          <label class="f"><span>재외국민교육기관 파견 <span class="rate">≤0.5</span></span><input type="number" min="0" max="0.5" step="0.001" inputmode="decimal" data-p="quick.b.overseas" placeholder=""></label>
+          <label class="f"><span>특수학교·학급(2002년 이전) <span class="rate">≤1</span></span><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.b.specialOld" placeholder=""></label>
+          <label class="f"><span>보직 추가 나목(2028.3.1.~) <span class="rate">≤0.4</span></span><input type="number" min="0" max="0.4" step="0.001" inputmode="decimal" data-p="quick.b.addB" placeholder=""></label>
         </div>
-        <p class="hint">보직+전문직은 학폭과 합쳐 2.0, 소년체전은 보직 추가와 합쳐 0.6까지만 인정되어 자동으로 잘립니다.</p>
+        <p class="hint">보직+전문직은 학폭과 합쳐 2.0, 소년체전은 보직 추가와 합쳐 0.6까지만 인정되어 자동으로 잘립니다. 한국어학급·교육실습생 지도 점수는 '연구학교·교육실습·한국어학급' 칸에 합쳐 넣고, 도서·벽지·한센병(1997년 이전)은 '학교 근무' 칸에 합쳐 넣으세요.</p>
       </div>
       <div id="qTotalIn" class="hide">
         <label class="f"><span>가산점 합계(평정표)</span><input type="number" min="0" max="15" step="0.001" inputmode="decimal" data-p="quick.bonusTotal" placeholder="예: 4.134"></label>
@@ -929,8 +943,8 @@ function defState(){
     mode:"quick", persona:null,
     guide:{hireYear:"", leave:"", q1:"95", res:"3", style:"steady", gwangju:true, checks:{}},
     quick:{eligAll:false, careerFull:false, careerY:"", careerM:"", trainFull:false, trainPts:"", bmode:"period",
-           p:{bojikY:"",bojikM:"",jeonY:"",jeonM:"",svN:"",rsMoeY:"",rsMoeM:"",rsEduY:"",rsEduM:"",prY:"",prM:"",cr6:"",cr4:"",crFull:false,addAY:"",addAM:"",region:"",regionFull:false,gold:"",silver:"",bronze:"",etc:""},
-           b:{bojik:"",sv:"",region:"",research:"",credits:"",sports:"",addA:"",etc:""}, bonusTotal:"", curRegion:"general", curClasses:""},
+           p:{bojikY:"",bojikM:"",jeonY:"",jeonM:"",svN:"",rsMoeY:"",rsMoeM:"",rsEduY:"",rsEduM:"",prY:"",prM:"",cr6:"",cr4:"",crFull:false,addAY:"",addAM:"",region:"",regionFull:false,gold:"",silver:"",bronze:"",ovY:"",ovM:"",koY:"",koM:"",guideN:"",spOld:""},
+           b:{bojik:"",sv:"",region:"",research:"",credits:"",sports:"",addA:"",overseas:"",specialOld:"",addB:""}, bonusTotal:"", curRegion:"general", curClasses:""},
     sim:{inc:0.16, active:"A", sel:null, plans:{A:defPlan(), B:defPlan()}}
   };
 }
@@ -948,6 +962,8 @@ function fromSaved(obj){
   const st = migrate(deepMerge(defState(), obj));
   if(obj && obj.quick && obj.quick.bmode===undefined && obj.quick.b && Object.values(obj.quick.b).some(v=>v!=="")) st.quick.bmode="bundle";
   if(obj && obj.quick && obj.quick.bmode==="bundle" && !obj.quick.p && !Object.values(obj.quick.b||{}).some(v=>v!=="")) st.quick.bmode="period";
+  if(st.quick.p && st.quick.p.etc){ if(!st.quick.p.spOld) st.quick.p.spOld=st.quick.p.etc; delete st.quick.p.etc; }
+  if(st.quick.b && st.quick.b.etc){ if(!st.quick.b.specialOld) st.quick.b.specialOld=st.quick.b.etc; delete st.quick.b.etc; }
   ["hire","cert1"].forEach(k=>{ const v=st.profile[k]; if(typeof v==="string" && /^\d{4}-\d{2}-\d{2}$/.test(v)) st.profile[k]=v.slice(0,7); });
   if(obj && obj.mode===undefined && ((obj.profile&&obj.profile.hire) || (obj.items&&obj.items.length) || obj.b)) st.mode="detail";
   return st;
@@ -1094,7 +1110,7 @@ const BUNDLES = [
   {k:"research", label:"연구학교·교육실습·한국어학급", cap:1, note:"합계 1.0", types:["rsMoe","rsEdu","prSchool","prGuide","korean"], cats:["rsMoe","rsEdu","prSchool","prGuide","korean"]},
   {k:"credits", label:"연수이수 실적 학점", cap:1, note:"1학점 0.02", types:["credits"], cats:["credits"]},
   {k:"sportAdd", label:"소년체전 + 보직 추가 가산점", cap:.6, note:"체전 0.55 · 보직 추가 0.5 · 합계 0.6", types:["sports","addA"], cats:["sports","addA"]},
-  {k:"etc", label:"기타", cap:null, note:"재외국민 0.5 · 보직 추가 나목 0.4 · 2002년 이전 특수 1.0", types:["overseas","addB"], cats:["overseas","addB","specialOld"]}
+  {k:"etc", label:"기타(재외국민·특수학교·보직 추가 나목)", cap:null, note:"재외국민 0.5 · 2002년 이전 특수 1.0 · 보직 추가 나목 0.4(2028~)", types:["overseas","addB"], cats:["overseas","addB","specialOld"]}
 ];
 function addMonthsD(d, k){ return new Date(d.y, d.m-1+k, d.d); }
 function D(y,m,d){ return new Date(y,m-1,d); }
@@ -1266,11 +1282,12 @@ function quickRaw(){
     raw.credits = P.crFull? 1 : (Math.max(0,n(P.cr6))*6 + Math.max(0,n(P.cr4))*4)*.02;
     raw.addA=mo("addA")*.01; raw.remote = P.regionFull? 1 : n(P.region);
     raw.sports = Math.max(0,n(P.gold))*.1 + Math.max(0,n(P.silver))*.05 + Math.max(0,n(P.bronze))*.025;
-    raw.specialOld=n(P.etc);
+    raw.overseas=mo("ov")*.015; raw.korean=mo("ko")*.003; raw.prGuide=Math.max(0,n(P.guideN))*.012; raw.specialOld=n(P.spOld);
   }
   else {
     raw.bojik=Math.min(1.75,n(b.bojik)); raw.sv=n(b.sv); raw.remote=n(b.region); raw.prGuide=n(b.research);
-    raw.credits=n(b.credits); raw.sports=n(b.sports); raw.addA=n(b.addA); raw.specialOld=n(b.etc);
+    raw.credits=n(b.credits); raw.sports=n(b.sports); raw.addA=n(b.addA);
+    raw.overseas=n(b.overseas); raw.specialOld=n(b.specialOld)+n(b.etc); raw.addB=n(b.addB);
   }
   const G=n(S.profile.gwangju), by=+S.profile.baseYear;
   raw.gwangju += Math.min(Math.max(0,(by-2026)*12), Math.max(0,G-120))*0.01;
@@ -1645,9 +1662,13 @@ function renderQuickPeriod(E){
   set("rsMoe", Math.min(1,r.rsMoe)); set("rsEdu", Math.min(1,r.rsEdu)); set("pr", Math.min(1,r.prSchool));
   set("cr", Math.min(1,r.credits), r.credits>=1?"상한 1.0":"");
   set("addA", Math.min(.5,r.addA), r.addA>.5?"상한 0.5":"");
-  set("region", Math.min(1,r.remote)); set("sports", Math.min(.55,r.sports)); set("etc", Math.min(1,r.specialOld));
+  set("region", Math.min(1,r.remote)); set("sports", Math.min(.55,r.sports));
+  set("ov", Math.min(.5,r.overseas), r.overseas>.5?"상한 0.5":""); set("ko", Math.min(1,r.korean)); set("guide", Math.min(1,r.prGuide)); set("spOld", Math.min(1,r.specialOld));
+  const rareSum = Math.min(.5,r.overseas)+r.korean+r.prGuide+Math.min(1,r.specialOld);
+  const pr=$("#pv-rare"); if(pr) pr.textContent = rareSum>0? "+"+f3(rareSum) : "";
+  if(rareSum>0){ const d=$("#qRare"); if(d && !d.dataset.auto){ d.open=true; d.dataset.auto="1"; } }
   const w=[];
-  if(r.rsMoe+r.rsEdu+r.prSchool>1) w.push("연구학교·교육실습은 합쳐서 1.0점까지만 인정되어 잘렸습니다.");
+  if(r.rsMoe+r.rsEdu+r.prSchool+r.korean+r.prGuide>1) w.push("연구학교·교육실습·한국어학급은 합쳐서 1.0점까지만 인정되어 잘렸습니다.");
   if(r.bojik+r.jeonmun+r.sv>2) w.push("보직·전문직·학교폭력 실적은 합쳐서 2.0점까지만 인정되어 잘렸습니다.");
   if(r.addA>0 && bo.g2<2-1e-6) w.push(`보직교사 추가 가산점은 보직+학폭 합계 2.0을 채운 뒤에만 인정됩니다(지금 ${f3(bo.g2)}점). 입력을 확인하세요.`);
   if(r.sports+r.addA>.6) w.push("소년체전과 보직 추가 가산점은 합쳐서 0.6점까지만 인정되어 잘렸습니다.");
