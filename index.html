@@ -80,7 +80,7 @@ p{margin:6px 0}
 /* forms */
 label.f{display:block;margin:0}
 label.f > span{display:block;font-size:13px;color:var(--ink2);font-weight:500;margin-bottom:4px}
-input[type=number],input[type=date],input[type=text],select{width:100%;font:inherit;font-size:16px;padding:9px 10px;border:1px solid var(--line2);border-radius:10px;background:#fff;color:var(--ink);min-height:42px}
+input[type=number],input[type=date],input[type=month],input[type=text],select{width:100%;font:inherit;font-size:16px;padding:9px 10px;border:1px solid var(--line2);border-radius:10px;background:#fff;color:var(--ink);min-height:42px}
 input:focus,select:focus{outline:2px solid var(--pri-l);border-color:var(--pri)}
 .chk{display:flex;align-items:center;gap:8px;font-size:14px;padding:8px 10px;border:1px solid var(--line2);border-radius:10px;background:#fff;cursor:pointer;min-height:42px}
 .chk input{width:18px;height:18px;accent-color:var(--pri);margin:0}
@@ -228,6 +228,20 @@ table.tg tfoot td.hitc{outline:2px solid var(--good)}
 .rng{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);margin-bottom:6px}
 .rng-b{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:8px}
 @media(max-width:380px){.ychips{grid-template-columns:repeat(4,1fr)}}
+.prow{padding:9px 0;border-bottom:1px dashed var(--line)}
+.ph{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.ph b{font-size:14px}
+.pv{margin-left:auto;color:var(--pri);font-weight:800;font-size:14px}
+.pv small{font-size:11px;color:var(--warn);font-weight:700}
+.pin{display:flex;flex-wrap:wrap;gap:8px}
+.pst{display:flex;align-items:center;gap:6px;flex:1 1 150px;min-width:0;max-width:100%}
+.pst > span{font-size:12.5px;color:var(--ink2);white-space:normal;line-height:1.3;min-width:0}
+.pin > input{flex:1 1 100%}
+.stepper.sm{flex:0 0 120px;min-width:0}
+.pst.wide{flex:1 1 100%}
+.stepper.sm .sb{flex-basis:36px;font-size:17px}
+.stepper.sm input{min-height:38px;padding:6px 4px}
+.psub{font-size:13px;font-weight:800;color:var(--ink2);margin:14px 0 2px;display:flex;gap:6px;align-items:baseline}
 /* ---- 입문 ---- */
 .persona{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:12px 0;box-shadow:var(--sh)}
 .persona-q{font-weight:800;font-size:16px;margin-bottom:10px}
@@ -636,8 +650,25 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
 
     <div class="qcard" id="qBonus">
       <div class="qhd"><b>가산점</b><span class="qv num" id="qvBonus"></span><button type="button" class="qh" data-help="bonus" aria-label="도움말">?</button></div>
-      <div class="helpbox" id="help-bonus" hidden>가산점 평정표에서 항목별 점수를 옮겨 적으세요. 묶음별로 넣으면 '보충 전략'이 어느 묶음에 여유가 있는지 알려 줍니다. 합계만 알면 아래에서 '합계만 입력'을 고르세요.</div>
-      <div class="seg" style="margin-bottom:10px"><button type="button" data-qbm="bundle">묶음별로 입력(권장)</button><button type="button" data-qbm="total">합계만 입력</button></div>
+      <div class="helpbox" id="help-bonus" hidden>점수를 몰라도 돼요. <b>기간으로 입력</b>은 보직·연구학교 등을 몇 년 몇 개월 했는지만 넣으면 점수를 계산해 줍니다. 평정표 점수를 알면 <b>점수로 입력</b>, 합계만 알면 <b>합계만 입력</b>을 고르세요. 묶음별로 들어가야 '보충 전략'이 어느 묶음에 여유가 있는지 알려 줍니다.</div>
+      <div class="seg" style="margin-bottom:10px"><button type="button" data-qbm="period">기간으로 입력(권장)</button><button type="button" data-qbm="bundle">점수로 입력</button><button type="button" data-qbm="total">합계만 입력</button></div>
+      <div id="qPeriodIn">
+        <div class="prow"><div class="ph"><b>보직교사</b><span class="rate">1년 0.252</span><span class="pv num" id="pv-bojik"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojikY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojikM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+        <div class="prow"><div class="ph"><b>교육전문직</b><span class="rate">1년 0.2016</span><span class="pv num" id="pv-jeon"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.jeonY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.jeonM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+        <div class="prow"><div class="ph"><b>학교폭력 예방·대응 실적</b><span class="rate">1회 0.1</span><span class="pv num" id="pv-sv"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.svN" placeholder="0" aria-label="회(인정받은 해)"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>회(인정받은 해)</span></div></div></div>
+        <div class="psub">연구학교·교육실습 <span class="rate">합계 1.0까지</span></div>
+        <div class="prow"><div class="ph"><b>교육부 지정 연구학교</b><span class="rate">1년 0.216</span><span class="pv num" id="pv-rsMoe"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.rsMoeY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.rsMoeM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+        <div class="prow"><div class="ph"><b>교육감 지정 연구학교</b><span class="rate">1년 0.144</span><span class="pv num" id="pv-rsEdu"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.rsEduY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.rsEduM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+        <div class="prow"><div class="ph"><b>교육실습 대용학교</b><span class="rate">1년 0.18</span><span class="pv num" id="pv-pr"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.prY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.prM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+        <div class="psub">연수이수 실적 학점 <span class="rate">1년 최대 6학점(90시간) · 상한 1.0</span></div>
+        <div class="prow"><div class="ph"><b>연수 이수 시간</b><span class="rate">90시간 이상 해 = 0.12</span><span class="pv num" id="pv-cr"></span></div><div class="pin"><div class="pst wide"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.cr6" placeholder="0" aria-label="90시간 이상 이수한 해"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>90시간 이상 이수한 해</span></div><div class="pst wide"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.cr4" placeholder="0" aria-label="60시간만 이수한 해"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>60시간만 이수한 해</span></div></div><label class="chk mini" style="margin-top:6px"><input type="checkbox" data-p="quick.p.crFull">이미 1.0 다 채웠어요</label></div>
+        <div class="prow"><div class="ph"><b>보직교사 추가 가산점</b><span class="rate">1년 0.12 · 상한 0.5</span><span class="pv num" id="pv-addA"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.addAY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.addAM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div><p class="hint" style="margin:4px 0 0">2023.3.1. 이후이면서 보직+학폭 2.0을 채운 뒤의 보직 기간만 넣으세요.</p></div>
+        <div class="psub">점수로 넣는 항목</div>
+        <div class="prow"><div class="ph"><b>학교 근무 경력</b><span class="rate">연도·학교마다 달라 점수로</span><span class="pv num" id="pv-region"></span></div><div class="pin"><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.p.region" placeholder="평정표 점수 예: 0.648"></div><label class="chk mini" style="margin-top:6px"><input type="checkbox" data-p="quick.p.regionFull">이미 1.0 다 채웠어요</label></div>
+        <div class="prow"><div class="ph"><b>전국소년체전 지도</b><span class="rate">금 0.1 · 은 0.05 · 동 0.025</span><span class="pv num" id="pv-sports"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.gold" placeholder="0" aria-label="금"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>금</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.silver" placeholder="0" aria-label="은"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>은</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.bronze" placeholder="0" aria-label="동"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>동</span></div></div><p class="hint" style="margin:4px 0 0">1인 지도 기준. 공동 지도는 '점수로 입력'을 쓰세요.</p></div>
+        <div class="prow"><div class="ph"><b>기타(재외국민 등)</b><span class="rate">점수</span><span class="pv num" id="pv-etc"></span></div><div class="pin"><input type="number" min="0" max="1" step="0.001" inputmode="decimal" data-p="quick.p.etc" placeholder="평정점"></div></div>
+        <div id="qWarn"></div>
+      </div>
       <div id="qBundleIn">
         <div class="fgrid al-end">
           <label class="f"><span>보직교사 + 교육전문직 <span class="rate">≤1.75</span></span><input type="number" min="0" max="1.75" step="0.001" inputmode="decimal" data-p="quick.b.bojik" placeholder="예: 1.386"></label>
@@ -673,8 +704,8 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
     <summary>① 경력평정 <span class="rate">70점 만점</span><span class="sv" id="svCareer"></span></summary>
     <div class="in">
       <div class="fgrid" style="margin-top:12px">
-        <label class="f full"><span>교사 최초 임용일 <button type="button" class="qh" data-help="hire" aria-label="도움말">?</button></span><input type="date" data-p="profile.hire"></label>
-        <div class="full"><div class="helpbox" id="help-hire" hidden>경력평정표 첫 줄(가장 오래된 경력)의 시작일입니다. 임용 전 군 경력이 있으면 그 기간만큼 앞당겨 넣으세요. 평정 기준일까지의 개월 수에서 '빠지는 기간'을 뺀 만큼이 '가'경력이 됩니다.</div></div>
+        <label class="f full"><span>교사 최초 임용 연·월 <button type="button" class="qh" data-help="hire" aria-label="도움말">?</button></span><input type="month" data-p="profile.hire" placeholder="2001-03"></label>
+        <div class="full"><div class="helpbox" id="help-hire" hidden>경력평정표 첫 줄(가장 오래된 경력)의 시작 연·월입니다. 대부분 3월 1일 임용이라 3월을 고르면 됩니다. 날짜(일)는 필요 없어요. 경력은 개월 단위로 계산하고, 20년 이상이면 만점이라 날짜가 결과를 바꾸지 않습니다. 임용 전 군 경력이 있으면 그 기간만큼 앞당겨 넣으세요. 평정 기준일까지의 개월 수에서 '빠지는 기간'을 뺀 만큼이 '가'경력이 됩니다.</div></div>
         <label class="f"><span>경력에서 빠지는 기간(개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.excl" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
         <label class="f"><span>'나'경력(기간제 등, 개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.na" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
       </div>
@@ -687,8 +718,8 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
   <details class="acc" open id="accElig">
     <summary>② 응시 자격 요건 <span class="sv" id="svElig"></span></summary>
     <div class="in">
-      <div class="fgrid" style="margin-top:12px">
-        <label class="f"><span>1급 정교사 자격 취득일</span><input type="date" data-p="profile.cert1"></label>
+      <div class="fgrid al-end" style="margin-top:12px">
+        <label class="f"><span>1급 정교사 자격 취득 연·월</span><input type="month" data-p="profile.cert1" placeholder="2005-03"></label>
         <label class="f"><span>한국사</span>
           <select data-p="profile.khist">
             <option value="">선택하세요</option>
@@ -697,6 +728,8 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
             <option value="course">한국사 연수 60시간 이상 이수</option>
           </select></label>
       </div>
+      <label class="chk" style="margin-top:10px"><input type="checkbox" data-p="profile.cert1ok">1정 취득 후 3년 이상 지났어요 (날짜를 몰라도 돼요)</label>
+      <p class="hint" id="cert1Hint"></p>
       <div id="eligOut" style="margin-top:10px"></div>
     </div>
   </details>
@@ -889,13 +922,14 @@ function defPlan(){ const a=[]; for(let i=0;i<6;i++) a.push(defRow()); return a;
 function defState(){
   return {
     v:1, tab:"home",
-    profile:{baseYear:2026, special:false, cert1:"", khist:"", hire:"", excl:"", na:"", gwangju:"", perf:""},
+    profile:{baseYear:2026, special:false, cert1:"", cert1ok:false, khist:"", hire:"", excl:"", na:"", gwangju:"", perf:""},
     train:{jobs:[{s:"",v:""},{s:"",v:""},{s:"",v:""}], qmode:"score", qscore:"", qgrade:""},
     research:{contests:[], master:"none", doctor:"none"},
     items:[], seq:0, bonusNone:false,
     mode:"quick", persona:null,
     guide:{hireYear:"", leave:"", q1:"95", res:"3", style:"steady", gwangju:true, checks:{}},
-    quick:{eligAll:false, careerFull:false, careerY:"", careerM:"", trainFull:false, trainPts:"", bmode:"bundle",
+    quick:{eligAll:false, careerFull:false, careerY:"", careerM:"", trainFull:false, trainPts:"", bmode:"period",
+           p:{bojikY:"",bojikM:"",jeonY:"",jeonM:"",svN:"",rsMoeY:"",rsMoeM:"",rsEduY:"",rsEduM:"",prY:"",prM:"",cr6:"",cr4:"",crFull:false,addAY:"",addAM:"",region:"",regionFull:false,gold:"",silver:"",bronze:"",etc:""},
            b:{bojik:"",sv:"",region:"",research:"",credits:"",sports:"",addA:"",etc:""}, bonusTotal:"", curRegion:"general", curClasses:""},
     sim:{inc:0.16, active:"A", sel:null, plans:{A:defPlan(), B:defPlan()}}
   };
@@ -912,6 +946,9 @@ function deepMerge(base, add){
 }
 function fromSaved(obj){
   const st = migrate(deepMerge(defState(), obj));
+  if(obj && obj.quick && obj.quick.bmode===undefined && obj.quick.b && Object.values(obj.quick.b).some(v=>v!=="")) st.quick.bmode="bundle";
+  if(obj && obj.quick && obj.quick.bmode==="bundle" && !obj.quick.p && !Object.values(obj.quick.b||{}).some(v=>v!=="")) st.quick.bmode="period";
+  ["hire","cert1"].forEach(k=>{ const v=st.profile[k]; if(typeof v==="string" && /^\d{4}-\d{2}-\d{2}$/.test(v)) st.profile[k]=v.slice(0,7); });
   if(obj && obj.mode===undefined && ((obj.profile&&obj.profile.hire) || (obj.items&&obj.items.length) || obj.b)) st.mode="detail";
   return st;
 }
@@ -1214,7 +1251,7 @@ function bonus(r){
 }
 function careerMonths(){
   const by=+S.profile.baseYear;
-  const hire=parseD(S.profile.hire), bd=parseD(baseDateStr(by));
+  const hire=parseYM(S.profile.hire,false), bd=parseD(baseDateStr(by));
   const ga = Math.max(0, monthsIncl(hire,bd) - n(S.profile.excl));
   return {ga, na:Math.max(0,n(S.profile.na))};
 }
@@ -1223,6 +1260,14 @@ function by0(){ return +S.profile.baseYear; }
 function quickRaw(){
   const q=S.quick, b=q.b, raw={}; CATS.forEach(c=>raw[c]=0);
   if(q.bmode==="total"){ raw.lump = n(q.bonusTotal); }
+  else if(q.bmode==="period"){ const P=q.p, mo=k=>Math.max(0,Math.floor(n(P[k+"Y"]))*12+Math.floor(n(P[k+"M"])));
+    raw.bojik=mo("bojik")*.021; raw.jeonmun=mo("jeon")*.0168; raw.sv=Math.max(0,n(P.svN))*.1;
+    raw.rsMoe=mo("rsMoe")*.018; raw.rsEdu=mo("rsEdu")*.012; raw.prSchool=mo("pr")*.015;
+    raw.credits = P.crFull? 1 : (Math.max(0,n(P.cr6))*6 + Math.max(0,n(P.cr4))*4)*.02;
+    raw.addA=mo("addA")*.01; raw.remote = P.regionFull? 1 : n(P.region);
+    raw.sports = Math.max(0,n(P.gold))*.1 + Math.max(0,n(P.silver))*.05 + Math.max(0,n(P.bronze))*.025;
+    raw.specialOld=n(P.etc);
+  }
   else {
     raw.bojik=Math.min(1.75,n(b.bojik)); raw.sv=n(b.sv); raw.remote=n(b.region); raw.prGuide=n(b.research);
     raw.credits=n(b.credits); raw.sports=n(b.sports); raw.addA=n(b.addA); raw.specialOld=n(b.etc);
@@ -1468,7 +1513,7 @@ function nextSchoolStart(it){
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
 }
 function chipRange(it){
-  const by=+S.profile.baseYear, hd=parseD(S.profile.hire);
+  const by=+S.profile.baseYear, hd=parseYM(S.profile.hire,false);
   let y0 = isQuick()||!hd? by-25 : (hd.m>=3? hd.y : hd.y-1);
   const sel=Object.keys(it.years||{}).filter(y=>it.years[y]).map(Number);
   if(sel.length) y0=Math.min(y0, ...sel);
@@ -1559,7 +1604,7 @@ function refreshBonus(){
 }
 
 /* ---- 입력 완성도 ---- */
-function quickBonusFilled(){ const q=S.quick; return q.bmode==="total"? q.bonusTotal!=="" : Object.values(q.b).some(v=>v!==""); }
+function quickBonusFilled(){ const q=S.quick; return q.bmode==="total"? q.bonusTotal!=="" : q.bmode==="period"? Object.values(q.p||{}).some(v=>v!==""&&v!==false) : Object.values(q.b).some(v=>v!==""); }
 function completeness(){
   const t=S.train;
   if(isQuick()){ const q=S.quick; return [
@@ -1569,8 +1614,8 @@ function completeness(){
     {k:"가산점", ok:quickBonusFilled() || !!S.bonusNone, acc:"qBonus"}
   ]; }
   return [
-    {k:"경력(임용일)", ok:!!S.profile.hire, acc:"accCareer"},
-    {k:"응시 요건(1정·한국사)", ok:!!S.profile.cert1 && S.profile.khist!=="", acc:"accElig"},
+    {k:"경력(임용 연·월)", ok:!!S.profile.hire, acc:"accCareer"},
+    {k:"응시 요건(1정·한국사)", ok:(!!S.profile.cert1 || !!S.profile.cert1ok) && S.profile.khist!=="", acc:"accElig"},
     {k:"직무연수 3회", ok:t.jobs.every(j=>j.s!==""), acc:"accTrain"},
     {k:"1정 자격연수 성적", ok: t.qmode==="grade"? t.qgrade!=="" : t.qscore!=="", acc:"accTrain"},
     {k:"가산점", ok:S.items.length>0 || !!S.bonusNone, acc:"accBonus"}
@@ -1591,6 +1636,23 @@ function gaugeHtml(label, v, cap, note){
    <div class="track"><div class="fill" style="width:${pct}%"></div></div>
    <div class="note">${full?"✔ 상한 도달 — 이 묶음은 더 쌓아도 점수가 오르지 않습니다.":"남은 여유 "+f3(cap-v)+"점"}${note?" · "+esc(note):""}</div></div>`;
 }
+function renderQuickPeriod(E){
+  const r=E.raw, bo=E.bo, P=S.quick.p;
+  const set=(k,v,note)=>{ const el=$("#pv-"+k); if(el) el.innerHTML = v>0? `+${f3(v)}${note?` <small>${note}</small>`:""}` : ""; };
+  set("bojik", Math.min(1.75,r.bojik), r.bojik+r.jeonmun>1.75?"상한 1.75":"");
+  set("jeon", Math.min(1,r.jeonmun));
+  set("sv", Math.min(1,r.sv), r.sv>1?"상한 1.0":"");
+  set("rsMoe", Math.min(1,r.rsMoe)); set("rsEdu", Math.min(1,r.rsEdu)); set("pr", Math.min(1,r.prSchool));
+  set("cr", Math.min(1,r.credits), r.credits>=1?"상한 1.0":"");
+  set("addA", Math.min(.5,r.addA), r.addA>.5?"상한 0.5":"");
+  set("region", Math.min(1,r.remote)); set("sports", Math.min(.55,r.sports)); set("etc", Math.min(1,r.specialOld));
+  const w=[];
+  if(r.rsMoe+r.rsEdu+r.prSchool>1) w.push("연구학교·교육실습은 합쳐서 1.0점까지만 인정되어 잘렸습니다.");
+  if(r.bojik+r.jeonmun+r.sv>2) w.push("보직·전문직·학교폭력 실적은 합쳐서 2.0점까지만 인정되어 잘렸습니다.");
+  if(r.addA>0 && bo.g2<2-1e-6) w.push(`보직교사 추가 가산점은 보직+학폭 합계 2.0을 채운 뒤에만 인정됩니다(지금 ${f3(bo.g2)}점). 입력을 확인하세요.`);
+  if(r.sports+r.addA>.6) w.push("소년체전과 보직 추가 가산점은 합쳐서 0.6점까지만 인정되어 잘렸습니다.");
+  $("#qWarn").innerHTML = w.map(x=>`<div class="callout warn small" style="margin:8px 0 0">${x}</div>`).join("");
+}
 function applyModeUI(){
   const q=isQuick(), Q=S.quick;
   $("#quickWrap").classList.toggle("hide", !q);
@@ -1601,7 +1663,8 @@ function applyModeUI(){
   const ap=q1Applies(by0());
   $("#qTrainFullLbl").textContent = ap? "만점(30점)" : "만점(21점 · 1정 제외)";
   const qn=$("#q1Note"); if(qn) qn.innerHTML = ap? "" : `<div class="callout warn small">평정 기준일이 ${by0()}년이라 1정 자격연수 성적은 <b>0점</b>으로 계산합니다(2030년 평정부터 제외 예정).</div>`;
-  $("#qBundleIn").classList.toggle("hide", Q.bmode==="total");
+  $("#qBundleIn").classList.toggle("hide", Q.bmode!=="bundle");
+  $("#qPeriodIn").classList.toggle("hide", Q.bmode!=="period");
   $("#qTotalIn").classList.toggle("hide", Q.bmode!=="total");
   $$("[data-qbm]").forEach(b=>b.classList.toggle("on", b.dataset.qbm===Q.bmode));
 }
@@ -1614,6 +1677,7 @@ function renderCalcOut(){
     $("#qvCareer").textContent = (Q.careerFull||Q.careerY!=="")? f3(E.car.total)+"점" : "";
     $("#qvTrain").textContent = (Q.trainFull||Q.trainPts!=="")? f3(E.tr.total)+"점" : "";
     $("#qvBonus").textContent = (quickBonusFilled()||S.bonusNone)? f3(E.bo.total)+"점" : "";
+    if(Q.bmode==="period") renderQuickPeriod(E);
     $$("#quickWrap .qcard").forEach(c=>{ const it=completeness().find(x=>x.acc===c.id); c.classList.toggle("done", !!(it&&it.ok)); });
   }
   // 자격
@@ -1659,12 +1723,15 @@ function renderCalcOut(){
 }
 function eligibility(E){
   if(isQuick()) return {ok:!!S.quick.eligAll, html:""};
-  const by=+S.profile.baseYear; const bd=parseD(baseDateStr(by)); const c1=parseD(S.profile.cert1);
+  const by=+S.profile.baseYear; const bd=parseD(baseDateStr(by)); const c1=parseYM(S.profile.cert1,false);
   const items=[];
   let ok=true;
-  if(c1){ const mo = monthsIncl(c1,bd); const pass = mo>=36; ok=ok&&pass;
+  const hint=document.getElementById("cert1Hint");
+  if(hint) hint.innerHTML = `연·월만 넣으면 돼요(그 달 1일 취득으로 계산). <b>${by-3}년 3월까지</b> 취득했으면 ${by}년 평정에서 충족합니다.`;
+  if(S.profile.cert1ok){ items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill good">✔ 충족(본인 확인)</span></div>`); }
+  else if(c1){ const mo = monthsIncl(c1,bd); const pass = mo>=36; ok=ok&&pass;
     items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill ${pass?"good":"bad"}">${pass?"✔ 충족":"✖ 미충족"} · ${Math.floor(mo/12)}년 ${mo%12}개월</span></div>`);
-  } else { ok=false; items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill">취득일 입력</span></div>`); }
+  } else { ok=false; items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill">취득 연·월 입력 또는 체크</span></div>`); }
   const kh = S.profile.khist==="exam"||S.profile.khist==="course"; ok=ok&&kh;
   items.push(`<div class="rowline"><span>한국사능력검정 3급 이상 또는 한국사 연수 60시간</span><span class="pill ${S.profile.khist===""?"":kh?"good":"bad"}">${S.profile.khist===""?"선택 필요":kh?"✔ 충족":"✖ 필요"}</span></div>`);
   items.push(`<div class="rowline"><span>현직 공립 초등학교 교사(${by}.2.말 기준)</span><span class="pill">본인 확인</span></div>`);
