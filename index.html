@@ -488,6 +488,22 @@ input[type=date]{min-width:0;max-width:100%;-webkit-appearance:none;appearance:n
 .mbar.full i{background:var(--good)}
 @media(max-width:380px){.drow{grid-template-columns:minmax(0,1fr) 60px 86px}}
 footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
+footer .srcs{text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px 16px 6px;margin:0 0 16px;font-size:12.5px;line-height:1.5;color:var(--ink2)}
+footer .srcs summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink);padding:2px 0 8px;user-select:none}
+footer .srcs summary::-webkit-details-marker{display:none}
+footer .srcs summary::after{content:"";width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-3px 0 0 auto;transition:transform .15s}
+footer .srcs[open] summary::after{transform:rotate(-135deg);margin-top:3px}
+footer .srcs .srcn{font-weight:500;color:var(--muted);font-size:12px}
+footer .srcs:not([open]){padding-bottom:8px}
+footer .srcg{display:grid;grid-template-columns:76px 1fr;gap:4px 12px;padding:8px 0;border-top:1px solid var(--line)}
+footer .sl{font-weight:700;color:var(--muted);font-size:12px;padding-top:1px}
+footer .srcg ul{list-style:none;margin:0;padding:0}
+footer .srcg li{margin:0 0 6px;overflow-wrap:anywhere}
+footer .srcg li em{font-style:normal;color:var(--muted);font-size:12px;white-space:nowrap}
+footer .srcg li em::before{content:"— "}
+@media (max-width:520px){footer .srcg{grid-template-columns:1fr;gap:4px}footer .srcg li em{display:block;white-space:normal}footer .srcg li em::before{content:""}}
+footer .fnote{margin:0 0 4px}
+footer .fby{margin:0;font-weight:600;color:var(--ink2)}
 .hide{display:none!important}
 @media(max-width:420px){
   h1{font-size:21px}
@@ -922,7 +938,28 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px 0 8px}
   <div id="rules"></div>
 </section>
 
-<footer style="padding-bottom:44px">구(舊) 광주광역시교육청 초등 승진 규정 기준 · 개략 추정용 도구이며 공식 평정을 대신하지 않습니다.<br>만든이 2026 최창훈</footer>
+<footer style="padding-bottom:44px">
+  <details class="srcs">
+    <summary>출처 <span class="srcn">9건</span></summary>
+    <div class="srcg"><span class="sl">법령·지침</span><ul>
+      <li>「교육공무원 승진규정」 <em>대통령령</em></li>
+      <li>「교원 등의 연수에 관한 규정 시행규칙」 개정안 입법예고 <em>교육부 · 2026.9.11.</em></li>
+      <li>교원 연수성적 분포 조견표 <em>교육부 교원양성연수과-945</em></li>
+    </ul></div>
+    <div class="srcg"><span class="sl">교육청 자료</span><ul>
+      <li>「2026 초등 교육공무원 인사실무」 제10절 승진 <em>광주광역시교육청</em></li>
+      <li>승진규정 제41조 가산점 평정기준 14차 개정 <em>광주광역시교육청 · 2025.8.25.</em></li>
+      <li>「2025년·2026년 초등 교감 자격연수 대상자 선발을 위한 서류 점수 분포」 안내 <em>광주광역시교육청</em></li>
+      <li>유초등교육지원과 업무분장 <em>광주광역시서부교육지원청 · 2026.9.1.</em></li>
+    </ul></div>
+    <div class="srcg"><span class="sl">언론 보도</span><ul>
+      <li>「1정 자격연수 점수 2030년부터 승진 반영 제외…교사들 "경과조치 필요"」 <em>에듀프레스 · 2026.10.2.</em></li>
+      <li>「1정 자격연수 5월부터 절대평가로 전환」 <em>한국교육신문 · 2020.4.23.</em></li>
+    </ul></div>
+  </details>
+  <p class="fnote">구(舊) 광주광역시교육청 초등 승진 규정 기준 · 개략 추정용 도구이며 공식 평정을 대신하지 않습니다.</p>
+  <p class="fby">만든이 2026 최창훈</p>
+</footer>
 </main>
 
 <div class="toast" id="toast" role="status" hidden><span id="toastMsg"></span><button type="button" id="toastUndo">되돌리기</button></div>
