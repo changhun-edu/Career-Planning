@@ -1207,7 +1207,9 @@ function migrate(st){
   return st;
 }
 let saveT=null;
-function save(){ clearTimeout(saveT); saveT=setTimeout(()=>{ const el=document.getElementById("saveState");
+function cleanURL(){ return location.pathname+location.search; }
+function saveNow(){ if(!saveT) return; clearTimeout(saveT); saveT=null; try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function save(){ clearTimeout(saveT); saveT=setTimeout(()=>{ saveT=null; const el=document.getElementById("saveState");
   try{ localStorage.setItem(KEY, JSON.stringify(S)); if(el){ const d=new Date(); el.textContent="✓ 저장됨 "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); el.classList.remove("err"); } }
   catch(e){ if(el){ el.textContent="저장 안 됨"; el.classList.add("err"); el.title="브라우저 설정 때문에 이 기기에 저장되지 않습니다. 메뉴의 '파일로 저장'을 쓰세요."; } } },150); }
 
@@ -2853,7 +2855,7 @@ function show(tab, push){
   $$("#tabs button").forEach(b=>b.classList.toggle("on", b.dataset.tab===tab || b.dataset.also===tab));
   $$(".libsw button").forEach(b=>b.classList.toggle("on", b.dataset.tab===tab));
   const btn=$(`#tabs button[data-tab="${tab}"]`); if(btn && btn.scrollIntoView) btn.scrollIntoView({block:"nearest",inline:"center"});
-  if(push){ try{ history.pushState({tab}, "", location.pathname+location.search); }catch(e){} }
+  if(push){ try{ history.pushState({tab}, "", cleanURL()); }catch(e){} }
   window.scrollTo(0,0);
   renderTab(tab);
 }
@@ -3012,24 +3014,52 @@ function init(){
   window.addEventListener("scroll", ()=>{ const tp=$("#termPop"); if(tp && !tp.hidden && Date.now()-termShownAt>400) tp.hidden=true; }, {passive:true});
   // 용어 사전
   RULES.push({t:"용어 사전 (가나다순)", id:"gloss", h:`<dl class="gloss">${Object.keys(GLOSS).sort((a,b)=>a.localeCompare(b,"ko")).map(k=>`<dt>${esc(k)}</dt><dd>${esc(GLOSS[k])}</dd>`).join("")}</dl>`});
-  window.addEventListener("popstate", e=>{ if(!$("#licWrap").hidden){ licHide(); if(e.state&&e.state.tab===S.tab) return; } const tab=(e.state&&e.state.tab)||"home"; show(tab,false); });
+  // 뒤로가기: 탭 이동 기록을 따라가고, 맨 처음(보호 기록)에 닿으면 사이트를 떠나지 않고 홈에 머묾
+  window.addEventListener("popstate", e=>{
+    const st=e.state||{};
+    $("#menuPop").hidden=true; $("#termPop").hidden=true;
+    if(!$("#licWrap").hidden){ licHide(); if(st.tab===S.tab && !st.guard) return; }
+    if(st.guard || !st.tab){
+      try{ history.pushState({tab:"home"}, "", cleanURL()); }catch(err){}
+      const was=S.tab; show("home",false);
+      if(was==="home") toast("첫 화면입니다. 사이트를 닫으려면 브라우저 탭을 닫아 주세요.");
+      return;
+    }
+    show(st.tab,false);
+  });
   // 오픈소스 라이선스 팝업 (뒤로가기로 닫힘)
   let licLast=null;
   function licHide(){ $("#licWrap").hidden=true; document.body.style.overflow=""; if(licLast) licLast.focus(); }
   function licOpen(){ licLast=document.activeElement; $("#licWrap").hidden=false; document.body.style.overflow="hidden"; $("#licWrap .licin").scrollTop=0; $("#licClose").focus();
-    try{ history.pushState({tab:S.tab, lic:1}, "", location.pathname+location.search); }catch(e){} }
+    try{ history.pushState({tab:S.tab, lic:1}, "", cleanURL()); }catch(e){} }
   function licCloseReq(){ if(history.state&&history.state.lic) history.back(); else licHide(); }
   $("#licBtn").addEventListener("click", licOpen);
   $("#licClose").addEventListener("click", licCloseReq);
   $("#licWrap").addEventListener("click", e=>{ if(e.target.id==="licWrap") licCloseReq(); });
   document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !$("#licWrap").hidden) licCloseReq(); });
 
-  let start = "home";
-  try{ start = sessionStorage.getItem("vpTab") || "home"; }catch(e){}
-  try{ history.replaceState({tab:start}, "", location.pathname+location.search); }catch(e){}
+  // 시작: 새로고침이면 보던 탭·스크롤 위치를 그대로, 처음이면 홈(또는 직전 탭). URL에는 해시를 남기지 않음
+  try{ if("scrollRestoration" in history) history.scrollRestoration="manual"; }catch(e){}
+  const hs = history.state||{};
+  let start = "home", armed=false, sy=0;
+  try{ start = sessionStorage.getItem("vpTab") || "home"; armed = sessionStorage.getItem("vpArmed")==="1"; sy = +sessionStorage.getItem("vpScroll")||0; }catch(e){}
+  if(hs.tab && !hs.guard){ start = hs.tab; }
+  else { armed=false; sy=0; }
+  try{ history.replaceState(hs.tab && !hs.guard ? hs : {tab:start, base:1}, "", cleanURL()); }catch(e){}
+  if(hs.guard){ try{ history.pushState({tab:start}, "", cleanURL()); armed=true; }catch(e){} }
   show(start,false);
-  window.addEventListener("pagehide", ()=>{ try{ sessionStorage.setItem("vpTab", S.tab); }catch(e){} });
-  document.addEventListener("visibilitychange", ()=>{ try{ sessionStorage.setItem("vpTab", S.tab); }catch(e){} });
+  if(sy>0) setTimeout(()=>window.scrollTo(0,sy), 80);
+  // 첫 사용자 조작 때 '보호 기록'을 깔아 둠(조작 없이 쌓은 기록은 일부 브라우저가 건너뛰기 때문)
+  function arm(){
+    if(armed) return; armed=true;
+    try{ history.replaceState({guard:1, tab:"home"}, "", cleanURL()); history.pushState({tab:S.tab}, "", cleanURL()); sessionStorage.setItem("vpArmed","1"); }catch(e){}
+  }
+  ["pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev, arm, {capture:true, passive:true}));
+  function persist(){ try{ sessionStorage.setItem("vpTab", S.tab); sessionStorage.setItem("vpScroll", String(Math.round(window.scrollY))); }catch(e){} saveNow(); }
+  window.addEventListener("pagehide", persist);
+  window.addEventListener("beforeunload", persist);
+  document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") persist(); });
+  window.addEventListener("hashchange", ()=>{ if(location.hash){ try{ history.replaceState(history.state, "", cleanURL()); }catch(e){} } });
 }
 init();
 })();
