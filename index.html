@@ -623,6 +623,14 @@ footer .fby{margin:0;font-weight:600;color:var(--ink2)}
 .bundle .bh .bt b{display:flex;align-items:center;gap:8px}
 .bundle .bh .bt b::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--pri);flex:0 0 auto}
 .bundle .track{background:#e1e8f2}
+
+/* ---- 입력 방식 전환(빠른/자세히) 강조 ---- */
+.modesw{background:var(--pri-l);border:1px solid #cddcf3;padding:5px;gap:6px}
+.modesw button{position:relative;background:#fff;border:1px solid #dbe5f4;color:var(--ink2);padding:10px 6px;transition:background .15s,color .15s,box-shadow .15s}
+.modesw button:hover{border-color:#9db8e3;color:var(--pri)}
+.modesw button.on{background:var(--pri);border-color:var(--pri);color:#fff;box-shadow:0 4px 12px rgba(31,95,191,.28)}
+.modesw button.on small{color:#d6e4fa}
+.modesw button.on::before{content:"✓";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;background:#fff;color:var(--pri);font-size:11px;font-weight:900;vertical-align:2px}
 </style>
 </head>
 <body>
