@@ -507,7 +507,6 @@ table.contact tr.key td{background:var(--acc-l)}
 .retband .btn{background:var(--good);margin-left:auto} .retband .btn:hover{background:#17724a}
 .retband .linkbtn{color:#13573a;font-weight:600;font-size:13px}
 .retslot:empty{display:none}
-.doneRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
 .sugg{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--good-l);border:1px solid #bfe3cf;border-radius:10px;padding:7px 10px;margin:8px 0;font-size:13px;color:#13573a}
 .sugg:empty{display:none}
 .sugg b{font-variant-numeric:tabular-nums}
@@ -1104,7 +1103,6 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
       <div class="helpbox" id="help-excl" hidden>빠지는 기간: 경력에 산입되지 않는 휴직(육아·질병 등 0% 인정) 기간, 50% 인정 휴직은 절반. 임용 전 군 경력은 '가'경력에 포함되므로 임용일을 그만큼 앞당겨 넣거나 빠지는 기간에서 빼 주세요.</div>
       <div id="careerOut" style="margin-top:10px"></div>
       <div class="retslot" id="ret-accCareer"></div>
-      <div class="doneRow"><button type="button" class="btn" data-done="accCareer" id="done-accCareer">입력 완료 ✓</button><span class="xs muted">누르면 이 섹션이 접히고 점수가 반영됩니다</span></div>
     </div>
   </details>
 
@@ -1161,7 +1159,6 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
       <div id="resConv"></div>
       <div id="trainConv"></div>
       <div class="retslot" id="ret-accTrain"></div>
-      <div class="doneRow"><button type="button" class="btn" data-done="accTrain" id="done-accTrain">입력 완료 ✓</button><span class="xs muted">누르면 이 섹션이 접히고 점수가 반영됩니다</span></div>
     </div>
   </details>
 
@@ -1172,8 +1169,6 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
       <div class="hint" style="margin-top:10px;display:flex;align-items:center;gap:6px">해당하는 항목만 <b>+ 버튼</b>으로 추가하세요 <button type="button" class="qh" data-help="bitems" aria-label="도움말">?</button></div>
       <div class="helpbox" id="help-bitems" hidden>기간은 <b>학년도 선택</b>(기본)·년·개월 수·기간(연·월) 중 편한 방식으로 넣으면 개정 시기별로 나눠 계산합니다. 묶음마다 상한이 있어 상한에 닿으면 더 넣어도 점수가 오르지 않고, 항목 점수 옆에 '인정 ← 원점수'로 잘린 만큼을 보여 줍니다. <span class="scope c">전국 공통</span> 전국 공통 가산점 <span class="scope g">광주 선택</span> 광주 선택 가산점</div>
       <div id="bundles"></div>
-      <div class="retslot" id="ret-accBonus"></div>
-      <div class="doneRow"><button type="button" class="btn" data-done="accBonus" id="done-accBonus">입력 완료 ✓</button><span class="xs muted">누르면 이 섹션이 접히고 점수가 반영됩니다</span></div>
       <label class="chk" style="margin-top:12px"><input type="checkbox" data-p="bonusNone">해당하는 가산점이 없습니다</label>
       <div class="bundle" style="margin-top:12px">
         <div class="bh"><div class="bt"><b>광주 관내 10년 초과 근무</b><span class="num muted small">2026.3.1.~ 월 0.01 · 1.0</span></div></div>
@@ -2235,7 +2230,7 @@ function renderBundles(){
       <div class="bh"><div class="bt"><b>${esc(B.label)}</b><span class="xs muted">${esc(B.note)}</span></div><div id="bg-${B.k}">${gaugeMini(v,B.cap,bundleRaw(E,B.k))}</div></div><div id="ow-${B.k}"></div>
       ${its.map(it=>itemHtml(it,E,al)).join("")}
       ${cta}<div class="chips">${B.types.map((t,i)=>`<button type="button" class="chip${i===0?" main":""}" data-additem="${t}">+ ${esc(ITYPES[t].label)}${i===0?(its.length?" 추가":" 추가"):""}</button>`).join("")}<button type="button" class="chip ghost" data-additem="pts" data-bundle="${B.k}">+ 점수 직접</button></div>
-    </div>`;
+    </div>${B.k==="region"?`<div class="retslot" id="ret-accBonus">${S.ret==="accBonus"?retHtml(E):""}</div>`:""}`;
   }).join("");
   bonusWarn(bo);
 }
@@ -2347,7 +2342,7 @@ function retHtml(E){
 function renderCalcOut(){
   applyModeUI();
   const E = evaluateNow();
-  { const h=retHtml(E); const top=$("#retTop"); if(top) top.innerHTML=h; ["accCareer","accTrain","accBonus"].forEach(k=>{ const el=$("#ret-"+k); if(el) el.innerHTML = (k===S.ret)? h : ""; const b=$("#done-"+k); if(b) b.textContent = (k===S.ret)? "입력 완료 · 평정표 입력으로 돌아가기 →" : "입력 완료 ✓"; }); }
+  { const h=retHtml(E); const top=$("#retTop"); if(top) top.innerHTML=h; ["accCareer","accTrain","accBonus"].forEach(k=>{ const el=$("#ret-"+k); if(el) el.innerHTML = (k===S.ret)? h : ""; }); }
   const by=+S.profile.baseYear;
   const ct=$("#ctxTxt"); if(ct) ct.innerHTML = `<b>${by}.2.${isLeap(by)?29:28}. 기준</b> · ${(S.profile.special===true||S.profile.special==="true")?"특수(초등) 교사":"초등 교사"} · 구 광주 기준`;
   if(isQuick()){
@@ -3624,16 +3619,6 @@ function init(){
         const d=$("#"+R.acc); if(d){ d.open=true; setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); },60); }
         toast(msg+"을 '평정표 점수로' 입력에 넣었습니다."); } return; }
     if(t.dataset.sugg){ const R=RET[t.dataset.sugg]; if(R){ const msg=R.apply(evaluateDetail()); S.ret=null; save(); bindInputs(); renderCalcOut(); renderDock(); toast(msg+"을 넣었습니다."); } return; }
-    if(t.dataset.done){ const k=t.dataset.done, R=RET[k], D=evaluateDetail(); if(!R) return;
-      if(S.ret===k){ const msg=R.apply(D); S.ret=null; S.mode="quick"; S.modeChosen=true; S.auto=S.auto||{}; S.auto[k]=true; save(); bindInputs(); renderCalcOut(); renderDock();
-        const d=$("#"+R.acc); if(d){ d.open=true; setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); },60); }
-        toast(msg+"을 '평정표 점수로' 입력에 넣었습니다."); return; }
-      const Q=S.quick; S.auto=S.auto||{};
-      const qEmpty = k==="accBonus"? (!Q.p.regionFull && Q.p.region==="") : k==="accCareer"? (!Q.careerFull && Q.careerY==="" && Q.careerM==="") : (!Q.trainFull && Q.trainPts==="");
-      let msg=""; if(qEmpty || S.auto[k]){ msg=R.apply(D); S.auto[k]=true; }
-      const d=$("#"+k); if(d) d.open=false; pendingClose.delete(k); save(); bindInputs(); renderCalcOut(); renderDock();
-      if(d) setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); },60);
-      toast(msg? msg+"을 '평정표 점수로' 입력에도 넣어 두었습니다." : `${R.label} 입력을 마쳤습니다 · ${f3(R.val(D))}점`); return; }
     if(t.dataset.retcancel){ S.ret=null; save(); renderCalcOut(); return; }
     if(t.dataset.mode){ const changed = S.mode!==t.dataset.mode || !S.modeChosen;
       S.ret = (S.mode==="quick" && t.dataset.mode==="detail" && RET[t.dataset.acc])? t.dataset.acc : null;
