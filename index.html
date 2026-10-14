@@ -216,10 +216,10 @@ table.tg tfoot td.neg{color:var(--bad)}
 table.tg tfoot td.hitc{outline:2px solid var(--good)}
 .notice{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:13.5px;margin:10px 0;color:var(--ink2)}
 .notice b:first-child{display:inline-block;background:var(--warn);color:#fff;font-size:12px;border-radius:6px;padding:1px 7px;margin-right:6px}
-.ychips{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:4px 0 6px}
-.ych{border:1px solid var(--line2);background:#fafbfd;border-radius:9px;padding:5px 2px;font:inherit;cursor:pointer;line-height:1.15;min-height:44px}
-.ych b{display:block;font-size:13px;font-weight:700;color:var(--ink2)}
-.ych small{display:block;font-size:12px;color:var(--muted);min-height:13px}
+.ychips{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:4px;margin:4px 0 6px}
+.ych{border:1px solid var(--line2);background:#fafbfd;border-radius:8px;padding:3px 2px;font:inherit;cursor:pointer;line-height:1.1;height:32px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:3px;white-space:nowrap}
+.ych b{display:block;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.ych small{display:block;font-size:11px;color:var(--muted)}
 .ych.on{background:var(--pri);border-color:var(--pri)} .ych.on b,.ych.on small{color:#fff}
 .ych.half{background:var(--pri-l);border-color:#9db8e3} .ych.half b,.ych.half small{color:var(--pri)}
 .ychelp{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
@@ -227,7 +227,7 @@ table.tg tfoot td.hitc{outline:2px solid var(--good)}
 .f.extra{margin-top:4px}
 .rng{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);margin-bottom:6px}
 .rng-b{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:8px}
-@media(max-width:380px){.ychips{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:380px){.ychips{grid-template-columns:repeat(auto-fill,minmax(62px,1fr))}}
 .prow{padding:9px 0;border-bottom:1px dashed var(--line)}
 .ph{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:6px}
 .ph b{font-size:14px}
@@ -434,7 +434,6 @@ body.hasdock .licbtn{bottom:calc(84px + env(safe-area-inset-bottom))}
 }
 .ctx{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--ink2);margin:-4px 0 6px}
 .ctx .linkbtn{font-size:13px}
-#progCard.slim{padding:8px 12px}
 .prog-done{display:flex;align-items:center;gap:10px}
 .prog-done .prog-bar{flex:1;margin:0}
 .gb{padding:9px 0;border-bottom:1px dashed var(--line)}
@@ -499,6 +498,15 @@ table.contact tr.key td{background:var(--acc-l)}
 .chip{border:1px dashed #9db8e3;background:var(--pri-l);color:var(--pri);font:inherit;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;cursor:pointer;min-height:34px}
 .chip:hover{background:#dbe7fa}
 .chip.ghost{background:#fff;border-color:var(--line2);color:var(--ink2);font-weight:500}
+.chip.main{background:var(--pri);border:1px solid var(--pri);color:#fff;font-weight:700;padding:8px 14px;box-shadow:0 3px 10px rgba(31,95,191,.25)}
+.chip.main:hover{background:var(--pri-d)}
+.emptyhint{font-size:13px;color:var(--ink2);margin:8px 2px 0}
+/* 평정표 입력으로 되돌아가기 */
+.retband{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;background:var(--good-l);border:1px solid #bfe3cf;border-left:4px solid var(--good);border-radius:12px;padding:10px 12px;margin:10px 0;font-size:13.5px;color:#13573a}
+.retband b{font-variant-numeric:tabular-nums}
+.retband .btn{background:var(--good);margin-left:auto} .retband .btn:hover{background:#17724a}
+.retband .linkbtn{color:#13573a;font-weight:600;font-size:13px}
+.retslot:empty{display:none}
 .chip.warnc{border:1px solid #f0d9a8;background:var(--warn-l);color:#7a5513}
 .seg{display:inline-flex;background:var(--grey-l);border-radius:9px;padding:3px;gap:3px;margin-bottom:8px}
 .seg button{border:0;background:transparent;font:inherit;font-size:12.5px;padding:4px 10px;border-radius:7px;color:var(--ink2);cursor:pointer}
@@ -685,6 +693,92 @@ body.hasdock .licbtn{bottom:calc(92px + env(safe-area-inset-bottom))}
 .bj-sv .stepper.sm input{font-weight:800;font-size:16px;color:var(--pri);min-height:34px}
 table.bjt td,table.bjt th{font-size:13px}
 @media(max-width:520px){.bj-top h3{flex-basis:100%!important}}
+
+/* ---- 항목별 점수 표시: 상태 표기 · 제목줄 내역 · 구성 트리 · 도크 칩 ---- */
+details.acc > summary{position:relative;flex-wrap:wrap;row-gap:4px;padding-right:36px}
+details.acc > summary:after{position:absolute;right:16px;top:19px;margin:0}
+.svb{flex-basis:100%;font-size:12.5px;font-weight:500;color:var(--muted);line-height:1.45;white-space:normal}
+.svb b{font-weight:700;color:var(--ink2);font-variant-numeric:tabular-nums}
+.svbar{flex-basis:100%;display:flex;gap:2px;height:4px;border-radius:2px;overflow:hidden;background:var(--grey-l);margin-top:2px}
+.svbar i{display:block;height:100%}
+.svbar i.c1{background:var(--pri)} .svbar i.c2{background:#5b8fd9} .svbar i.c3{background:var(--teal)} .svbar i.c4{background:#9aa5b5}
+.st-empty{color:var(--muted);font-weight:500}
+.st-cut{color:var(--warn)} .st-cut small{font-weight:500;font-size:11.5px;opacity:.9}
+.st-zero{color:var(--ink2)}
+.sv .st-full,.qv .st-full,.tv .st-full{color:var(--good)}
+.qsub{font-size:12.5px;color:var(--muted);margin:-4px 0 10px;line-height:1.45}
+.qsub:empty{display:none}
+.qsub b{color:var(--ink2);font-variant-numeric:tabular-nums}
+.tree{margin:6px 0 2px}
+.tr{display:grid;grid-template-columns:minmax(0,1fr) auto 96px;gap:8px;align-items:center;padding:6px 0;border:0;border-bottom:1px dashed var(--line);background:none;font:inherit;font-size:13.5px;color:inherit;width:100%;text-align:left;cursor:pointer;border-radius:0}
+.tr:hover .tn{color:var(--pri)}
+.tr.l1{font-weight:700}
+.tr.l2 .tn{padding-left:16px;font-size:13px;color:var(--ink2)}
+.tr.l3 .tn{padding-left:30px;font-size:12.5px;color:var(--muted)}
+.tr .tn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tr .tv{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tr .tv small{color:var(--muted);font-size:11.5px;font-weight:500;margin-left:1px}
+.tr .tm{display:block;height:6px;background:var(--grey-l);border-radius:3px;overflow:hidden}
+.tr .tm i{display:block;height:100%;background:var(--pri);border-radius:3px}
+.tr.full .tm i{background:var(--good)} .tr.cut .tm i{background:var(--warn)} .tr.empty .tm i{background:transparent}
+.tr.sum{border-bottom:0;border-top:2px solid var(--line2);margin-top:4px;font-size:15px;font-weight:800;cursor:default}
+.tr.sum:hover .tn{color:inherit}
+.tree-leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);margin-top:8px}
+.tree-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+@media(max-width:440px){.tr{grid-template-columns:minmax(0,1fr) auto 52px;gap:6px}}
+.dock .dock-parts{display:flex;flex-wrap:wrap;gap:5px;padding-top:7px}
+.dock .dock-parts:empty{display:none}
+.pchips{display:flex;flex-wrap:wrap;gap:5px}
+.pchips button{border:0;background:rgba(255,255,255,.1);color:#d6e4fa;font:inherit;font-size:12.5px;font-weight:600;padding:3px 10px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.pchips button:hover{background:rgba(255,255,255,.2)}
+.pchips button b{color:#fff;font-weight:800;margin-left:4px;font-variant-numeric:tabular-nums}
+.pchips button.full b{color:#63d69d} .pchips button.empty b{color:#aebbd0;font-weight:500} .pchips button.cut b{color:#ffd27a}
+/* 상단 총점 히어로 */
+.scoreHero{padding:16px 16px 14px;margin:10px 0 18px}
+.sh-h{display:flex;align-items:center;gap:8px;font-size:13px;color:#aebbd0;flex-wrap:wrap}
+.sh-h .pill{background:rgba(255,210,122,.16);color:#ffd27a}
+.sh-date{margin-left:auto;font-size:12px}
+.scoreHero .big{font-size:44px;font-weight:800;letter-spacing:-1.4px;line-height:1.05;margin:4px 0 2px;color:#fff}
+.sh-gap{font-size:14px;color:#d6e4fa}
+.sh-gap b.pos{color:#63d69d} .sh-gap b.neg{color:#ff8e86}
+.sh-miss{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:8px;font-size:12.5px;color:#ffd27a}
+.sh-miss button{border:1px solid rgba(255,210,122,.5);background:rgba(255,210,122,.12);color:#ffd27a;font:inherit;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;cursor:pointer}
+.sh-chips{margin-top:12px;align-items:center}
+.pchips .sh-more{margin-left:auto;background:#fff;color:var(--pri)}
+.pchips .sh-more:hover{background:#eaf1fc}
+.sh-tree{margin-top:12px}
+.sh-treein{background:#fff;color:var(--ink);border-radius:12px;padding:6px 12px 12px}
+.sh-treein .callout{margin-bottom:0}
+/* 입력 방식 한 줄 */
+h2.inH{margin:22px 0 8px;font-size:17px;display:flex;align-items:center;gap:8px}
+h2.inH::after{content:"";flex:1;height:1px;background:var(--line2)}
+.modecard{padding:12px 14px 12px;margin:0 0 10px;border-left:4px solid var(--pri)}
+.mc-h{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.mc-h b{font-size:15.5px}
+.mc-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mc-btns button{min-height:44px;border:1.5px solid var(--pri);background:#fff;color:var(--pri);border-radius:11px;font:inherit;font-size:14.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s,color .15s}
+.mc-btns button i{font-style:normal;font-size:8px;opacity:0;transition:opacity .15s}
+.mc-btns button:hover{background:var(--pri-l)}
+.mc-btns button.on{background:var(--pri);color:#fff;box-shadow:0 4px 12px rgba(31,95,191,.25)}
+.mc-btns button.on i{opacity:1}
+.mc-d{font-size:13px;color:var(--ink2);margin:8px 0 0}
+.mc-d:empty{display:none}
+.modecard .helpbox{margin:10px 0 0}
+/* ③ 히어로에 현재 입력 방식 · ④ 무게 조절 */
+.sh-mode{font-size:12px;color:#aebbd0;flex-basis:100%;margin-top:2px}
+.sh-mode .linkbtn{font-size:12px;color:#9fc3ff;padding:0;margin-left:4px}
+.scoreHero .sh-chips{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1)}
+.scoreHero .pchips button{background:rgba(255,255,255,.07)}
+.scoreHero .pchips .sh-more{background:#fff;color:var(--pri)}
+/* 섹션 상태: 완료(초록) · 미완료(노랑), 열리면 제목줄 내역 숨김 */
+details.acc.done{border-left:4px solid var(--good)} details.acc.needs{border-left:4px solid var(--warn)}
+details.acc[open] > summary .svb,details.acc[open] > summary .svbar{display:none}
+.tn{font-size:11.5px;padding:1px 7px} .tn:empty{display:none}
+#help-mode{margin-top:-6px;margin-bottom:12px}
+#quickWrap details.acc > summary .qh{margin-left:6px}
+body.hasdock main{padding-bottom:168px}
+body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
+.toast.withdock{bottom:calc(126px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
@@ -848,8 +942,7 @@ table.bjt td,table.bjt th{font-size:13px}
 </section>
 
 <section class="page" id="p-calc">
-  <h1>내 점수 계산</h1>
-  <p class="lead">평정 기준일 현재까지의 실적을 넣으세요. <span class="gjtag">구 광주광역시교육청 기준</span></p>
+  <h1>내 점수</h1>
 
   <div class="ctx"><span id="ctxTxt"></span><button type="button" class="linkbtn" id="ctxEdit">기준일·대상 바꾸기</button></div>
   <div class="card tight hide" id="ctxBox">
@@ -867,7 +960,7 @@ table.bjt td,table.bjt th{font-size:13px}
     <p class="hint">교감 자격연수 서류는 해마다 2월 말일을 기준으로 평정합니다. 예) 2026년 자격연수 = 2026.2.28. 기준</p>
   </div>
 
-  <div class="card tight" id="progCard"></div>
+  <div class="card hero scoreHero hide" id="scoreHero"></div>
 
   <div class="mode-ask hide" id="modeAsk">
     <div class="ma-q">평정표를 갖고 계신가요?</div>
@@ -878,22 +971,26 @@ table.bjt td,table.bjt th{font-size:13px}
     </div>
   </div>
 
-  <div class="modesw" role="tablist" id="modeSw">
-    <button type="button" data-mode="quick">평정표 점수로<small>평정표를 보며 옮겨 적기</small><em>이걸로 바꾸기 →</em></button>
-    <button type="button" data-mode="detail">근무 기록으로<small>학교·기간을 넣으면 자동 계산</small><em>이걸로 바꾸기 →</em></button>
+  <h2 class="inH" id="inH">입력</h2>
+  <div class="card modecard" id="modeSw">
+    <div class="mc-h"><b>⓪ 입력 방식</b><button type="button" class="qh" data-help="mode" aria-label="도움말">?</button></div>
+    <div class="mc-btns" role="tablist"><button type="button" data-mode="quick"><i>●</i>평정표 점수로</button><button type="button" data-mode="detail"><i>●</i>근무 기록으로</button></div>
+    <p class="mc-d" id="mcDesc"></p>
+    <div class="helpbox" id="help-mode" hidden><b>평정표 점수로</b>: 학교에서 받은 경력·연수성적·가산점 평정표의 점수를 옮겨 적습니다(1~2분). 평정표는 교감 선생님께 요청하세요. <b>근무 기록으로</b>: 임용일·학교·기간·연수를 넣으면 자동 계산합니다. 두 방식의 입력 내용은 따로 보관되고 언제든 바꿀 수 있어요. 교직 초반이면 <button type="button" class="linkbtn" data-go="guide">입문의 장기 설계</button>부터 보세요.</div>
   </div>
 
   <div id="quickWrap">
-    <div class="mode-band"><span>지금은 <b>평정표 점수로</b> 입력 중이에요.</span><button type="button" class="mb-go" data-mode="detail">평정표가 없으면 근무 기록으로 계산 →</button></div>
-    <p class="hint" style="margin:0 0 4px">평정표는 교감 선생님께 요청하세요. 교직 초반이면 <button type="button" class="linkbtn" data-go="guide">입문의 장기 설계</button>부터 보세요.</p>
-    <div class="qcard" id="qElig">
-      <div class="qhd"><b>응시 요건</b><button type="button" class="qh" data-help="elig" aria-label="도움말">?</button></div>
+    <details class="acc" id="qElig">
+      <summary><b>응시 요건</b><span class="sv" id="qvElig"></span><button type="button" class="qh" data-help="elig" aria-label="도움말">?</button></summary>
+      <div class="in">
       <div class="helpbox" id="help-elig" hidden>1급 정교사 자격 취득 후 교육경력 3년 이상(평정 기준일 현재)이고, 한국사능력검정 3급 이상 또는 한국사 연수 60시간 이상을 이수했으면 체크하세요. 날짜로 확인하려면 '근무 기록으로' 입력을 쓰세요.</div>
       <label class="chk big"><input type="checkbox" data-p="quick.eligAll">1정 취득 후 3년 이상 + 한국사 요건 모두 충족</label>
-    </div>
+      </div>
+    </details>
 
-    <div class="qcard" id="qCareer">
-      <div class="qhd"><b>경력평정</b><span class="rate">70점</span><span class="qv num" id="qvCareer"></span><button type="button" class="qh" data-help="career" aria-label="도움말">?</button></div>
+    <details class="acc" id="qCareer">
+      <summary><b>경력평정</b><span class="sv num" id="qvCareer"></span><button type="button" class="qh" data-help="career" aria-label="도움말">?</button><span class="svb" id="qsCareer"></span><span class="svbar" id="qrCareer"></span></summary>
+      <div class="in">
       <div class="helpbox" id="help-career" hidden>경력평정표 맨 아래 '합계' 점수입니다. 교육경력이 20년(기본 15년 + 초과 5년) 이상이면 만점 70점입니다. 휴직 등으로 빠지는 기간은 뺀 실제 인정 경력으로 생각하세요.</div>
       <label class="chk big"><input type="checkbox" data-p="quick.careerFull">만점(70점) — 인정 경력 20년 이상</label>
       <div id="qCareerMore" class="fgrid" style="margin-top:10px">
@@ -901,18 +998,22 @@ table.bjt td,table.bjt th{font-size:13px}
         <label class="f"><span>(개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.careerM" placeholder="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
         <p class="altlink full">인정 경력을 모르면 <button type="button" class="linkbtn" data-mode="detail" data-acc="accCareer">임용 연·월로 계산하기 →</button></p>
       </div>
-    </div>
+      </div>
+    </details>
 
-    <div class="qcard" id="qTrain">
-      <div class="qhd"><b>연수성적평정</b><span class="rate">30점</span><span class="qv num" id="qvTrain"></span><button type="button" class="qh" data-help="train" aria-label="도움말">?</button></div>
+    <details class="acc" id="qTrain">
+      <summary><b>연수성적평정</b><span class="sv num" id="qvTrain"></span><button type="button" class="qh" data-help="train" aria-label="도움말">?</button><span class="svb" id="qsTrain"></span><span class="svbar" id="qrTrain"></span></summary>
+      <div class="in">
       <div class="helpbox" id="help-train" hidden>연수성적평정표 '연수성적 평정점 총계'입니다. 직무연수 3회(18점) + 1급 정교사 자격연수(9점) + 연구실적(3점)이 모두 만점이면 30점입니다. <b>2030년 평정부터는 1정 성적이 빠질 예정</b>이라 만점이 21점이 되고, 평정표 점수에서 1정 성적을 빼고 넣어야 합니다(평정 기준일 2030년 이상 선택 시). 점수를 모르면 '근무 기록으로' 입력에서 계산할 수 있습니다.</div>
       <label class="chk big"><input type="checkbox" data-p="quick.trainFull"><span id="qTrainFullLbl">만점(30점)</span></label>
       <label class="f" id="qTrainMore" style="margin-top:10px"><span>평정표의 연수성적 점수</span><input type="number" min="0" max="30" step="0.0001" inputmode="decimal" data-p="quick.trainPts" placeholder="예: 29.7625"></label>
       <p class="altlink">점수를 모르면 <button type="button" class="linkbtn" data-mode="detail" data-acc="accTrain">직무연수·1정 성적·연구실적으로 계산하기 →</button></p>
-    </div>
+      </div>
+    </details>
 
-    <div class="qcard" id="qBonus">
-      <div class="qhd"><b>가산점</b><span class="qv num" id="qvBonus"></span><button type="button" class="qh" data-help="bonus" aria-label="도움말">?</button></div>
+    <details class="acc" id="qBonus">
+      <summary><b>가산점</b><span class="sv num" id="qvBonus"></span><button type="button" class="qh" data-help="bonus" aria-label="도움말">?</button><span class="svb" id="qsBonus"></span><span class="svbar" id="qrBonus"></span></summary>
+      <div class="in">
       <div class="helpbox" id="help-bonus" hidden>점수를 몰라도 돼요. <b>기간으로 입력</b>은 보직·연구학교 등을 몇 년 몇 개월 했는지만 넣으면 점수를 계산해 줍니다. 평정표 점수를 알면 <b>점수로 입력</b>, 합계만 알면 <b>합계만 입력</b>을 고르세요. 묶음별로 들어가야 '보충 전략'이 어느 묶음에 여유가 있는지 알려 줍니다.</div>
       <div class="seg" style="margin-bottom:10px"><button type="button" data-qbm="period">기간으로 입력(권장)</button><button type="button" data-qbm="bundle">점수로 입력</button><button type="button" data-qbm="total">합계만 입력</button></div>
       <div id="qPeriodIn">
@@ -976,33 +1077,35 @@ table.bjt td,table.bjt th{font-size:13px}
         <label class="f full"><span>광주 관내 실근무 누적(개월) <button type="button" class="qh" data-help="gj" aria-label="도움말">?</button></span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="600" inputmode="numeric" data-p="profile.gwangju" placeholder="예: 300"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
       </div>
       <div class="helpbox" id="help-gj" hidden>휴직·타 시도 파견처럼 실제 광주에서 근무하지 않은 기간을 뺀 개월 수입니다. 120개월(10년)을 넘으면 2026.3.1. 이후 근무분부터 월 0.01점(상한 1.0)이 붙습니다. 교직 전체를 광주에서 근무했다면 인정 경력과 거의 같습니다.</div>
-    </div>
+      </div>
+    </details>
   </div>
 
   <div id="detailWrap">
-  <div class="mode-band"><span>지금은 <b>근무 기록으로</b> 계산 중이에요.</span><button type="button" class="mb-go" data-mode="quick">평정표가 있으면 점수로 옮겨 적기 →</button></div>
 
+  <div id="retTop"></div>
   <!-- 경력 -->
-  <details class="acc" id="accCareer" open>
-    <summary>① 경력평정 <span class="rate">70점 만점</span><span class="sv" id="svCareer"></span></summary>
+  <details class="acc" id="accCareer">
+    <summary>① 경력평정 <span class="tn pill warn" id="tnCareer"></span><span class="sv" id="svCareer"></span><span class="svb" id="svbCareer"></span><span class="svbar" id="svrCareer"></span></summary>
     <div class="in">
       <div class="fgrid" style="margin-top:12px">
         <label class="f full"><span>교사 최초 임용 연·월 <button type="button" class="qh" data-help="hire" aria-label="도움말">?</button></span><input type="month" data-p="profile.hire" placeholder="2001-03"></label>
         <div class="full"><div class="helpbox" id="help-hire" hidden>경력평정표 첫 줄(가장 오래된 경력)의 시작 연·월입니다. 대부분 3월 1일 임용이라 3월을 고르면 됩니다. 날짜(일)는 필요 없어요. 경력은 개월 단위로 계산하고, 20년 이상이면 만점이라 날짜가 결과를 바꾸지 않습니다. 임용 전 군 경력이 있으면 그 기간만큼 앞당겨 넣으세요. 평정 기준일까지의 개월 수에서 '빠지는 기간'을 뺀 만큼이 '가'경력이 됩니다.</div></div>
-        <label class="f"><span>경력에서 빠지는 기간(개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.excl" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
+        <label class="f"><span>경력에서 빠지는 기간(개월) <button type="button" class="qh" data-help="excl" aria-label="도움말">?</button></span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.excl" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
         <label class="f"><span>'나'경력(기간제 등, 개월)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="480" inputmode="numeric" data-p="profile.na" placeholder="0"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
       </div>
-      <p class="hint">빠지는 기간: 경력에 산입되지 않는 휴직(육아·질병 등 0% 인정) 기간, 50% 인정 휴직은 절반. 임용 전 군 경력은 '가'경력에 포함되므로 임용일을 그만큼 앞당겨 넣거나 빠지는 기간에서 빼 주세요.</p>
+      <div class="helpbox" id="help-excl" hidden>빠지는 기간: 경력에 산입되지 않는 휴직(육아·질병 등 0% 인정) 기간, 50% 인정 휴직은 절반. 임용 전 군 경력은 '가'경력에 포함되므로 임용일을 그만큼 앞당겨 넣거나 빠지는 기간에서 빼 주세요.</div>
       <div id="careerOut" style="margin-top:10px"></div>
+      <div class="retslot" id="ret-accCareer"></div>
     </div>
   </details>
 
   <!-- 자격 요건 -->
-  <details class="acc" open id="accElig">
+  <details class="acc" id="accElig">
     <summary>② 응시 자격 요건 <span class="sv" id="svElig"></span></summary>
     <div class="in">
       <div class="fgrid al-end" style="margin-top:12px">
-        <label class="f"><span>1급 정교사 자격 취득 연·월</span><input type="month" data-p="profile.cert1" placeholder="2005-03"></label>
+        <label class="f"><span>1급 정교사 자격 취득 연·월 <button type="button" class="qh" data-help="cert1" aria-label="도움말">?</button></span><input type="month" data-p="profile.cert1" placeholder="2005-03"></label>
         <label class="f"><span>한국사</span>
           <select data-p="profile.khist">
             <option value="">선택하세요</option>
@@ -1012,20 +1115,21 @@ table.bjt td,table.bjt th{font-size:13px}
           </select></label>
       </div>
       <label class="chk" style="margin-top:10px"><input type="checkbox" data-p="profile.cert1ok">1정 취득 후 3년 이상 지났어요 (날짜를 몰라도 돼요)</label>
-      <p class="hint" id="cert1Hint"></p>
+      <div class="helpbox" id="help-cert1" hidden></div>
       <div id="eligOut" style="margin-top:10px"></div>
     </div>
   </details>
 
   <!-- 연수성적 -->
-  <details class="acc" id="accTrain" open>
-    <summary>③ 연수성적평정 <span class="rate">30점 만점</span><span class="sv" id="svTrain"></span></summary>
+  <details class="acc" id="accTrain">
+    <summary>③ 연수성적평정 <span class="tn pill warn" id="tnTrain"></span><span class="sv" id="svTrain"></span><span class="svb" id="svbTrain"></span><span class="svbar" id="svrTrain"></span></summary>
     <div class="in">
-      <div class="sub">직무연수 <span class="rate">최근 10년 내 3회 · 회당 6점 · 18점</span></div>
+      <div class="sub">직무연수 <span class="rate">최근 10년 내 3회 · 회당 6점 · 18점</span><button type="button" class="qh" data-help="job" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-job" hidden>엑셀 평정표 산식 기준: 교사의 직무연수는 이수하면 회당 6점(만점)으로 처리합니다. 성적을 넣으면 95점 초과→100, 90점 초과→95, 85점 초과→90, 그 외→85로 환산해 6점에 곱합니다. 2020.5.1. 이후 시작한 60시간 이상 연수는 성적이 연수인원과 순위에 따른 <b>상대평가 조견표</b>로 매겨지므로, '순위·인원으로 계산'을 고르면 조견표 점수를 자동으로 찾아 줍니다. <button class="btn ghost sm" data-go="rules" data-rule="lookup" style="margin-left:2px">조견표 보기</button></div>
       <div id="jobRows"></div>
-      <p class="hint">엑셀 평정표 산식 기준: 교사의 직무연수는 이수하면 회당 6점(만점)으로 처리합니다. 성적을 넣으면 95점 초과→100, 90점 초과→95, 85점 초과→90, 그 외→85로 환산해 6점에 곱합니다. 2020.5.1. 이후 시작한 60시간 이상 연수는 성적이 연수인원과 순위에 따른 <b>상대평가 조견표</b>로 매겨지므로, '순위·인원으로 계산'을 고르면 조견표 점수를 자동으로 찾아 줍니다. <button class="btn ghost sm" data-go="rules" data-rule="lookup" style="margin-left:2px">조견표 보기</button></p>
 
-      <div class="sub">자격연수(1급 정교사) <span class="rate">9점</span></div>
+      <div class="sub">자격연수(1급 정교사) <span class="rate">9점 · 2029년 평정까지</span><button type="button" class="qh" data-help="q1x" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-q1x" hidden>교감 자격연수 대상자 산식: 9 − (100 − 성적) × 0.025 (소수 넷째 자리 버림). 정교사(1급) 자격연수는 상대평가 조견표 적용에서 제외됩니다. <b>2029년 평정까지만 반영되고 2030년 평정부터는 0점으로 계산합니다</b>(2026.9.11. 입법예고). <button type="button" class="linkbtn" data-go="rules" data-rule="q1change">자세히</button></div>
       <div class="fgrid">
         <label class="f"><span>입력 방식</span>
           <select data-p="train.qmode"><option value="score">성적(점수)</option><option value="grade">등급(A~D)</option></select></label>
@@ -1033,11 +1137,11 @@ table.bjt td,table.bjt th{font-size:13px}
         <label class="f hide" id="qGradeWrap"><span>등급</span>
           <select data-p="train.qgrade"><option value="">선택하세요</option><option value="A">A (90점)</option><option value="B">B (85점)</option><option value="C">C (80점)</option><option value="D">D (80점)</option></select></label>
       </div>
-      <p class="hint">교감 자격연수 대상자 산식: 9 − (100 − 성적) × 0.025 (소수 넷째 자리 버림). 정교사(1급) 자격연수는 상대평가 조견표 적용에서 제외됩니다. <b>2029년 평정까지만 반영되고 2030년 평정부터는 0점으로 계산합니다</b>(2026.9.11. 입법예고). <button type="button" class="linkbtn" data-go="rules" data-rule="q1change">자세히</button></p>
       <div id="q1Conv"></div>
       <div id="q1Note"></div>
 
-      <div class="sub">연구실적 <span class="rate">연구대회 입상 + 학위 · 3점 상한</span></div>
+      <div class="sub">연구실적 <span class="rate">연구대회 입상 + 학위 · 3점 상한</span><button type="button" class="qh" data-help="res" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-res" hidden>연구대회 입상은 1년에 1회만 인정됩니다. 공동 연구는 2인 70%, 3인 50%, 4인 이상 30%로 환산합니다. 학위는 박사 직무관련 3점·기타 1.5점, 석사 직무관련 1.5점·기타 1점이며 대회와 합쳐 3점까지입니다.</div>
       <div id="contestRows"></div>
       <button class="btn ghost sm" id="addContest">+ 연구대회 입상 추가</button>
       <div class="fgrid" style="margin-top:12px">
@@ -1048,36 +1152,38 @@ table.bjt td,table.bjt th{font-size:13px}
       </div>
       <div id="resConv"></div>
       <div id="trainConv"></div>
-      <p class="hint">연구대회 입상은 1년에 1회만 인정됩니다. 공동 연구는 2인 70%, 3인 50%, 4인 이상 30%로 환산합니다.</p>
+      <div class="retslot" id="ret-accTrain"></div>
     </div>
   </details>
 
   <!-- 가산점 -->
-  <details class="acc" id="accBonus" open>
-    <summary>④ 가산점 <span class="rate">해당 항목만 추가</span><span class="sv" id="svBonus"></span></summary>
+  <details class="acc" id="accBonus">
+    <summary>④ 가산점 <span class="tn pill warn" id="tnBonus"></span><span class="sv" id="svBonus"></span><span class="svb" id="svbBonus"></span><span class="svbar" id="svrBonus"></span></summary>
     <div class="in">
-      <p class="hint" style="margin-top:10px">해당하는 항목만 <b>+ 버튼</b>으로 추가하세요. 기간은 <b>학년도 선택</b>(기본)·년·개월 수·기간(연·월) 중 편한 방식으로 넣으면 개정 시기별로 나눠 계산합니다. <span class="scope c">전국 공통</span> <span class="scope g">광주 선택</span></p>
+      <div class="hint" style="margin-top:10px;display:flex;align-items:center;gap:6px">해당하는 항목만 <b>+ 버튼</b>으로 추가하세요 <button type="button" class="qh" data-help="bitems" aria-label="도움말">?</button></div>
+      <div class="helpbox" id="help-bitems" hidden>기간은 <b>학년도 선택</b>(기본)·년·개월 수·기간(연·월) 중 편한 방식으로 넣으면 개정 시기별로 나눠 계산합니다. 묶음마다 상한이 있어 상한에 닿으면 더 넣어도 점수가 오르지 않고, 항목 점수 옆에 '인정 ← 원점수'로 잘린 만큼을 보여 줍니다. <span class="scope c">전국 공통</span> 전국 공통 가산점 <span class="scope g">광주 선택</span> 광주 선택 가산점</div>
       <div id="bundles"></div>
+      <div class="retslot" id="ret-accBonus"></div>
       <label class="chk" style="margin-top:12px"><input type="checkbox" data-p="bonusNone">해당하는 가산점이 없습니다</label>
       <div class="bundle" style="margin-top:12px">
         <div class="bh"><div class="bt"><b>광주 관내 10년 초과 근무</b><span class="num muted small">2026.3.1.~ 월 0.01 · 1.0</span></div></div>
         <label class="f" style="margin-top:8px"><span>광주 관내 실근무 누적(개월, 휴직·파견 제외)</span><div class="stepper"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="600" inputmode="numeric" data-p="profile.gwangju" placeholder="예: 300"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div></label>
-        <p class="hint">120개월을 넘긴 뒤 <b>2026.3.1. 이후 근무분부터</b> 쌓입니다. 미래 시뮬레이션에서 자동 계산됩니다. <button class="btn ghost sm" id="gjSame" style="margin-left:4px">교육경력과 같게</button></p>
+        <div class="btn-row" style="margin-top:6px;align-items:center"><button class="btn ghost sm" id="gjSame">교육경력과 같게</button><button type="button" class="qh" data-help="gj2" aria-label="도움말">?</button></div>
+        <div class="helpbox" id="help-gj2" hidden>휴직·타 시도 파견처럼 실제 광주에서 근무하지 않은 기간을 뺀 개월 수입니다. 120개월을 넘긴 뒤 <b>2026.3.1. 이후 근무분부터</b> 월 0.01점(상한 1.0)이 쌓이고, 미래 시뮬레이션에서 자동 계산됩니다.</div>
       </div>
     </div>
   </details>
   </div><!-- /detailWrap -->
 
   <details class="acc" id="accPerf">
-    <summary>⑤ 근무성적(선택) <span class="rate">명부 순위용</span><span class="sv" id="svPerf"></span></summary>
+    <summary>⑤ 근무성적(선택) <span class="sv" id="svPerf"></span></summary>
     <div class="in">
-      <label class="f" style="margin-top:12px"><span>근무성적평정점(100점 만점, 최근 5년 중 유리한 3년 환산)</span><input type="number" min="0" max="100" step="0.0001" inputmode="decimal" data-p="profile.perf" placeholder="예: 99.5"></label>
-      <p class="hint">서류 기준점에는 들어가지 않습니다. 기준점을 넘은 뒤 '응시대상자 순위 명부(200점 + 가산점)'를 만들 때 쓰입니다. 교사의 근무성적은 전국 공통으로 <b>교감(평정자) 20% + 교장(확인자) 40% + 다면평가 40%</b>(정성 32% + 정량 8%)를 합산합니다.</p>
+      <label class="f" style="margin-top:12px"><span>근무성적평정점(100점 만점, 최근 5년 중 유리한 3년 환산) <button type="button" class="qh" data-help="perf" aria-label="도움말">?</button></span><input type="number" min="0" max="100" step="0.0001" inputmode="decimal" data-p="profile.perf" placeholder="예: 99.5"></label>
+      <div class="helpbox" id="help-perf" hidden>서류 기준점에는 들어가지 않습니다. 기준점을 넘은 뒤 '응시대상자 순위 명부(200점 + 가산점)'를 만들 때 쓰입니다. 교사의 근무성적은 전국 공통으로 <b>교감(평정자) 20% + 교장(확인자) 40% + 다면평가 40%</b>(정성 32% + 정량 8%)를 합산합니다.</div>
     </div>
   </details>
 
-  <div class="card result" id="calcSummary"></div>
-  <div class="btn-row">
+  <div class="btn-row" id="calcActions">
     <button class="btn" data-go="sim">이 점수로 미래 시뮬레이션 →</button>
     <button class="btn ghost" data-go="plan">보충 전략 보기</button>
     <button class="btn ghost" data-print="1">요약 인쇄·PDF</button>
@@ -1300,6 +1406,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre>
     <div style="flex:1;min-width:0"><div class="lbl" id="dockCutLbl">기준점</div><div id="dockGap" class="num" style="font-weight:700"></div></div>
     <button class="btn ghost sm" id="dockToggle" aria-expanded="false">내역 <span id="dockArrow">▲</span></button>
   </div>
+  <div class="wrap dock-parts pchips" id="dockParts"></div>
 </div>
 
 <script>
@@ -1369,6 +1476,7 @@ function defState(){
   };
 }
 let S = defState();
+let heroVisible=true; const pendingClose=new Set(); let accPrev=null;
 function deepMerge(base, add){
   if(add===null || typeof add!=="object" || Array.isArray(add)) return add===undefined?base:add;
   const out = Array.isArray(base)?[]:{...base};
@@ -1946,11 +2054,93 @@ function renderContestRows(){
 }
 /* ---- 가산점 묶음·항목 ---- */
 function bundleVal(bo,k){ return k==="etc"? r3(bo.overseas+bo.addB+bo.specialOld) : bo[k]; }
-function gaugeMini(v,cap){
-  if(cap==null) return `<div class="bstat"><span class="num"><b>${f3(v)}</b>점</span></div>`;
+function gaugeMini(v,cap,rawSum){
+  const cut = rawSum!=null && rawSum>(cap==null?v:cap)+1e-6;
+  const cutTxt = cut? ` <span class="st-cut xs">원점수 ${f3(rawSum)} → ${f3(rawSum-v)} 잘림</span>` : "";
+  if(cap==null) return `<div class="bstat"><span class="num"><b>${f3(v)}</b>점${cutTxt}</span></div>`;
   const pct=Math.min(100,v/cap*100), full=v>=cap-1e-6;
   return `<div class="track${full?" full":""}"><div class="fill" style="width:${pct}%"></div></div>
-   <div class="bstat"><span class="num"><b>${f3(v)}</b> / ${cap}</span><span class="${full?"st-full":"st-left"}">${full?"✔ 상한 도달 · 더 쌓아도 0점":"여유 "+f3(cap-v)+"점"}</span></div>`;
+   <div class="bstat"><span class="num"><b>${f3(v)}</b> / ${cap}${cutTxt}</span><span class="${full?"st-full":"st-left"}">${full?"✔ 상한 도달 · 더 쌓아도 0점":"여유 "+f3(cap-v)+"점"}</span></div>`;
+}
+/* ---- 항목별 점수 표시: 상태(미입력·0·부분·만점·잘림) · 인정 점수 배분 · 구성 트리 ---- */
+const CAT_CAP = {rsMoe:1,rsEdu:1,prSchool:1,prGuide:1,korean:1,overseas:.5,credits:1,sv:1,bojik:1.75,jeonmun:1,addA:.5,addB:.4,remote:1,rural:1,insa:.48,small:1,general:1,specialOld:1,sports:.55,gwangju:1};
+const BSHORT = {g2:"보직·학폭",region:"학교근무",research:"연구학교",credits:"연수학점",sportAdd:"체전·보직추가",etc:"기타"};
+function stCls(v,cap,empty,raw){
+  if(empty) return "empty";
+  if(raw!=null && raw>v+1e-6) return "cut";
+  if(cap!=null && cap>0 && v>=cap-1e-6) return "full";
+  return v>0? "part" : "zero";
+}
+function svHtml(v,cap,empty,raw){
+  const c=stCls(v,cap,empty,raw);
+  if(c==="empty") return `<span class="st-empty">미입력</span>`;
+  if(c==="cut") return `<span class="st-cut">${f3(v)}점<small> ← ${f3(raw)}</small></span>`;
+  return `<span class="${c==="full"?"st-full":c==="zero"?"st-zero":""}">${f3(v)}점${c==="full"?" ✓":""}</span>`;
+}
+function svBar(segs,max){ if(!(max>0)) return ""; return segs.filter(s=>s[0]>0).map(s=>`<i class="${s[1]}" style="width:${Math.min(100,s[0]/max*100)}%"></i>`).join(""); }
+function emptyFlags(){
+  if(isQuick()){ const q=S.quick; return {car:!(q.careerFull||q.careerY!==""), tr:!(q.trainFull||q.trainPts!==""), bo:!(quickBonusFilled()||S.bonusNone)}; }
+  const tm=S.train, qE= tm.qmode==="grade"? tm.qgrade==="" : tm.qscore==="";
+  return {car:!S.profile.hire, tr: tm.jobs.every(j=>j.s==="") && qE && !S.research.contests.length && S.research.master==="none" && S.research.doctor==="none", bo:!(S.items.length||S.bonusNone)};
+}
+function bundleRaw(E,k){ const B=BUNDLES.find(x=>x.k===k); return B? r3(B.cats.reduce((a,c)=>a+(E.raw[c]||0),0)) : 0; }
+// 묶음 상한에 잘릴 때 항목별 인정 점수(항목 상한 먼저, 남은 초과분은 비례 배분)
+function catAlloc(E){
+  const raw=E.raw, bo=E.bo, out={};
+  BUNDLES.forEach(B=>{ const cs=B.cats.map(c=>[c, Math.min(raw[c]||0, CAT_CAP[c]??(raw[c]||0))]); const sum=cs.reduce((a,x)=>a+x[1],0); const v=bundleVal(bo,B.k); const f= sum>v+1e-9? v/sum : 1; cs.forEach(([c,m])=>out[c]=m*f); });
+  out.gwangju=bo.gwangju; out.lump=bo.lump;
+  return out;
+}
+function iptsHtml(r,al,raw){
+  if(r.total<=0) return "0";
+  let rec=0; for(const c in r.cats){ const rw=raw[c]||0; rec += rw>0? r.cats[c]*(al[c]||0)/rw : 0; } rec=r3(rec);
+  return rec<r.total-1e-4? `<span class="st-cut">+${f3(rec)}<small> ← ${f3(r.total)}</small></span>` : "+"+f3(r.total);
+}
+function treeRows(E){
+  const q=isQuick(), by=by0(), ap=q1Applies(by), t=E.tr, c=E.car, bo=E.bo, cut=cutFor(by), ef=emptyFlags();
+  const R=[]; const cA=q?"qCareer":"accCareer", tA=q?"qTrain":"accTrain", bA=q?"qBonus":"accBonus";
+  R.push({l:1,n:"경력평정",v:c.total,cap:70,empty:ef.car,acc:cA});
+  R.push({l:2,n:`기본경력(최근 15년) ${c.bga+c.bna}/180개월`,v:c.base,cap:64,empty:ef.car,acc:cA});
+  R.push({l:2,n:`초과경력(그 전 5년) ${c.ega+c.ena}/60개월`,v:c.over,cap:6,empty:ef.car,acc:cA});
+  const trFull=ap?30:21;
+  R.push({l:1,n:"연수성적평정",v:t.total,cap:trFull,empty:ef.tr,acc:tA});
+  if(q){ R.push({l:2,n:"평정표 점수(직무·1정·연구 합계)",v:t.total,cap:trFull,empty:ef.tr,acc:tA,nobar:true}); }
+  else {
+    const tm=S.train, qE= tm.qmode==="grade"? tm.qgrade==="" : tm.qscore==="", jE=tm.jobs.every(j=>j.s===""), rE=!S.research.contests.length && S.research.master==="none" && S.research.doctor==="none";
+    R.push({l:2,n:"직무연수 3회",v:t.jobSum,cap:18,empty:jE,acc:tA});
+    t.jobs.forEach((v,i)=>R.push({l:3,n:`직무연수 ${i+1}${tm.jobs[i].s==="none"?" (미이수)":""}`,v,cap:6,empty:tm.jobs[i].s==="",acc:tA}));
+    R.push({l:2,n: ap? "1정 자격연수 성적":"1정 자격연수 성적 (이 연도 제외)", v:t.q, cap:ap?9:null, raw: ap?null:t.qRaw, empty:qE, acc:tA, excl:!ap});
+    R.push({l:2,n:"연구실적",v:t.res,cap:3,raw:r3(t.cont+t.deg),empty:rE,acc:tA});
+    R.push({l:3,n:`연구대회 입상 ${S.research.contests.length}건`,v:t.cont,cap:null,empty:!S.research.contests.length,acc:tA,nobar:true});
+    R.push({l:3,n:"학위(석사·박사)",v:t.deg,cap:null,empty:S.research.master==="none"&&S.research.doctor==="none",acc:tA,nobar:true});
+  }
+  const need=Math.max(0, r3(cut-100));
+  R.push({l:1,n:"가산점",v:bo.total,cap:null,max:need,empty:ef.bo,acc:bA,note:`필요 ${f2(need)}`});
+  const al=catAlloc(E);
+  BUNDLES.forEach(B=>{ const v=bundleVal(bo,B.k), rs=bundleRaw(E,B.k); if(!(v>0||rs>0)) return;
+    R.push({l:2,n:B.label,v,cap:B.cap,raw:rs,acc:bA});
+    if(!q) B.cats.forEach(cc=>{ const rw=E.raw[cc]||0; if(rw>0) R.push({l:3,n:CAT_KO[cc]||cc,v:r3(al[cc]||0),cap:CAT_CAP[cc]??null,raw:r3(rw),acc:bA}); }); });
+  if(bo.gwangju>0) R.push({l:2,n:"광주 관내 10년 초과",v:bo.gwangju,cap:1,raw:r3(E.raw.gwangju),acc:bA});
+  if(bo.lump>0) R.push({l:2,n:"가산점 합계(직접 입력)",v:bo.lump,cap:null,acc:bA,nobar:true});
+  R.push({l:0,n:`서류 점수 / 기준점`,v:E.total,cap:cut,sum:true});
+  return R;
+}
+function treeState(r){ return r.excl? "excl" : stCls(r.v,r.cap,r.empty,r.raw); }
+function treeHtml(E){
+  const rows=treeRows(E);
+  const capTxt=cap=> cap==null? "" : (Number.isInteger(cap)? String(cap) : f2(cap));
+  return `<div class="tree">`+rows.map(r=>{
+    const c=treeState(r);
+    const max = r.cap!=null? r.cap : (r.max||0);
+    const pct = max>0? Math.min(100, r.v/max*100) : 0;
+    const val = c==="excl"? `<span class="st-empty">제외${r.raw?`<small> (${f3(r.raw)})</small>`:""}</span>`
+      : c==="empty"? `<span class="st-empty">미입력</span>`
+      : c==="cut"? `<span class="st-cut">${f3(r.v)}<small> ← ${f3(r.raw)}</small></span>`
+      : `<span class="${c==="full"?"st-full":c==="zero"?"st-zero":""}">${f3(r.v)}</span>`;
+    const capT = (r.cap!=null && c!=="excl")? `<small>/${capTxt(r.cap)}</small>` : (r.note?`<small> · ${r.note}</small>`:"");
+    const bar = (r.nobar||max<=0)? "<span></span>" : `<span class="tm"><i style="width:${pct}%"></i></span>`;
+    return `<button type="button" class="tr l${r.l} ${c}${r.sum?" sum":""}"${r.acc?` data-goacc="${r.acc}"`:""}><span class="tn">${esc(r.n)}</span><span class="tv num">${val}${capT}</span>${bar}</button>`;
+  }).join("")+`</div><div class="tree-leg"><span><i style="background:var(--pri)"></i>인정 점수</span><span><i style="background:var(--good)"></i>만점·상한 도달</span><span><i style="background:var(--warn)"></i>상한에 잘림 (← 원점수)</span><span class="st-empty">미입력 = 아직 0으로 계산</span><span>줄을 누르면 입력 위치로 이동</span></div>`;
 }
 function nextRangeStart(it){
   const ms=itemMonths(it); if(!ms.length) return it.type==="school"? nextSchoolStart(it) : "";
@@ -1977,7 +2167,7 @@ function yearChips(it, kind){
   for(let y=y0;y<=y1;y++){ const v=(it.years||{})[y];
     const lab = kind==="m"? (CHIP_LBL[v]||"") : kind==="cr"? (v? v+"학점":"") : (v? "실적":"");
     const cls = !v? "" : (v==="h1"||v==="h2"||(kind==="cr"&&+v<6))? "half" : "on";
-    h+=`<button type="button" class="ych ${cls}" data-ych="${it.id}" data-y="${y}" data-k="${kind}"><b>${y}</b><small>${lab||"&nbsp;"}</small></button>`; }
+    h+=`<button type="button" class="ych ${cls}" data-ych="${it.id}" data-y="${y}" data-k="${kind}"><b>${y}</b>${lab?`<small>${lab}</small>`:""}</button>`; }
   const help = kind==="m"? "누를 때마다 1년 → 1학기(3~8월) → 2학기(9~2월) → 해제" : kind==="cr"? "누를 때마다 6학점 → 4학점 → 2학점 → 해제(1년 최대 6학점)" : "실적을 인정받은 학년도를 누르세요";
   return `<div class="ychips">${h}</div><div class="ychelp"><span>${help}</span><button type="button" class="linkbtn" data-ymore="${it.id}">이전 연도 더 보기</button></div>`;
 }
@@ -2012,25 +2202,26 @@ function itemFields(it){
     return `<div class="fgrid"><label class="f"><span>항목</span>${sel("cat",b.cats.map(c=>[c,CAT_KO[c]]))}</label><label class="f"><span>평정점</span>${inp("pts","number","예: 0.456",'step="0.0001"')}</label></div>`; }
   return "";
 }
-function itemHtml(it){
+function itemHtml(it,E,al){
   const T=ITYPES[it.type]; const r=itemCalc(it);
   const title = T.kind==="pts"? `${T.label}` : T.label;
   return `<div class="item" data-itemid="${it.id}">
-    <div class="ih"><b>${esc(title)} ${it.type==="pts"?"":COMMON_TYPES.includes(it.type)?'<span class="scope c">전국 공통</span>':'<span class="scope g">광주 선택</span>'}</b><span class="ipts num" id="ipts${it.id}">${r.total>0?"+"+f3(r.total):"0"}</span><button type="button" class="x" data-itdel="${it.id}" aria-label="삭제">✕</button></div>
+    <div class="ih"><b>${esc(title)} ${it.type==="pts"?"":COMMON_TYPES.includes(it.type)?'<span class="scope c">전국 공통</span>':'<span class="scope g">광주 선택</span>'}</b><span class="ipts num" id="ipts${it.id}">${(E&&al)? iptsHtml(r,al,E.raw) : (r.total>0?"+"+f3(r.total):"0")}</span><button type="button" class="x" data-itdel="${it.id}" aria-label="삭제">✕</button></div>
     ${T.hint && r.total<=0?`<div class="ihint">${esc(T.hint)}</div>`:""}
     ${itemFields(it)}
     <div class="idet" id="idet${it.id}">${esc(r.detail)}</div>
   </div>`;
 }
 function renderBundles(){
-  const bo=evaluateNow().bo;
+  const E=evaluateNow(), bo=E.bo, al=catAlloc(E);
   $("#bundles").innerHTML = BUNDLES.map(B=>{
     const its=S.items.filter(it=> it.type==="pts"? it.bundle===B.k : B.types.includes(it.type));
     const v=bundleVal(bo,B.k);
+    const cta = its.length? "" : `<div class="emptyhint">아직 넣은 항목이 없어요. 아래 <b>+ 버튼</b>을 눌러 추가하세요${B.k==="region"?" (근무한 학교마다 하나씩)":""}.</div>`;
     return `<div class="bundle${its.length?"":" empty"}" id="bd-${B.k}">
-      <div class="bh"><div class="bt"><b>${esc(B.label)}</b><span class="xs muted">${esc(B.note)}</span></div><div id="bg-${B.k}">${gaugeMini(v,B.cap)}</div></div><div id="ow-${B.k}"></div>
-      ${its.map(itemHtml).join("")}
-      <div class="chips">${B.types.map(t=>`<button type="button" class="chip" data-additem="${t}">+ ${esc(ITYPES[t].label)}</button>`).join("")}<button type="button" class="chip ghost" data-additem="pts" data-bundle="${B.k}">+ 점수 직접</button></div>
+      <div class="bh"><div class="bt"><b>${esc(B.label)}</b><span class="xs muted">${esc(B.note)}</span></div><div id="bg-${B.k}">${gaugeMini(v,B.cap,bundleRaw(E,B.k))}</div></div><div id="ow-${B.k}"></div>
+      ${its.map(it=>itemHtml(it,E,al)).join("")}
+      ${cta}<div class="chips">${B.types.map((t,i)=>`<button type="button" class="chip${(!its.length&&i===0)?" main":""}" data-additem="${t}">+ ${esc(ITYPES[t].label)}${(!its.length&&i===0)?" 추가":""}</button>`).join("")}<button type="button" class="chip ghost" data-additem="pts" data-bundle="${B.k}">+ 점수 직접</button></div>
     </div>`;
   }).join("");
   bonusWarn(bo);
@@ -2048,9 +2239,9 @@ function renderOverlap(){
   BUNDLES.forEach(B=>{ const el=$("#ow-"+B.k); if(el) el.innerHTML=(ow[B.k]||[]).map(m=>`<div class="callout warn small" style="margin:8px 0 0">${esc(m)}</div>`).join(""); });
 }
 function refreshBonus(){
-  const bo=evaluateNow().bo; renderOverlap();
-  S.items.forEach(it=>{ const r=itemCalc(it); const a=$("#ipts"+it.id), d=$("#idet"+it.id); if(a) a.textContent=r.total>0?"+"+f3(r.total):"0"; if(d) d.textContent=r.detail; });
-  BUNDLES.forEach(B=>{ const g=$("#bg-"+B.k); if(g) g.innerHTML=gaugeMini(bundleVal(bo,B.k),B.cap); });
+  const E=evaluateNow(), bo=E.bo, al=catAlloc(E); renderOverlap();
+  S.items.forEach(it=>{ const r=itemCalc(it); const a=$("#ipts"+it.id), d=$("#idet"+it.id); if(a) a.innerHTML=iptsHtml(r,al,E.raw); if(d) d.textContent=r.detail; });
+  BUNDLES.forEach(B=>{ const g=$("#bg-"+B.k); if(g) g.innerHTML=gaugeMini(bundleVal(bo,B.k),B.cap,bundleRaw(E,B.k)); });
   bonusWarn(bo);
 }
 
@@ -2114,11 +2305,12 @@ function applyModeUI(){
   const ask = !S.modeChosen && !S.demo && !hasData();
   $("#modeAsk").classList.toggle("hide", !ask);
   $("#modeSw").classList.toggle("hide", ask);
-  $("#progCard").classList.toggle("hide", ask);
-  ["#accPerf","#calcSummary","#calcSummary + .btn-row"].forEach(sel=>{ const el=$(sel); if(el) el.classList.toggle("hide", ask); });
+  ["#accPerf","#scoreHero","#calcActions"].forEach(sel=>{ const el=$(sel); if(el) el.classList.toggle("hide", ask); });
   $("#quickWrap").classList.toggle("hide", ask || !q);
   $("#detailWrap").classList.toggle("hide", ask || q);
-  $$(".modesw button").forEach(b=>b.classList.toggle("on", b.dataset.mode===S.mode));
+  $$("#modeSw button[data-mode]").forEach(b=>b.classList.toggle("on", b.dataset.mode===S.mode));
+  const md=$("#mcDesc"); if(md) md.textContent = q? "평정표를 보며 점수를 옮겨 적기 · 1~2분. 평정표는 교감 선생님께 요청하세요." : "임용일·학교·기간·연수를 넣으면 자동 계산. 평정표가 없을 때.";
+  const ih=$("#inH"); if(ih) ih.classList.toggle("hide", ask);
   $("#qCareerMore").classList.toggle("hide", !!Q.careerFull);
   $("#qTrainMore").classList.toggle("hide", !!Q.trainFull);
   const ap=q1Applies(by0());
@@ -2129,26 +2321,47 @@ function applyModeUI(){
   $("#qTotalIn").classList.toggle("hide", Q.bmode!=="total");
   $$("[data-qbm]").forEach(b=>b.classList.toggle("on", b.dataset.qbm===Q.bmode));
 }
+// '평정표 점수로' 입력의 "…로 계산하기 →" 링크로 넘어온 경우: 계산값을 평정표 입력에 돌려주는 띠
+const RET = {
+  accCareer:{label:"경력평정", val:E=>E.car.total, acc:"qCareer", apply:E=>{ const q=S.quick; if(E.car.total>=70-1e-9) q.careerFull=true; else { q.careerFull=false; q.careerY=String(Math.floor(E.cm.ga/12)); q.careerM=String(E.cm.ga%12); } return "경력평정 "+f3(E.car.total)+"점"; }},
+  accTrain:{label:"연수성적평정", val:E=>E.tr.total, acc:"qTrain", apply:E=>{ const q=S.quick, full=q1Applies(by0())?30:21; if(E.tr.total>=full-1e-9) q.trainFull=true; else { q.trainFull=false; q.trainPts=f3(E.tr.total); } return "연수성적평정 "+f3(E.tr.total)+"점"; }},
+  accBonus:{label:"학교 근무 경력 점수", val:E=>E.bo.region, acc:"qBonus", apply:E=>{ const q=S.quick; q.bmode="period"; if(E.bo.region>=1-1e-9) q.p.regionFull=true; else { q.p.regionFull=false; q.p.region=f3(E.bo.region); } return "학교 근무 경력 "+f3(E.bo.region)+"점"; }}
+};
+function retHtml(E){
+  const R=RET[S.ret]; if(!R || isQuick()) return "";
+  return `<div class="retband"><span>'평정표 점수로' 입력에서 넘어왔어요 · 지금 계산된 <b>${R.label} ${f3(R.val(E))}점</b></span><button type="button" class="btn sm" data-retapply="1">이 점수 가져가서 돌아가기 →</button><button type="button" class="linkbtn" data-retcancel="1">그냥 여기서 계속</button></div>`;
+}
 function renderCalcOut(){
   applyModeUI();
   const E = evaluateNow();
+  { const h=retHtml(E); const top=$("#retTop"); if(top) top.innerHTML=h; ["accCareer","accTrain","accBonus"].forEach(k=>{ const el=$("#ret-"+k); if(el) el.innerHTML = (k===S.ret)? h : ""; }); }
   const by=+S.profile.baseYear;
-  const ct=$("#ctxTxt"); if(ct) ct.innerHTML = `<b>${by}.2.${isLeap(by)?29:28}. 기준</b> · ${(S.profile.special===true||S.profile.special==="true")?"특수(초등) 교사":"초등 교사"}`;
+  const ct=$("#ctxTxt"); if(ct) ct.innerHTML = `<b>${by}.2.${isLeap(by)?29:28}. 기준</b> · ${(S.profile.special===true||S.profile.special==="true")?"특수(초등) 교사":"초등 교사"} · 구 광주 기준`;
   if(isQuick()){
     const Q=S.quick;
-    $("#qvCareer").textContent = (Q.careerFull||Q.careerY!=="")? f3(E.car.total)+"점" : "";
-    $("#qvTrain").textContent = (Q.trainFull||Q.trainPts!=="")? f3(E.tr.total)+"점" : "";
-    $("#qvBonus").textContent = (quickBonusFilled()||S.bonusNone)? f3(E.bo.total)+"점" : "";
+    const ef=emptyFlags(), trF=q1Applies(by)?30:21, needQ=Math.max(0,r3(cutFor(by)-100));
+    $("#qvElig").innerHTML = Q.eligAll? `<span class="pill good">✔ 충족</span>` : `<span class="pill warn">확인 필요</span>`;
+    $("#qvCareer").innerHTML = svHtml(E.car.total,70,ef.car);
+    $("#qrCareer").innerHTML = svBar([[E.car.base,"c1"],[E.car.over,"c2"]],70);
+    $("#qrTrain").innerHTML = svBar([[E.tr.total,"c2"]],trF);
+    $("#qrBonus").innerHTML = svBar(BUNDLES.map((B,i)=>[bundleVal(E.bo,B.k),["c1","c2","c3","c4"][i%4]]).concat([[E.bo.gwangju,"c4"]]), Math.max(needQ,E.bo.total));
+    $("#qsCareer").innerHTML = ef.car? "" : `인정 ${fmtYM(E.cm.ga)} · 기본 <b>${f3(E.car.base)}</b>/64 · 초과 <b>${f3(E.car.over)}</b>/6`;
+    $("#qvTrain").innerHTML = svHtml(E.tr.total,trF,ef.tr);
+    $("#qsTrain").innerHTML = ef.tr? "" : (Q.trainFull? `직무 <b>18</b> + 1정 <b>${q1Applies(by)?9:"제외"}</b> + 연구 <b>3</b>` : `평정표 점수 <b>${f3(E.tr.total)}</b>/${trF}${q1Applies(by)?` · 1정 몫(추정) ${f3(E.tr.q)}`:" · 1정 제외"}`);
+    $("#qvBonus").innerHTML = svHtml(E.bo.total,null,ef.bo);
+    const blq=BUNDLES.map(B=>[B,bundleVal(E.bo,B.k)]).filter(x=>x[1]>0);
+    $("#qsBonus").innerHTML = ef.bo? "" : (blq.length? blq.map(([B,v])=>`${BSHORT[B.k]} <b>${f3(v)}</b>`).join(" · ") : "가산점 없음") + (E.bo.gwangju>0?` · 관내 <b>${f3(E.bo.gwangju)}</b>`:"") + ` · 필요 ${f2(needQ)}`;
     if(Q.bmode==="period") renderQuickPeriod(E);
-    $$("#quickWrap .qcard").forEach(c=>{ const it=completeness().find(x=>x.acc===c.id); c.classList.toggle("done", !!(it&&it.ok)); });
   }
   // 자격
   const el = eligibility(E);
   $("#svElig").innerHTML = el.ok? `<span class="pill good">✔ 충족</span>` : `<span class="pill warn">확인 필요</span>`;
   $("#eligOut").innerHTML = el.html;
   // 경력
-  $("#svCareer").textContent = f3(E.car.total)+"점";
-  const c=E.car;
+  const c=E.car, efD=emptyFlags();
+  $("#svCareer").innerHTML = svHtml(c.total,70,efD.car);
+  $("#svbCareer").innerHTML = efD.car? "임용 연·월을 넣으면 계산됩니다" : `기본 <b>${f3(c.base)}</b>/64 · 초과 <b>${f3(c.over)}</b>/6 · 인정 ${fmtYM(E.cm.ga)}${c.total<70?` · 만점까지 ${Math.max(0,240-E.cm.ga-E.cm.na)}개월`:""}`;
+  $("#svrCareer").innerHTML = svBar([[c.base,"c1"],[c.over,"c2"]],70);
   $("#careerOut").innerHTML = S.profile.hire? `
     <div class="rowline"><span>'가'경력 인정 개월</span><b class="num">${E.cm.ga}개월 (${Math.floor(E.cm.ga/12)}년 ${E.cm.ga%12}개월)</b></div>
     <div class="rowline"><span>기본경력(최근 15년) ${c.bga+c.bna}/180개월</span><b class="num">${f3(c.base)} / 64</b></div>
@@ -2156,33 +2369,59 @@ function renderCalcOut(){
     ${c.total<70?`<div class="callout small">만점(70점)까지 <b>${E.cm.ga+E.cm.na>=240?0:240-E.cm.ga-E.cm.na}개월</b> 남았습니다. 경력점은 근무하는 동안 자동으로 오릅니다.</div>`:`<div class="callout good small">경력평정 만점입니다.</div>`}`
     : `<p class="small muted">임용일을 넣으면 경력평정점을 계산합니다.</p>`;
   // 연수
-  const t=E.tr;
-  $("#svTrain").textContent = f3(t.total)+"점";
+  const t=E.tr, tmS=S.train, trAp=q1Applies(by), trFull=trAp?30:21;
+  $("#svTrain").innerHTML = svHtml(t.total,trFull,efD.tr);
+  $("#svbTrain").innerHTML = efD.tr? "직무연수·1정 성적·연구실적을 넣으면 계산됩니다"
+    : `직무 ${t.jobs.map((v,i)=>tmS.jobs[i].s===""?"–":f2(v)).join("·")} = <b>${f3(t.jobSum)}</b>/18 · 1정 <b>${trAp?f3(t.q)+"</b>/9":"제외</b>"} · 연구 <b>${f3(t.res)}</b>/3`;
+  $("#svrTrain").innerHTML = svBar([[t.jobSum,"c1"],[t.q,"c2"],[t.res,"c3"]],trFull);
+  { const qE= tmS.qmode==="grade"? tmS.qgrade==="" : tmS.qscore===""; const nT = efD.tr? 0 : tmS.jobs.filter(j=>j.s==="").length + (qE?1:0);
+    const tn=$("#tnTrain"); if(tn) tn.textContent = nT>0? `빈 항목 ${nT}` : ""; }
   renderTrainConv(E);
   // 가산점
-  $("#svBonus").textContent = f3(E.bo.total)+"점";
+  const needD=Math.max(0,r3(cutFor(by)-100)), blD=BUNDLES.map(B=>[B,bundleVal(E.bo,B.k)]).filter(x=>x[1]>0);
+  $("#svBonus").innerHTML = svHtml(E.bo.total,null,efD.bo);
+  $("#svbBonus").innerHTML = efD.bo? "해당 항목을 추가하면 계산됩니다" : ((blD.length||E.bo.gwangju>0)? blD.map(([B,v])=>`${BSHORT[B.k]} <b>${f3(v)}</b>`).concat(E.bo.gwangju>0?[`관내 <b>${f3(E.bo.gwangju)}</b>`]:[]).join(" · ") : "가산점 없음") + ` · 필요 ${f2(needD)}`;
+  $("#svrBonus").innerHTML = svBar(blD.map(([B,v],i)=>[v,["c1","c2","c3","c4"][i%4]]).concat(E.bo.gwangju>0?[[E.bo.gwangju,"c4"]]:[]), Math.max(needD,E.bo.total));
   refreshBonus();
-  $("#progCard").innerHTML = progressHtml(); $("#progCard").classList.toggle("slim", isComplete());
   const comp = isComplete();
   $("#svPerf").textContent = S.profile.perf!==""? f3(n(S.profile.perf))+"점":"";
   // 요약
   const cut = cutFor(by), gap = r3(E.total-cut);
   const roster = S.profile.perf!==""? r3(E.car.total + n(S.profile.perf) + t.total + E.bo.total):null;
-  $("#calcSummary").innerHTML = `
-    <h3>${by}.2.${isLeap(by)?29:28}. 기준 계산 결과 ${comp?"":'<span class="pill warn">임시</span>'}</h3>
-    <div class="grid3">
-      <div class="stat"><div class="k">경력평정</div><div class="v num">${f3(E.car.total)}</div></div>
-      <div class="stat"><div class="k">연수성적평정</div><div class="v num">${f3(t.total)}</div></div>
-      <div class="stat"><div class="k">가산점</div><div class="v num">${f3(E.bo.total)}</div></div>
-    </div>
-    ${t.quick? `<div class="rowline" style="margin-top:10px"><span>입력 방식</span><span>평정표 점수로</span></div>` : `<div class="rowline" style="margin-top:10px"><span>└ 교육성적(직무 ${f3(t.jobSum)} + 자격 ${f3(t.q)})</span><span class="num">${f3(t.edu)} / ${q1Applies(by)?27:18}</span></div>
-    <div class="rowline"><span>└ 연구실적(대회 ${f3(t.cont)} + 학위 ${f3(t.deg)})</span><span class="num">${f3(t.res)} / 3</span></div>`}
-    <div class="rowline" style="font-size:16px"><b>서류 점수${comp?"":" (임시)"}</b><b class="num">${f3(E.total)}</b></div>
-    <div class="rowline"><span>${by}년 기준점${newSys(by)?" (새 체계 임시 비교선)":by>2026?" (추정)":""}</span><span class="num">${f2(cut)}</span></div>
-    ${newSys(by)?`<div class="callout warn small" style="margin-top:8px">${by}년 평정은 1정 성적이 빠진 새 점수 체계로 계산했습니다. 기준점이 아직 없어 '기존 기준점 − 내 1정 점수(${f3(ownQ1())})'를 임시 비교선으로 씁니다. 다른 지원자도 1정 점수가 함께 빠진다고 보는 것입니다.</div>`:""}
-    <div class="rowline"><span>차이</span><b class="num" style="color:${gap>=0?"var(--good)":"var(--bad)"}">${sgn(gap)}</b></div>
-    ${roster!=null?`<div class="rowline"><span>참고: 순위 명부 점수(200점+가산점)</span><span class="num">${f3(roster)}</span></div>`:""}
-    ${!comp?`<div class="callout warn small" style="margin-top:10px">아직 입력하지 않은 항목이 있어 <b>임시 서류 점수</b>입니다. 위쪽 '입력 진행' 표시에서 빈 항목을 채우면 정확해집니다.</div>`:`<div class="callout ${gap>=0?"good":"bad"} small" style="margin-top:10px">${gap>=0?`기준점을 <b>${f3(gap)}점</b> 넘습니다. 서류 제출 대상에 해당할 가능성이 높습니다.`:`기준점까지 <b>${f3(-gap)}점</b>이 부족합니다. '미래 시뮬레이션'과 '보충 전략'에서 채울 방법을 확인하세요.`}</div>`}`;
+  $("#scoreHero").innerHTML = heroHtml(E,by,cut,gap,comp,roster);
+  syncAcc();
+}
+function heroHtml(E,by,cut,gap,comp,roster){
+  const ef=emptyFlags(), qk=isQuick(), c=completeness(), miss=c.filter(x=>!x.ok);
+  const chips=[["경력",E.car.total,70,ef.car,qk?"qCareer":"accCareer"],["연수",E.tr.total,q1Applies(by)?30:21,ef.tr,qk?"qTrain":"accTrain"],["가산점",E.bo.total,null,ef.bo,qk?"qBonus":"accBonus"]]
+    .map(([l,v,cap,em,acc])=>{ const cc=stCls(v,cap,em); return `<button type="button" class="${cc}" data-goacc="${acc}" title="${l} 입력으로 이동">${l}<b>${cc==="empty"?"미입력":f3(v)}</b></button>`; }).join("");
+  return `<div class="sh-h"><span>${comp?"서류 점수":"임시 서류 점수"}</span>${comp?"":`<span class="pill">입력 ${c.length-miss.length}/${c.length}</span>`}<span class="sh-date">${by}.2.${isLeap(by)?29:28}. 기준</span><span class="sh-mode">${qk?"평정표 점수로":"근무 기록으로"} 입력 중<button type="button" class="linkbtn" data-scroll="modeSw">바꾸기</button></span></div>
+    <div class="big num">${f3(E.total)}</div>
+    <div class="sh-gap num">기준점 ${f2(cut)}${newSys(by)?" (새 체계 임시)":by>2026?" (추정)":""} · <b class="${gap>=0?"pos":"neg"}">${gap>=0?"✔":"✖"} ${sgn(gap)}</b>${comp?"":' <span class="muted">· 빈 항목은 0점으로 계산 중</span>'}</div>
+    ${comp?"":`<div class="sh-miss">빈 항목 ${miss.map(x=>`<button type="button" data-goacc="${x.acc}">${esc(x.k)}</button>`).join("")}</div>`}
+    <div class="pchips sh-chips">${chips}<button type="button" class="sh-more" id="heroTreeBtn" aria-expanded="${!!S.treeOpen}">내역 ${S.treeOpen?"▴":"▾"}</button></div>
+    <div class="sh-tree" id="heroTree"${S.treeOpen?"":" hidden"}><div class="sh-treein">
+      <div class="sub" style="margin-top:8px">항목별 점수 구성 <span class="rate">${qk?"평정표 점수로 입력":"근무 기록으로 계산"}${comp?"":" · 임시"}</span></div>
+      ${treeHtml(E)}
+      ${newSys(by)?`<div class="callout warn small" style="margin-top:10px">${by}년 평정은 1정 성적이 빠진 새 점수 체계로 계산했습니다. 기준점이 아직 없어 '기존 기준점 − 내 1정 점수(${f3(ownQ1())})'를 임시 비교선으로 씁니다.</div>`:""}
+      ${roster!=null?`<div class="rowline" style="margin-top:8px"><span>참고: 순위 명부 점수(200점+가산점)</span><span class="num">${f3(roster)}</span></div>`:""}
+      ${comp?`<div class="callout ${gap>=0?"good":"bad"} small" style="margin-top:10px">${gap>=0?`기준점을 <b>${f3(gap)}점</b> 넘습니다. 서류 제출 대상에 해당할 가능성이 높습니다.`:`기준점까지 <b>${f3(-gap)}점</b>이 부족합니다. '미래 시뮬레이션'과 '보충 전략'에서 채울 방법을 확인하세요.`}</div>`:""}
+    </div></div>`;
+}
+// 섹션 접기: 저장된 상태 → 없으면 첫 미완료만 열기. 한 섹션을 다 채우면(포커스가 나간 뒤) 접고 다음 미완료를 연다.
+function syncAcc(){
+  const c=completeness(), ids=c.map(x=>x.acc);
+  if(S.accMode!==S.mode){ S.accMode=S.mode; accPrev=null; }
+  if(accPrev===null){
+    const saved=S.accOpen||{}; const has=ids.some(id=>id in saved);
+    ids.forEach(id=>{ const d=$("#"+id); if(d && d.tagName==="DETAILS") d.open = has? !!saved[id] : false; });
+    if(!has){ const f=c.find(x=>!x.ok); if(f){ const d=$("#"+f.acc); if(d) d.open=true; } }
+  } else {
+    c.forEach((x,i)=>{ if(accPrev[x.acc]===false && x.ok){ pendingClose.add(x.acc);
+      const nx=c.slice(i+1).find(y=>!y.ok)||c.find(y=>!y.ok); if(nx && nx.acc!==x.acc){ const e=$("#"+nx.acc); if(e) e.open=true; } } });
+  }
+  accPrev={}; c.forEach(x=>accPrev[x.acc]=x.ok);
+  c.forEach(x=>{ const d=$("#"+x.acc); if(d){ d.classList.toggle("done",x.ok); d.classList.toggle("needs",!x.ok); } });
 }
 function renderTrainConv(E){
   const t=E.tr, by=+S.profile.baseYear, ap=q1Applies(by), tm=S.train;
@@ -2206,7 +2445,7 @@ function eligibility(E){
   const by=+S.profile.baseYear; const bd=parseD(baseDateStr(by)); const c1=parseYM(S.profile.cert1,false);
   const items=[];
   let ok=true;
-  const hint=document.getElementById("cert1Hint");
+  const hint=document.getElementById("help-cert1");
   if(hint) hint.innerHTML = `연·월만 넣으면 돼요(그 달 1일 취득으로 계산). <b>${by-3}년 3월까지</b> 취득했으면 ${by}년 평정에서 충족합니다.`;
   if(S.profile.cert1ok){ items.push(`<div class="rowline"><span>1급 정교사 취득 후 교육경력 3년 이상</span><span class="pill good">✔ 충족(본인 확인)</span></div>`); }
   else if(c1){ const mo = monthsIncl(c1,bd); const pass = mo>=36; ok=ok&&pass;
@@ -2220,7 +2459,8 @@ function eligibility(E){
 
 /* ---- 하단 도크 ---- */
 function renderDock(){
-  const on = ["calc","sim"].includes(S.tab);
+  const heroEl=$("#scoreHero");
+  const on = S.tab==="sim" || (S.tab==="calc" && !heroVisible && heroEl && !heroEl.classList.contains("hide"));
   $("#dock").classList.toggle("on", on);
   document.body.classList.toggle("hasdock", on);
   if(!on) return;
@@ -2233,6 +2473,7 @@ function renderDock(){
     const g=r3(last.total-last.cut);
     $("#dockGap").innerHTML = `<span style="color:${g>=0?"var(--good)":"var(--bad)"}">${f3(last.total)} (${g>=0?"+":"−"}${f2(Math.abs(g))})</span>`;
     $("#dockToggle").innerHTML = "그래프 ↓";
+    $("#dockParts").innerHTML = "";
     return;
   }
   $("#dockToggle").innerHTML = `내역 <span id="dockArrow">${$("#dock").classList.contains("open")?"▼":"▲"}</span>`;
@@ -2243,6 +2484,9 @@ function renderDock(){
   $("#dockCutLbl").textContent = by+"년 기준점 "+f2(cut);
   $("#dockGap").innerHTML = comp? `<span style="color:${gap>=0?"var(--good)":"var(--bad)"}">${gap>=0?"✔ ":"✖ "}${sgn(gap)}점</span>`
     : `<span class="muted" style="font-weight:500;font-size:13px">입력 ${c.filter(x=>x.ok).length}/${c.length} · ${sgn(gap)}</span>`;
+  const efK=emptyFlags(), qk=isQuick();
+  $("#dockParts").innerHTML = [["경력",E.car.total,70,efK.car,qk?"qCareer":"accCareer"],["연수",E.tr.total,q1Applies(by)?30:21,efK.tr,qk?"qTrain":"accTrain"],["가산점",E.bo.total,null,efK.bo,qk?"qBonus":"accBonus"]]
+    .map(([l,v,cap,em,acc])=>{ const cc=stCls(v,cap,em); return `<button type="button" class="${cc}" data-goacc="${acc}" title="${l} 입력으로 이동">${l}<b>${cc==="empty"?"미입력":f3(v)}</b></button>`; }).join("");
   if($("#dock").classList.contains("open")) renderDockDetail(E,cut,gap);
 }
 function bar(v,cap){ const pct=cap?Math.min(100,v/cap*100):0; return `<span class="mbar${v>=cap-1e-6?" full":""}"><i style="width:${pct}%"></i></span>`; }
@@ -3210,8 +3454,8 @@ function buildPrint(){
     <p class="ps-sub">구(舊) 광주광역시교육청 초등 기준 · ${by}.2.${isLeap(by)?29:28}. 평정 기준 · 작성 ${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()}.${comp?"":" · <b>입력 미완료(임시)</b>"}${S.demo?" · 예시 자료":""}</p>
     <table><tr><th>경력평정</th><th>연수성적평정</th><th>가산점</th><th>합계</th><th>${by}년 기준점</th><th>차이</th></tr>
       <tr><td>${f3(E.car.total)}</td><td>${f3(E.tr.total)}</td><td>${f3(bo.total)}</td><td><b>${f3(E.total)}</b></td><td>${f2(cut)}</td><td><b>${sgn(gap)}</b></td></tr></table>
-    <h2>가산점 묶음별 현황</h2>
-    <table><tr><th class="l">묶음</th><th>점수</th><th>상한</th><th>상태</th></tr>${rows}</table>
+    <h2>항목별 점수 구성</h2>
+    <table><tr><th class="l">항목</th><th>점수</th><th>상한</th><th>상태</th></tr>${treeRows(E).filter(r=>!r.sum).map(r=>{ const c=treeState(r); return `<tr><td class="l" style="padding-left:${5+(r.l-1)*10}pt">${esc(r.n)}</td><td>${c==="empty"?"-":f3(r.v)}</td><td>${r.cap!=null&&c!=="excl"?r.cap:"-"}</td><td>${c==="excl"?"이 연도 제외":c==="empty"?"미입력":c==="cut"?"원점수 "+f3(r.raw)+" → 상한 잘림":c==="full"?"만점·상한":""}</td></tr>`; }).join("")}</table>
     <h2>미래 시뮬레이션 (기준점 연 +${f2(n(S.sim.inc))} 가정)</h2>
     <table><tr><th>계획</th><th>예상 도달</th><th>마지막 평정 연도 점수</th></tr>
       <tr><td>계획 A</td><td>${hA?hA.year+"년":"계획 내 미도달"}</td><td>${f3(A[A.length-1].total)} (${A[A.length-1].year}년)</td></tr>
@@ -3349,18 +3593,24 @@ function init(){
     if(t.dataset.recipe){ S.guide.recipe=t.dataset.recipe; save(); const sy=window.scrollY; renderYears(); window.scrollTo(0,sy); return; }
     if(t.dataset.gstyle){ S.guide.style=t.dataset.gstyle; save(); renderGuide(); return; }
     if(t.dataset.scroll){ const el=document.getElementById(t.dataset.scroll); if(el){ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); } return; }
-    if(t.dataset.mode){ const changed = S.mode!==t.dataset.mode || !S.modeChosen; S.mode=t.dataset.mode; S.modeChosen=true; save();
+    if(t.dataset.retapply){ const R=RET[S.ret]; if(R){ const E=evaluateNow(); const msg=R.apply(E); S.ret=null; S.mode="quick"; S.modeChosen=true; save(); bindInputs(); renderCalcOut(); renderDock();
+        const d=$("#"+R.acc); if(d){ d.open=true; setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); },60); }
+        toast(msg+"을 '평정표 점수로' 입력에 넣었습니다."); } return; }
+    if(t.dataset.retcancel){ S.ret=null; save(); renderCalcOut(); return; }
+    if(t.dataset.mode){ const changed = S.mode!==t.dataset.mode || !S.modeChosen;
+      S.ret = (S.mode==="quick" && t.dataset.mode==="detail" && RET[t.dataset.acc])? t.dataset.acc : null;
+      S.mode=t.dataset.mode; S.modeChosen=true; save();
       if(S.tab!=="calc") show("calc",true); else { renderCalcOut(); renderDock(); }
       const acc=t.dataset.acc;
       if(acc){ setTimeout(()=>{ const d=$("#"+acc); if(d){ d.open=true; const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); } },60); }
-      else { const sw=$("#modeSw"); const hh=($("header.top")||{}).offsetHeight||110; if(sw && S.tab==="calc") window.scrollTo({top:Math.max(0, sw.getBoundingClientRect().top+window.scrollY-hh-8)}); }
+      else if(S.tab==="calc") window.scrollTo({top:0});
       if(t.dataset.ask) toast(S.mode==="quick"?"평정표 점수를 옮겨 적어 주세요. 위 버튼으로 언제든 바꿀 수 있습니다.":"근무 기록을 넣으면 점수를 계산합니다. 위 버튼으로 언제든 바꿀 수 있습니다.");
       else if(changed) toast(S.mode==="quick"?"'평정표 점수로' 입력으로 바꿨습니다. 근무 기록으로 넣은 내용은 그대로 보관됩니다.":"'근무 기록으로' 입력으로 바꿨습니다. 평정표 점수로 넣은 내용은 그대로 보관됩니다.");
       return; }
     if(t.dataset.qbm){ S.quick.bmode=t.dataset.qbm; save(); renderCalcOut(); renderDock(); return; }
     if(t.dataset.stepd){ const box=t.closest(".stepper"); const inp=box&&box.querySelector("input"); if(inp){ const mn=inp.min!==""?+inp.min:-Infinity, mx=inp.max!==""?+inp.max:Infinity;
         let v=Math.round(n(inp.value))+(+t.dataset.stepd); if(inp.value==="" && +t.dataset.stepd>0 && mn>0) v=mn; v=Math.min(mx,Math.max(mn,v)); inp.value=String(v); inp.dispatchEvent(new Event("input",{bubbles:true})); } return; }
-    if(t.dataset.help){ const h=$("#help-"+t.dataset.help); if(h){ h.hidden=!h.hidden; t.classList.toggle("on",!h.hidden); } return; }
+    if(t.dataset.help){ e.preventDefault(); const h=$("#help-"+t.dataset.help); if(h){ h.hidden=!h.hidden; t.classList.toggle("on",!h.hidden); const d=h.closest("details"); if(d && !h.hidden) d.open=true; } return; }
     if(t.dataset.gridmore){ S.sim.moreRows = t.dataset.gridmore==="1"; save(); renderSimRows(); return; }
     if(t.dataset.preset){ applyPreset(t.dataset.preset); return; }
     if(t.dataset.print){ doPrint(); return; }
@@ -3368,6 +3618,7 @@ function init(){
       if(S.tab!=="calc"){ show("calc",true); setTimeout(go,60); } else go(); return; }
     switch(t.id){
       case "logoBtn": show("home",true); break;
+      case "heroTreeBtn": S.treeOpen=!S.treeOpen; save(); renderCalcOut(); break;
       case "moreBtn": { const m=$("#menuPop"); m.hidden=!m.hidden; t.setAttribute("aria-expanded",!m.hidden); e.stopPropagation(); break; }
       case "resetBtn2": $("#menuPop").hidden=true; $("#resetBtn").click(); break;
       case "printBtn": doPrint(); break;
@@ -3399,6 +3650,10 @@ function init(){
   let rz=null; let lastW=window.innerWidth;
   window.addEventListener("resize", ()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(Math.abs(window.innerWidth-lastW)<20) return; lastW=window.innerWidth; if(S.tab==="cut") renderCut(); if(S.tab==="sim") renderSimResult(); },200); });
   updateDemoBar();
+  document.addEventListener("toggle", e=>{ const d=e.target; if(d && d.tagName==="DETAILS" && d.classList.contains("acc") && d.id && d.closest("#p-calc")){ S.accOpen=S.accOpen||{}; S.accOpen[d.id]=d.open; save(); } }, true);
+  document.addEventListener("focusout", ()=>{ if(!pendingClose.size) return; setTimeout(()=>{ pendingClose.forEach(id=>{ const d=$("#"+id); if(!d) { pendingClose.delete(id); return; } const ae=document.activeElement; if(ae && ae!==document.body && !d.contains(ae)){ d.open=false; pendingClose.delete(id); } }); },0); });
+  if("IntersectionObserver" in window){ const he=$("#scoreHero"); if(he) new IntersectionObserver(es=>{ heroVisible=es[0].isIntersecting; renderDock(); },{threshold:0.1, rootMargin:"-100px 0px 0px 0px"}).observe(he); }
+  else heroVisible=false;
   try{ if(localStorage.getItem(KEY)) $("#saveState").textContent="✓ 자동 저장"; }catch(e){}
   document.addEventListener("keydown", e=>{ if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("term")){ e.preventDefault(); showTerm(e.target); } if(e.key==="Escape"){ $("#termPop").hidden=true; } });
   window.addEventListener("scroll", ()=>{ const tp=$("#termPop"); if(tp && !tp.hidden && Date.now()-termShownAt>400) tp.hidden=true; }, {passive:true});
