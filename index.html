@@ -570,6 +570,13 @@ table.plt td.me{background:var(--good-l);color:var(--good);font-weight:800;outli
 .bjalloc b{font-variant-numeric:tabular-nums}
 .bjalloc .arr{color:var(--muted)}
 .bjalloc.warn{background:var(--warn-l);color:#6b4a12}
+.bjalloc .bjdir{font-size:12px;font-weight:700;opacity:.8}
+.bjalloc .bjclr{border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;font-size:12px;font-weight:700;padding:2px 8px;min-height:26px;cursor:pointer;opacity:.85}
+.bjalloc .bjclr:hover{opacity:1}
+.bjalloc .bjwarn{flex-basis:100%;font-weight:600}
+.bjlab{display:grid;gap:1px}
+.bjuse{font-size:11.5px;font-weight:500;color:var(--muted)}
+.bjsub[hidden]{display:none!important}
 @media(max-width:400px){.bjlab{min-width:100%}}
 .sugg{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--good-l);border:1px solid #bfe3cf;border-radius:10px;padding:7px 10px;margin:8px 0;font-size:13px;color:#13573a}
 .sugg:empty{display:none}
@@ -616,8 +623,19 @@ footer .srcg li{margin:0 0 6px;overflow-wrap:anywhere}
 footer .srcg li em{font-style:normal;color:var(--muted);font-size:12px;white-space:nowrap}
 footer .srcg li em::before{content:"— "}
 @media (max-width:520px){footer .srcg{grid-template-columns:1fr;gap:4px}footer .srcg li em{display:block;white-space:normal}footer .srcg li em::before{content:""}}
-footer .fnote{margin:0 0 4px}
-footer .fby{margin:0;font-weight:600;color:var(--ink2)}
+footer{text-align:left}
+footer .fbrand{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 10px;font-size:13px;color:var(--muted)}
+footer .fbrand .mk{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:var(--pri)}
+footer .fbrand b{font-size:15px;color:var(--ink)}
+footer .fnote{display:flex;gap:8px;margin:0 0 12px;line-height:1.6;color:var(--ink2);font-size:13px}
+footer .fnote i{font-style:normal;color:var(--pri);font-weight:700;flex:0 0 auto}
+footer .fnote b{color:var(--ink)}
+footer .fby{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;margin:0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+footer .fby>*+*::before{content:"·";display:inline-block;margin:0 8px;color:var(--muted)}
+footer .fhub{color:var(--ink2);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+footer .fhub:hover{color:var(--pri)}
+footer .flink{border:0;background:none;padding:0;font:inherit;color:var(--ink2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;cursor:pointer}
+footer .flink:hover{color:var(--pri)}
 .hide{display:none!important}
 @media(max-width:420px){
   h1{font-size:21px}
@@ -1091,11 +1109,11 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
       <div id="qPeriodIn">
         <section class="pgrp"><div class="psub">보직·학교폭력 <span class="rate">합계 2.0 · 그 뒤 가목 0.5 · 나목 0.4</span></div>
         <div class="prow bjrow"><div class="ph"><b>보직교사 기간</b><span class="rate">시기별로 나눠 넣으면 자동 배분</span><span class="pv num" id="pv-bojik"></span></div>
-          <div class="bjsub"><span class="bjlab">2023.2.28.까지</span><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojikY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojikM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
-          <div class="bjsub"><span class="bjlab">2023.3.1.~2028.2.29.</span><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojik2Y" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojik2M" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
-          <div class="bjsub"><span class="bjlab">2028.3.1. 이후</span><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojik3Y" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojik3M" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+          <div class="bjsub"><span class="bjlab">2023.2.28.까지<small class="bjuse">①에만</small></span><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojikY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojikM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+          <div class="bjsub"><span class="bjlab" id="bjlab2">2023.3.1. 이후<small class="bjuse">①을 채우고 남으면 가목</small></span><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojik2Y" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojik2M" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
+          <div class="bjsub" id="bjrow3" hidden><span class="bjlab">2028.3.1. 이후<small class="bjuse">가목을 채우고 남으면 나목</small></span><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bojik3Y" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bojik3M" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
           <div class="bjalloc" id="pv-bjalloc"></div>
-          <p class="hint" style="margin:6px 0 0">① 보직(학폭과 합쳐 2.0) → ② 추가 가산점 가목(2023.3.1. 이후, 0.5) → ③ 추가 나목(2028.3.1. 이후, 0.4) 순서로 나눠 계산합니다. 시기를 모르면 전체 기간을 첫 칸에 넣으세요(①만 계산).</p></div>
+          <p class="hint" style="margin:6px 0 0">오래된 기간부터 ① 보직(학폭과 합쳐 2.0)에 채우고, 2.0을 넘긴 2023.3.1. 이후 기간이 가목(0.5)이 됩니다. 시기를 모르면 전체 기간을 첫 칸에 넣되, 2023년 이후 보직이 있었다면 가목이 빠집니다.</p></div>
         <div class="prow"><div class="ph"><b>교육전문직</b><span class="rate">1년 0.2016</span><span class="pv num" id="pv-jeon"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.jeonY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.jeonM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
         <div class="prow"><div class="ph"><b>학교폭력 예방·대응 실적</b><span class="rate">1회 0.1</span><span class="pv num" id="pv-sv"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.svN" placeholder="0" aria-label="회(인정받은 해)"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>회(인정받은 해)</span></div></div></div>
         <details class="rare" id="qBjDirect"><summary>가목·나목 점수를 평정표에서 직접 넣기 <span class="rate">아는 경우만 · 자동 배분보다 우선</span><span class="pv num" id="pv-bjdirect"></span></summary>
@@ -1355,8 +1373,9 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
       <li>「1정 자격연수 5월부터 절대평가로 전환」 <em>한국교육신문 · 2020.4.23.</em></li>
     </ul></div>
   </details>
-  <p class="fnote"><b>교육청 공식 사이트가 아닙니다.</b> 광주광역시교육청·교육지원청과 무관하게 개인이 만든 비공식 참고 도구입니다.<br>구(舊) 광주광역시교육청 초등 승진 규정을 바탕으로 한 개략 추정용이며 공식 평정을 대신하지 않습니다. 공식 안내는 소속 학교·교육지원청 인사 담당에게 확인하세요.</p>
-  <p class="fby">만든이 2026 최창훈</p>
+  <div class="fbrand"><span class="mk" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c3-1 4-4 6-7s4-5 10-6"/><circle cx="4" cy="20" r="1.6" fill="#fff"/><path d="M15 4l5 3-3 5"/></svg></span><b>교감 자격연수 내비게이터</b><span>구 광주 초등 승진 기준</span></div>
+  <p class="fnote"><i aria-hidden="true">ⓘ</i><span><b>교육청 공식 사이트가 아닙니다.</b> 광주광역시교육청·교육지원청과 무관하게 교원 개인이 만든 비영리 참고 도구로, 법적 효력이 없습니다. 구(舊) 광주광역시교육청 초등 승진 규정을 바탕으로 한 개략 추정용이며 공식 평정을 대신하지 않습니다. 공식 안내는 소속 학교·교육지원청 인사 담당에게 확인하세요.</span></p>
+  <p class="fby"><span>만든이 2026 최창훈</span><a class="fhub" href="https://edu-hub-alpha-ten.vercel.app/" target="_blank" rel="noopener">학교 연장통의 도구</a><span>비영리</span><button type="button" class="flink" data-lic="1">출처·라이선스 보기</button></p>
 </footer>
 </main>
 
@@ -1579,7 +1598,7 @@ function fromSaved(obj){
   const st = migrate(deepMerge(defState(), obj));
   if(obj && obj.quick && obj.quick.bmode===undefined && obj.quick.b && Object.values(obj.quick.b).some(v=>v!=="")) st.quick.bmode="bundle";
   if(obj && obj.quick && obj.quick.bmode==="bundle" && !obj.quick.p && !Object.values(obj.quick.b||{}).some(v=>v!=="")) st.quick.bmode="period";
-  if(st.quick.p && (st.quick.p.addAY||st.quick.p.addAM)){ const m=Math.floor(n(st.quick.p.addAY))*12+Math.floor(n(st.quick.p.addAM)); if(m>0 && !st.quick.p.addApts) st.quick.p.addApts=f3(Math.min(.5,m*.01)); delete st.quick.p.addAY; delete st.quick.p.addAM; }
+  if(st.quick.p && (st.quick.p.addAY||st.quick.p.addAM)){ const m=Math.floor(n(st.quick.p.addAY))*12+Math.floor(n(st.quick.p.addAM)); if(m>0 && !st.quick.p.addApts){ st.quick.p.addApts=f3(Math.min(.5,m*.01)); st.quick.p.addAfrom="old"; } delete st.quick.p.addAY; delete st.quick.p.addAM; }
   if(st.quick.p && st.quick.p.etc){ if(!st.quick.p.spOld) st.quick.p.spOld=st.quick.p.etc; delete st.quick.p.etc; }
   if(st.quick.b && st.quick.b.etc){ if(!st.quick.b.specialOld) st.quick.b.specialOld=st.quick.b.etc; delete st.quick.b.etc; }
   ["hire","cert1"].forEach(k=>{ const v=st.profile[k]; if(typeof v==="string" && /^\d{4}-\d{2}-\d{2}$/.test(v)) st.profile[k]=v.slice(0,7); });
@@ -1908,7 +1927,7 @@ function quickRaw(){
   else if(q.bmode==="period"){ const P=q.p, mo=k=>Math.max(0,Math.floor(n(P[k+"Y"]))*12+Math.floor(n(P[k+"M"])));
     raw.jeonmun=mo("jeon")*.0168; raw.sv=Math.max(0,n(P.svN))*.1;
     { const A=bojikAlloc(P, raw.sv, raw.jeonmun, Math.max(0,n(P.gold))*.1 + Math.max(0,n(P.silver))*.05 + Math.max(0,n(P.bronze))*.025);
-      raw.bojik=A.bojik; raw.addA = P.addApts!==""? Math.min(.5,n(P.addApts)) : A.addA; raw.addB = P.addBpts!==""? Math.min(.4,n(P.addBpts)) : A.addB; }
+      raw.bojik=A.bojik; raw.addA = P.addApts!==""? (A.full? Math.min(.5,n(P.addApts)) : 0) : A.addA; raw.addB = P.addBpts!==""? (A.full? Math.min(.4,n(P.addBpts)) : 0) : A.addB; }
     raw.rsMoe=mo("rsMoe")*.018; raw.rsEdu=mo("rsEdu")*.012; raw.prSchool=mo("pr")*.015;
     raw.credits = P.crFull? 1 : (Math.max(0,n(P.cr6))*6 + Math.max(0,n(P.cr4))*4)*.02;
     raw.remote = P.regionFull? 1 : n(P.region);
@@ -2112,12 +2131,17 @@ function bindInputs(){
     if(el.type==="checkbox") el.checked=!!v; else el.value = (v===undefined||v===null)?"":String(v);
   });
 }
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-bjclr]"); if(!b) return;
+  const k=b.dataset.bjclr; S.quick.p[k]=""; if(k==="addApts") delete S.quick.p.addAfrom;
+  $$(`[data-p="quick.p.${k}"]`).forEach(o=>o.value=""); save(); renderCalcOut(); renderDock(); });
 function onInput(e){
   const el=e.target; if(!el.dataset || !el.dataset.p) return;
   let v = el.type==="checkbox"?el.checked:el.value;
   if(el.dataset.p==="profile.special") v = (v==="true");
   if(el.dataset.p==="profile.baseYear") v = +v;
   setP(el.dataset.p, v);
+  if(/^quick\.p\.bojik[23][YM]$/.test(el.dataset.p) && S.quick.p.addAfrom==="old"){ S.quick.p.addApts=""; delete S.quick.p.addAfrom; $$('[data-p="quick.p.addApts"]').forEach(o=>o.value=""); }
+  if(el.dataset.p==="quick.p.addApts" && S.quick.p.addAfrom) delete S.quick.p.addAfrom;
   { const P=el.dataset.p, m = /^quick\.p\.region/.test(P)? "accBonus" : /^quick\.career/.test(P)? "accCareer" : /^quick\.train/.test(P)? "accTrain" : null; if(m && S.auto) delete S.auto[m]; }
   $$(`[data-p="${el.dataset.p}"]`).forEach(o=>{ if(o!==el){ if(o.type==="checkbox") o.checked=!!v; else o.value=v; } });
   save(); renderCalcOut(); renderDock();
@@ -2426,10 +2450,14 @@ function renderQuickPeriod(E){
   { const A=bojikAlloc(P, r.sv, r.jeonmun, r.sports); const el=$("#pv-bjalloc"); const tot=A.used1+A.usedA+A.usedB+A.lost;
     if(el){ if(!tot) el.innerHTML=""; else {
       const parts=[`① 보직 <b>${f3(Math.min(A.bojik,A.bjCap))}</b> (${fmtYM(A.used1)})`];
-      if(A.full){ parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(P.addApts!==""?Math.min(.5,n(P.addApts)):A.addA)}</b>${P.addApts!==""?" 직접":" ("+fmtYM(A.usedA)+")"}`); parts.push(`<span class="arr">→</span> ③ 나목 <b>${f3(P.addBpts!==""?Math.min(.4,n(P.addBpts)):A.addB)}</b>${P.addBpts!==""?" 직접":" ("+fmtYM(A.usedB)+")"}`); }
-      else parts.push(`<span class="arr">·</span> 학폭 ${f3(r.sv)} + 보직으로 2.0을 못 채워 추가 가산점은 0`);
+      const dA=P.addApts!=="", dB=P.addBpts!=="";
+      const clr=k=>`<button type="button" class="bjclr" data-bjclr="${k}" aria-label="직접 입력 지우기">✕ 지우기</button>`;
+      let warnDirect="";
+      if(A.full){ parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(dA?Math.min(.5,n(P.addApts)):A.addA)}</b>${dA?` <span class="bjdir">${P.addAfrom==="old"?"이전 자료에서 옮긴 값":"직접 입력"}</span> ${clr("addApts")}`:" ("+fmtYM(A.usedA)+")"}`); if(+S.profile.baseYear>=2029||dB||A.addB>0) parts.push(`<span class="arr">→</span> ③ 나목 <b>${f3(dB?Math.min(.4,n(P.addBpts)):A.addB)}</b>${dB?` <span class="bjdir">직접 입력</span> ${clr("addBpts")}`:" ("+fmtYM(A.usedB)+")"}`);
+        if(dA && n(P.addApts)>0 && A.addA<1e-9) warnDirect="2023.3.1. 이후 보직 기간이 없는데 가목 점수가 직접 입력돼 있어요. 평정표의 가목 점수가 맞는지 확인하고, 아니면 지우세요."; }
+      else { parts.push(`<span class="arr">·</span> 학폭 ${f3(r.sv)} + 보직으로 2.0을 못 채워 추가 가산점은 0`); if((dA&&n(P.addApts)>0)||(dB&&n(P.addBpts)>0)) parts.push(`<span class="arr">·</span> 직접 넣은 가목·나목은 2.0을 채우기 전이라 계산에서 뺐어요 ${clr("addApts")}`); }
       if(A.lost>0) parts.push(`<span class="arr">·</span> 점수 없는 기간 ${fmtYM(A.lost)}`);
-      el.className="bjalloc"+(A.full?"":" warn"); el.innerHTML=parts.join(" "); } }
+      el.className="bjalloc"+(A.full&&!warnDirect?"":" warn"); el.innerHTML=parts.join(" ")+(warnDirect?`<span class="bjwarn">${warnDirect}</span>`:""); } }
     const d=$("#pv-bjdirect"); if(d) d.textContent = (P.addApts!==""||P.addBpts!=="")? "직접 입력 중" : ""; }
   set("region", Math.min(1,r.remote)); set("sports", Math.min(.55,r.sports));
   set("ov", Math.min(.5,r.overseas), r.overseas>.5?"상한 0.5":""); set("ko", Math.min(1,r.korean)); set("guide", Math.min(1,r.prGuide)); set("spOld", Math.min(1,r.specialOld));
@@ -2474,7 +2502,12 @@ function retHtml(E){
   const R=RET[S.ret]; if(!R || isQuick()) return "";
   return `<div class="retband"><span>'평정표 점수로' 입력에서 넘어왔어요 · 지금 계산된 <b>${R.label} ${f3(R.val(E))}점</b></span><button type="button" class="btn sm" data-retapply="1">이 점수 가져가서 돌아가기 →</button><button type="button" class="linkbtn" data-retcancel="1">그냥 여기서 계속</button></div>`;
 }
+function renderBjRows(){ const P=S.quick.p||{}, by=+S.profile.baseYear, has=(n(P.bojik3Y)||n(P.bojik3M))>0, show=by>=2029||has;
+  const r3=document.getElementById("bjrow3"), l2=document.getElementById("bjlab2");
+  if(r3) r3.hidden=!show;
+  if(l2) l2.firstChild.textContent = show? "2023.3.1.~2028.2.29." : "2023.3.1. 이후"; }
 function renderCalcOut(){
+  renderBjRows();
   applyModeUI();
   const E = evaluateNow();
   { const h=retHtml(E); const top=$("#retTop"); if(top) top.innerHTML=h; ["accCareer","accTrain","accBonus"].forEach(k=>{ const el=$("#ret-"+k); if(el) el.innerHTML = (k===S.ret)? h : ""; }); }
@@ -3973,6 +4006,7 @@ function init(){
     try{ history.pushState({tab:S.tab, lic:1}, "", cleanURL()); }catch(e){} }
   function licCloseReq(){ if(history.state&&history.state.lic) history.back(); else licHide(); }
   $("#licBtn").addEventListener("click", licOpen);
+  $$("[data-lic]").forEach(b=>b.addEventListener("click", ()=>{ const d=document.querySelector("footer .srcs"); if(d) d.open=true; licOpen(); }));
   $("#licClose").addEventListener("click", licCloseReq);
   $("#licWrap").addEventListener("click", e=>{ if(e.target.id==="licWrap") licCloseReq(); });
   document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !$("#licWrap").hidden) licCloseReq(); });
