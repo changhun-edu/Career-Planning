@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>교감 자격연수 내비게이터</title>
-<meta name="description" content="구 광주광역시교육청 기준, 초등 교사를 위한 교감 자격연수 서류 기준점 계산·진로 시뮬레이션 도구">
+<meta name="description" content="초등 교사를 위한 교감 자격연수 서류 기준점 계산·진로 시뮬레이션 도구(구 광주광역시교육청 규정 기준). 교육청 공식 사이트가 아닌 현직 교감이 개인적으로 만든 비공식 참고 도구입니다.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" onload="this.media='all'">
 <style>
 :root{
@@ -462,6 +462,8 @@ details.alerts[open] > summary::after{transform:rotate(-135deg)}
 .al-b p b{margin-right:4px}
 /* 문의처 */
 table.contact tr.key td{background:var(--acc-l)}
+.unofficial{background:#fff8ec;border:1px solid #f1d9ad;border-left:4px solid var(--warn);border-radius:12px;padding:10px 12px;margin:0 0 12px;font-size:13.5px;color:#5c4423;line-height:1.55}
+.unofficial b{color:#7a3f12}
 /* 지역 표시 */
 .region{background:#fff8ec;border:1px solid #f1d9ad;border-left:4px solid var(--acc);border-radius:12px;padding:12px 14px;margin:12px 0 4px}
 .region-h{display:flex;align-items:center;gap:6px;font-size:15px;color:#7a3f12}
@@ -484,7 +486,7 @@ table.contact tr.key td{background:var(--acc-l)}
 .st-full{color:var(--good);font-weight:700}
 .st-left{color:var(--muted)}
 .item{border:1px solid var(--line2);border-radius:10px;padding:9px 9px 8px;margin:10px 0 4px;background:#fff}
-.item.flash{animation:flash 1.2s ease}
+.item.flash,.prow.flash,details.acc.flash{animation:flash 1.2s ease}
 @keyframes flash{0%{box-shadow:0 0 0 4px var(--pri-l);border-color:var(--pri)}100%{box-shadow:none}}
 .ih{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .ih b{font-size:14px;flex:1;min-width:0}
@@ -791,7 +793,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
     <div class="bar">
       <button class="logo" id="logoBtn" aria-label="홈으로">
         <span class="mk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c3-1 4-4 6-7s4-5 10-6"/><circle cx="4" cy="20" r="1.6" fill="#fff"/><path d="M15 4l5 3-3 5"/></svg></span>
-        <span><b>교감 자격연수 내비게이터</b><small>구 광주광역시교육청 기준 · 초등</small></span>
+        <span><b>교감 자격연수 내비게이터</b><small>비공식 개인 제작 · 구 광주 초등 기준</small></span>
       </button>
       <div class="tools">
         <span class="savestate" id="saveState" aria-live="polite"></span>
@@ -824,6 +826,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
 <section class="page" id="p-home">
   <h1>나는 교감 자격연수까지<br>어디쯤 와 있을까?</h1>
   <p class="lead">내 점수와 앞으로의 계획으로 교감 자격연수 시기를 미리 그려 봅니다.</p>
+  <div class="unofficial"><b>교육청 공식 사이트가 아닙니다.</b> 광주광역시교육청·교육지원청과 관계없이, 현직 초등학교 교감이 공개된 규정과 안내 자료를 바탕으로 개인적으로 만든 <b>비공식 참고 도구</b>입니다. 결과는 추정치이며 공식 평정·안내는 소속 학교와 교육지원청을 따르세요. <button type="button" class="linkbtn" data-go="rules" data-rule="about">자세히 →</button></div>
   <div class="persona" id="persona">
     <div class="persona-q">나는 어떤 상황인가요?</div>
     <div class="persona-btns">
@@ -833,8 +836,9 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
   </div>
   <div id="homeStatus"></div>
   <details class="alerts" id="homeAlerts">
-    <summary><span class="al-n">알림 2</span><span class="al-t">구 광주광역시교육청 기준 · 1정 성적 2030년 제외 예정</span></summary>
+    <summary><span class="al-n">알림 3</span><span class="al-t">비공식 개인 제작 · 구 광주 기준 · 1정 성적 2030년 제외 예정</span></summary>
     <div class="al-b">
+      <p><b>비공식 도구</b> 이 사이트는 교육청·교육지원청의 공식 사이트가 아니며 교육청의 검토·승인을 받지 않았습니다. 여기 적힌 수치와 설명은 공개 자료를 제작자가 정리한 것으로, 오류가 있을 수 있습니다. <button type="button" class="linkbtn" data-go="rules" data-rule="about">자세히 →</button></p>
       <p><b>적용 지역</b> 이 도구는 구(舊) 광주광역시교육청 초등 기준입니다. 평정의 큰 틀은 전국이 같지만 선택 가산점, 기준점, 면접 방식은 시·도마다 다릅니다. <button type="button" class="linkbtn" data-go="rules" data-rule="region">지역별 차이 →</button></p>
       <p><b>제도 변화 예고</b> 1정 자격연수 성적(최대 9점)은 2029년 평정까지만 반영되고 2030년부터 빠질 예정입니다(2026.9.11. 입법예고, 확정 전). <button type="button" class="linkbtn" data-go="rules" data-rule="q1change">자세히 →</button></p>
       <p><b>문의</b> 소속 교육지원청 초등인사 담당 <button type="button" class="linkbtn" data-go="rules" data-rule="contact">업무별 담당 부서 →</button></p>
@@ -854,7 +858,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
     <button data-go="cut"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="13" width="3" height="4"/></svg></i><b>자료실</b><span>기준점·점수 분포, 규정 요약, 조견표</span></button>
   </div>
 
-  <div class="card ref small" style="margin-top:18px">이 프로그램의 결과는 <b>개략적인 추정치</b>입니다. 실제 평정은 학교 평정자와 교육청 확인을 거쳐 확정되며, 세부 인정 여부(휴직·파견 기간, 학교 지정 기간 등)에 따라 달라질 수 있습니다. 입력한 내용은 이 기기 브라우저에만 저장되고, 어디로도 전송되지 않습니다.</div>
+  <div class="card ref small" style="margin-top:18px"><b>이 사이트는 교육청 공식 사이트가 아닙니다.</b> 개인이 만든 참고 도구이며, 결과는 <b>개략적인 추정치</b>입니다. 실제 평정은 학교 평정자와 교육청 확인을 거쳐 확정되며, 세부 인정 여부(휴직·파견 기간, 학교 지정 기간 등)에 따라 달라질 수 있습니다. 입력한 내용은 이 기기 브라우저에만 저장되고, 어디로도 전송되지 않습니다.</div>
 </section>
 
 <!-- ============ CUT ============ -->
@@ -1272,7 +1276,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
       <li>「1정 자격연수 5월부터 절대평가로 전환」 <em>한국교육신문 · 2020.4.23.</em></li>
     </ul></div>
   </details>
-  <p class="fnote">구(舊) 광주광역시교육청 초등 승진 규정 기준 · 개략 추정용 도구이며 공식 평정을 대신하지 않습니다.</p>
+  <p class="fnote"><b>교육청 공식 사이트가 아닙니다.</b> 광주광역시교육청·교육지원청과 무관하게 개인이 만든 비공식 참고 도구입니다.<br>구(舊) 광주광역시교육청 초등 승진 규정을 바탕으로 한 개략 추정용이며 공식 평정을 대신하지 않습니다. 공식 안내는 소속 학교·교육지원청 인사 담당에게 확인하세요.</p>
   <p class="fby">만든이 2026 최창훈</p>
 </footer>
 </main>
@@ -2892,6 +2896,16 @@ function fastest(E){
    규정
 ------------------------------------------------------------------ */
 const RULES = [
+ {t:"이 사이트에 대하여 — 교육청 공식 사이트가 아닙니다", id:"about", h:`
+  <div class="callout warn small" style="margin-top:8px"><b>교육청 공식 사이트가 아닙니다.</b> 광주광역시교육청, 동부·서부교육지원청과 아무 관계가 없으며, 교육청의 검토나 승인을 받지 않았습니다.</div>
+  <ul class="clean">
+   <li><b>누가 만들었나</b>: 현직 초등학교 교감(최창훈)이 개인 시간에 만든 참고 도구입니다. 교육청 업무로 만든 것이 아닙니다.</li>
+   <li><b>무엇을 바탕으로 했나</b>: 교육공무원 승진규정(대통령령), 광주광역시교육청 인사실무·가산점 평정기준·점수 분포 안내 등 <b>공개된 자료</b>를 제작자가 읽고 정리한 것입니다(아래 '출처와 유의사항').</li>
+   <li><b>정확성</b>: 자료를 옮기는 과정에서 오류나 누락이 있을 수 있고, 규정은 수시로 바뀝니다. 산식 일부는 기존 평정표(엑셀)를 참고해 추정했습니다.</li>
+   <li><b>결과의 성격</b>: 모든 점수와 예상 연도는 <b>개략적인 추정치</b>입니다. 실제 평정은 학교 평정자·확인자와 교육청 확인을 거쳐 확정되며, 이 도구의 결과로 어떤 권리나 자격이 생기지 않습니다.</li>
+   <li><b>공식 안내</b>: 승진·자격연수에 관한 공식 안내는 소속 학교 교감·교장과 교육지원청 초등인사 담당에게 확인하세요.</li>
+   <li><b>개인정보</b>: 입력한 내용은 이 기기 브라우저에만 저장되고 어디로도 전송되지 않습니다.</li>
+  </ul>`},
  {t:"제도 변화 예고: 1정 자격연수 성적 2030년부터 제외", id:"q1change", h:`
   <div class="callout warn small" style="margin-top:8px"><b>확정 전(입법예고) 내용입니다.</b> 최종 공포 내용과 경과조치에 따라 달라질 수 있습니다.</div>
   <ul class="clean">
@@ -3483,7 +3497,7 @@ function buildPrint(){
       <tr><td>계획 A</td><td>${hA?hA.year+"년":"계획 내 미도달"}</td><td>${f3(A[A.length-1].total)} (${A[A.length-1].year}년)</td></tr>
       <tr><td>계획 B</td><td>${hB?hB.year+"년":"계획 내 미도달"}</td><td>${f3(B[B.length-1].total)} (${B[B.length-1].year}년)</td></tr></table>
     ${S.profile.perf!==""?`<p>참고: 순위 명부 점수(200점 + 가산점) ${f3(E.car.total+n(S.profile.perf)+E.tr.total+bo.total)}</p>`:""}
-    <p class="ps-note">2030년 이후 평정은 1정 자격연수 성적 제외(2026.9.11. 입법예고)를 반영해 0점으로 계산하고, 기준점은 '기존 기준점 − 내 1정 점수' 임시 비교선을 썼습니다. 이 요약은 개략 추정치이며 공식 평정을 대신하지 않습니다. 만든이 2026 최창훈</p>`;
+    <p class="ps-note">2030년 이후 평정은 1정 자격연수 성적 제외(2026.9.11. 입법예고)를 반영해 0점으로 계산하고, 기준점은 '기존 기준점 − 내 1정 점수' 임시 비교선을 썼습니다. 이 요약은 교육청 공식 자료가 아니라 개인이 만든 비공식 도구의 개략 추정치이며, 공식 평정을 대신하지 않습니다. 만든이 2026 최창훈</p>`;
 }
 function doPrint(){ buildPrint(); $("#menuPop").hidden=true; setTimeout(()=>window.print(), 50); }
 
@@ -3615,8 +3629,10 @@ function init(){
     if(t.dataset.recipe){ S.guide.recipe=t.dataset.recipe; save(); const sy=window.scrollY; renderYears(); window.scrollTo(0,sy); return; }
     if(t.dataset.gstyle){ S.guide.style=t.dataset.gstyle; save(); renderGuide(); return; }
     if(t.dataset.scroll){ const el=document.getElementById(t.dataset.scroll); if(el){ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); } return; }
-    if(t.dataset.retapply){ const R=RET[S.ret]; if(R){ const E=evaluateNow(); const msg=R.apply(E); S.ret=null; S.mode="quick"; S.modeChosen=true; save(); bindInputs(); renderCalcOut(); renderDock();
-        const d=$("#"+R.acc); if(d){ d.open=true; setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110; window.scrollTo({top:d.getBoundingClientRect().top+window.scrollY-hh-8, behavior:"smooth"}); },60); }
+    if(t.dataset.retapply){ const R=RET[S.ret]; if(R){ const E=evaluateNow(); const k=S.ret; const msg=R.apply(E); S.ret=null; S.mode="quick"; S.modeChosen=true; save(); bindInputs(); renderCalcOut(); renderDock();
+        const d=$("#"+R.acc); if(d){ d.open=true; setTimeout(()=>{ const hh=($("header.top")||{}).offsetHeight||110;
+          const inp=$('[data-p="quick.p.region"]'); const row = k==="accBonus"&&inp? inp.closest(".prow") : null; const grp = row? row.closest(".pgrp") : null; const el=row||d;
+          window.scrollTo({top:(grp||el).getBoundingClientRect().top+window.scrollY-hh-10, behavior:"smooth"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1300); },80); }
         toast(msg+"을 '평정표 점수로' 입력에 넣었습니다."); } return; }
     if(t.dataset.sugg){ const R=RET[t.dataset.sugg]; if(R){ const msg=R.apply(evaluateDetail()); S.ret=null; save(); bindInputs(); renderCalcOut(); renderDock(); toast(msg+"을 넣었습니다."); } return; }
     if(t.dataset.retcancel){ S.ret=null; save(); renderCalcOut(); return; }
