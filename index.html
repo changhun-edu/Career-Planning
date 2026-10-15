@@ -571,6 +571,7 @@ table.plt td.me{background:var(--good-l);color:var(--good);font-weight:800;outli
 .bjalloc .arr{color:var(--muted)}
 .bjalloc.warn{background:var(--warn-l);color:#6b4a12}
 .bjalloc .bjdir{font-size:12px;font-weight:700;opacity:.8}
+.bjalloc .bjf{font-size:12px;font-weight:500;opacity:.85;font-variant-numeric:tabular-nums}
 .bjalloc .bjclr{border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;font-size:12px;font-weight:700;padding:2px 8px;min-height:26px;cursor:pointer;opacity:.85}
 .bjalloc .bjclr:hover{opacity:1}
 .bjalloc .bjwarn{flex-basis:100%;font-weight:600}
@@ -2449,11 +2450,13 @@ function renderQuickPeriod(E){
   set("addB", Math.min(.4,r.addB), P.addBpts!==""?"직접 입력":"");
   { const A=bojikAlloc(P, r.sv, r.jeonmun, r.sports); const el=$("#pv-bjalloc"); const tot=A.used1+A.usedA+A.usedB+A.lost;
     if(el){ if(!tot) el.innerHTML=""; else {
-      const parts=[`① 보직 <b>${f3(Math.min(A.bojik,A.bjCap))}</b> (${fmtYM(A.used1)})`];
+      const bjCut = A.bojik>A.bjCap+1e-9;
+      const fm=(m,rate)=>`(${m}개월 × ${rate}${m>=12?" · "+fmtYM(m):""})`;
+      const parts=[`① 보직 <b>${f3(Math.min(A.bojik,A.bjCap))}</b> <span class="bjf">${fm(A.used1,"0.021")}${bjCut?` → 2.0 상한`:""}</span>`];
       const dA=P.addApts!=="", dB=P.addBpts!=="";
       const clr=k=>`<button type="button" class="bjclr" data-bjclr="${k}" aria-label="직접 입력 지우기">✕ 지우기</button>`;
       let warnDirect="";
-      if(A.full){ parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(dA?Math.min(.5,n(P.addApts)):A.addA)}</b>${dA?` <span class="bjdir">${P.addAfrom==="old"?"이전 자료에서 옮긴 값":"직접 입력"}</span> ${clr("addApts")}`:" ("+fmtYM(A.usedA)+")"}`); if(+S.profile.baseYear>=2029||dB||A.addB>0) parts.push(`<span class="arr">→</span> ③ 나목 <b>${f3(dB?Math.min(.4,n(P.addBpts)):A.addB)}</b>${dB?` <span class="bjdir">직접 입력</span> ${clr("addBpts")}`:" ("+fmtYM(A.usedB)+")"}`);
+      if(A.full){ parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(dA?Math.min(.5,n(P.addApts)):A.addA)}</b>${dA?` <span class="bjdir">${P.addAfrom==="old"?"이전 자료에서 옮긴 값":"직접 입력"}</span> ${clr("addApts")}`:` <span class="bjf">${fm(A.usedA,"0.01")}</span>`}`); if(+S.profile.baseYear>=2029||dB||A.addB>0) parts.push(`<span class="arr">→</span> ③ 나목 <b>${f3(dB?Math.min(.4,n(P.addBpts)):A.addB)}</b>${dB?` <span class="bjdir">직접 입력</span> ${clr("addBpts")}`:` <span class="bjf">${fm(A.usedB,"0.01")}</span>`}`);
         if(dA && n(P.addApts)>0 && A.addA<1e-9) warnDirect="2023.3.1. 이후 보직 기간이 없는데 가목 점수가 직접 입력돼 있어요. 평정표의 가목 점수가 맞는지 확인하고, 아니면 지우세요."; }
       else { parts.push(`<span class="arr">·</span> 학폭 ${f3(r.sv)} + 보직으로 2.0을 못 채워 추가 가산점은 0`); if((dA&&n(P.addApts)>0)||(dB&&n(P.addBpts)>0)) parts.push(`<span class="arr">·</span> 직접 넣은 가목·나목은 2.0을 채우기 전이라 계산에서 뺐어요 ${clr("addApts")}`); }
       if(A.lost>0) parts.push(`<span class="arr">·</span> 점수 없는 기간 ${fmtYM(A.lost)}`);
