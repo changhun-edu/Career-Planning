@@ -1633,7 +1633,6 @@ function fromSaved(obj){
       P.bjStart=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); P.bjFrom="old"; }
     else P.bjMode="range";
     if(!Array.isArray(P.bjr)) P.bjr=[];
-    if(P.addApts!=="" && P.addAfrom!=="old") P.bjFix=true;
     ["bojikY","bojikM","bojik2Y","bojik2M","bojik3Y","bojik3M"].forEach(k=>delete P[k]); }
   if(st.quick.p && !Array.isArray(st.quick.p.bjr)) st.quick.p.bjr=[];
   if(st.quick.p && st.quick.p.etc){ if(!st.quick.p.spOld) st.quick.p.spOld=st.quick.p.etc; delete st.quick.p.etc; }
@@ -2514,6 +2513,8 @@ function renderQuickPeriod(E){
         parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(vA)}</b> <span class="bjf">${dA?`평정표 값 ${clr("addApts")}`:`(${fm(A.usedA,"0.01")})${A.usedA>=Math.ceil(A.capA/.01-1e-9)&&A.usedA>0?" → 상한":""}`}</span>`);
         if(by>=2029||dB||A.usedB>0||A.lost2>0) parts.push(`<span class="arr">→</span> ③ 나목 <b>${f3(vB)}</b> <span class="bjf">${dB?`평정표 값 ${clr("addBpts")}`:`(${fm(A.usedB,"0.01")})${A.usedB>=40?" → 상한":""}`}</span>`);
         if(dA && n(P.addApts)>0 && A.usedA===0 && M.m2+M.m3===0) warn.push("2023.3.1. 이후 보직 기간이 없는데 가목을 평정표 값으로 고정했어요. 기간을 확인하거나 고정을 풀어 주세요.");
+        if(dA && Math.abs(n(P.addApts)-A.addA)>1e-4) warn.push(`가목을 평정표 값 ${f3(Math.min(.5,n(P.addApts)))}점으로 고정해 쓰는 중이에요. 넣은 기간으로 계산하면 ${f3(A.addA)}점입니다. 평정표 값이 아니면 '평정표 값으로 고정'을 끄거나 ✕ 지우기를 누르세요.`);
+        if(dB && Math.abs(n(P.addBpts)-A.addB)>1e-4) warn.push(`나목을 평정표 값 ${f3(Math.min(.4,n(P.addBpts)))}점으로 고정해 쓰는 중이에요(기간 계산 ${f3(A.addB)}점).`);
         if(!dA && A.addA>0 && P.addApts!=="" && Math.abs(n(P.addApts)-A.addA)>1e-4) warn.push(`${P.addAfrom==="old"?"이전 자료의":"평정표에 넣은"} 가목 ${f3(n(P.addApts))}점과 기간으로 계산한 ${f3(A.addA)}점이 달라요. 평정표가 맞으면 '평정표 값으로 고정'을 켜 주세요.`);
       } else {
         parts.push(`<span class="arr">·</span> 학폭 ${f3(Math.min(1,r.sv))} + 보직 ${f3(Math.min(A.bojik,A.bjCap))}로 2.0을 못 채워 가목·나목은 아직 0`);
@@ -2531,14 +2532,15 @@ function renderQuickPeriod(E){
         const okA = v2>=A.capA-1e-9 && A.capA>0, okB = v3>=.4-1e-9, nmok = by>=2029;
         let tail;
         if(!A.full) tail = `① ${f3(v1)} · 2.0까지 ${f3(Math.max(0,2-Math.min(1,r.sv)-Math.min(1,r.jeonmun)-v1))} 남음`;
-        else if(!okA) tail = `① ${f2(v1)} ✓ → ② 가목 ${f2(v2)} 쌓이는 중${A.capA>0?` (상한 ${f2(A.capA)})`:""}`;
-        else if(!okB) tail = `① ${f2(v1)} ✓ · ② ${f2(v2)} ✓ → ③ 나목 ${f2(v3)}${nmok?" 쌓이는 중":" (2028.3.~ 경력부터)"}`;
-        else tail = `① ${f2(v1)} ✓ · ② ${f2(v2)} ✓ · ③ ${f2(v3)} ✓ 보직 최대`;
+        else if(!okA) tail = `① ${f2(v1)} ✓ → ② 가목 ${f2(v2)}${dA?" (평정표 고정값)":" 쌓이는 중"}${A.capA>0&&!dA?` (상한 ${f2(A.capA)})`:""}`;
+        else if(!okB) tail = `① ${f2(v1)} ✓ · ② ${f2(v2)}${dA?" 고정값":" ✓"} → ③ 나목 ${f2(v3)}${dB?" (평정표 고정값)":nmok?" 쌓이는 중":" (2028.3.~ 경력부터)"}`;
+        else tail = `① ${f2(v1)} ✓ · ② ${f2(v2)}${dA?" 고정값":" ✓"} · ③ ${f2(v3)}${dB?" 고정값":" ✓"} 보직 최대`;
         const pb=$("#pv-bojik"); if(pb) pb.innerHTML = sum>0? `+${f3(sum)} <small>${tail}</small>` : "";
         const bx=$("#bjMax"); if(bx){ const mx=r3(Math.min(1.75,2-Math.min(1,r.sv))+A.capA+.4); // 이 사람이 보직으로 받을 수 있는 최대
           bx.innerHTML = M.total? `<div class="bjmx-t"><span>보직으로 받는 점수</span><b>${f3(sum)}</b><span class="xs muted">/ 최대 ${f2(mx)} (학폭 ${f2(Math.min(1,r.sv))} 포함 시 ${f2(Math.min(1,r.sv)+mx)})</span></div><div class="bjmx-bar"><i class="s1" style="width:${v1/mx*100}%"></i><i class="s2" style="width:${v2/mx*100}%"></i><i class="s3" style="width:${v3/mx*100}%"></i><span class="bjmx-tick" style="left:${Math.min(1.75,2-Math.min(1,r.sv))/mx*100}%" title="① 상한 — 여기부터 가목"></span></div><div class="bjmx-ax"><span>① 보직</span><span>② 가목</span><span>③ 나목</span></div>` : ""; } }
       el.innerHTML = band + `<div class="bjline">${parts.join(" ")}</div>` + (why.length?`<div class="bjwhy">${why.map(w=>`<span>· 점수 없는 기간 — ${w}</span>`).join("")}</div>`:"") + warn.map(w=>`<span class="bjwarn">${w}</span>`).join(""); } }
     const d=$("#pv-bjdirect"); if(d) d.textContent = fx&&(P.addApts!==""||P.addBpts!=="")? "평정표 값 사용 중" : (P.addApts!==""||P.addBpts!=="")? "값 있음 · 고정 안 함" : "";
+    { const dt=$("#qBjDirect"); if(dt && fx && (P.addApts!==""||P.addBpts!=="") && !dt.dataset.auto){ dt.open=true; dt.dataset.auto="1"; } }
     const on=$("#bjOldNote"); if(on) on.innerHTML = (P.addAfrom==="old" && P.addApts!=="" && !fx)? `<p class="hint">이전 버전에서 가목 년·개월로 넣었던 값(${f3(n(P.addApts))}점)이 남아 있어요. 지금은 보직 기간에서 자동 배분하므로 이 값은 쓰지 않습니다. 평정표 값이 맞으면 위 체크를 켜고, 아니면 ✕ 지우기로 지우세요. <button type="button" class="bjclr" data-bjclr="addApts">✕ 지우기</button></p>` : ""; }
   set("region", Math.min(1,r.remote)); set("sports", Math.min(.55,r.sports));
   set("ov", Math.min(.5,r.overseas), r.overseas>.5?"상한 0.5":""); set("ko", Math.min(1,r.korean)); set("guide", Math.min(1,r.prGuide)); set("spOld", Math.min(1,r.specialOld));
