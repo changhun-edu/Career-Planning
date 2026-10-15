@@ -2502,7 +2502,7 @@ function renderQuickPeriod(E){
     if(el){ if(!M.total && !M.over && !M.noStart){ el.innerHTML=""; el.className="bjalloc"; const pb=$("#pv-bojik"); if(pb) pb.innerHTML=""; const bx=$("#bjMax"); if(bx) bx.innerHTML=""; } else {
       const bjCut = A.bojik>A.bjCap+1e-9;
       const fm=(m,rate)=>`${m}개월 × ${rate}${m>=12?" · "+fmtYM(m):""}`;
-      const vA = dA? Math.min(.5,n(P.addApts)) : A.addA, vB = dB? Math.min(.4,n(P.addBpts)) : A.addB;
+      const vA = !A.full? 0 : dA? Math.min(.5,n(P.addApts)) : A.addA, vB = !A.full? 0 : dB? Math.min(.4,n(P.addBpts)) : A.addB;
       // 가로 띠: ① 보직 / ② 가목 / ③ 나목 / 점수 없는 달
       const segs=[["① 보직",A.used1,"s1"],["② 가목",A.usedA,"s2"],["③ 나목",A.usedB,"s3"],["점수 없음",A.lost,"s0"]].filter(x=>x[1]>0);
       const tot=segs.reduce((t,x)=>t+x[1],0);
