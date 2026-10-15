@@ -586,6 +586,7 @@ table.plt td.me{background:var(--good-l);color:var(--good);font-weight:800;outli
 .bjbar i.s1{background:#1f5fbf} .bjbar i.s2{background:var(--teal)} .bjbar i.s3{background:#0b6b61} .bjbar i.s0{background:#c4cbd6;color:var(--ink2)}
 .bjax{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:3px}
 .bjrng{grid-template-columns:1fr 1fr}
+input.need{border-color:var(--warn);box-shadow:0 0 0 2px var(--warn-l)}
 .bjmax{margin:2px 2px 8px}
 .bjmax:empty{display:none}
 .bjmx-t{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2)}
@@ -1136,7 +1137,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
         <div class="prow bjrow"><div class="ph"><b>보직교사 기간</b><span class="rate">평정표의 보직 경력 그대로</span><span class="pv num" id="pv-bojik"></span></div>
           <div class="seg" role="group" style="margin-bottom:6px"><button type="button" data-bjm="range">기간(연·월)으로</button><button type="button" data-bjm="sum">총 기간 + 시작 연·월</button></div>
           <div id="bjRangeIn"><div id="bjRanges"></div><button type="button" class="chip ghost" data-bjadd="1" style="margin-top:4px">+ 보직 기간 추가</button><p class="hint" style="margin:6px 0 0">보직이 끊겼다 다시 맡았으면 기간을 따로 추가하세요. 겹치는 달은 한 번만 세고, 평정 기준일 이후는 자동으로 뺍니다.</p></div>
-          <div id="bjSumIn" class="hide"><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bjSumY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bjSumM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div><label class="f" style="flex:1 1 160px"><span>보직 시작 연·월</span><input type="month" data-p="quick.p.bjStart" placeholder="2017-03"></label></div><p class="hint" style="margin:6px 0 0">시작 연·월부터 쉬지 않고 이어서 보직을 맡았다고 보고 시기를 자동으로 나눕니다. 중간에 쉰 적이 있으면 '기간(연·월)으로'를 쓰세요.</p></div>
+          <div id="bjSumIn" class="hide"><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.bjSumY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.bjSumM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div><label class="f" style="flex:1 1 160px"><span>보직 시작 연·월</span><input type="month" data-p="quick.p.bjStart" placeholder="2017-03"></label></div><p class="hint" style="margin:6px 0 0">시작 연·월부터 쉬지 않고 이어서 보직을 맡았다고 보고 시기를 자동으로 나눕니다. 시작 연·월을 비우면 평정 기준일까지 이어진 것으로 봅니다. 중간에 쉰 적이 있으면 '기간(연·월)으로'를 쓰세요.</p></div>
           <div class="bjalloc" id="pv-bjalloc"></div>
           <p class="hint" style="margin:6px 0 0">오래된 달부터 ① 보직(월 0.021 · 학폭과 합쳐 2.0)에 채우고, 2.0을 넘긴 뒤의 보직은 ② 가목(월 0.01 · 0.5, 2023.3.1. 이후 경력만), 가목까지 채우면 ③ 나목(월 0.01 · 0.4, 2028.3.1. 이후 경력만)으로 자동 배분합니다.</p></div>
         <div class="prow"><div class="ph"><b>교육전문직</b><span class="rate">1년 0.2016</span><span class="pv num" id="pv-jeon"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.jeonY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.jeonM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
@@ -1989,7 +1990,7 @@ function bojikMonths(P){
   const set=new Set(); let over=0, noStart=false;
   const take=(a,b)=>{ if(a==null||b==null||b<a) return; for(let i=a;i<=b;i++){ if(i>last){ over++; continue; } set.add(i); } };
   if(P.bjMode==="sum"){ const tot=Math.max(0,Math.floor(n(P.bjSumY))*12+Math.floor(n(P.bjSumM))); const st=ymIdx(P.bjStart);
-    if(tot>0){ if(st==null){ noStart=true; take(BJ_A-tot, BJ_A-1); } else take(st, st+tot-1); } }
+    if(tot>0){ if(st==null){ noStart=true; take(last-tot+1, last); } else take(st, st+tot-1); } }
   else (P.bjr||[]).forEach(r=>{ const a=ymIdx(r.start); if(a==null) return; const b = r.current? last : ymIdx(r.end); take(a, b==null? null : b); });
   let m1=0,m2=0,m3=0; set.forEach(i=>{ if(i<BJ_A) m1++; else if(i<BJ_B) m2++; else m3++; });
   return {m1,m2,m3, total:m1+m2+m3, over, noStart};
@@ -2525,7 +2526,8 @@ function renderQuickPeriod(E){
       if(A.lost2>0) why.push(`2023.3.~2028.2. ${fmtYM(A.lost2)}: ${A.full? "가목 상한(0.5)을 넘긴 달이고, 나목은 2028.3.1. 이후 경력만 인정" : "①이 찼지만 2.0 미달로 가목 불가"}`);
       if(A.lost3>0) why.push(`2028.3. 이후 ${fmtYM(A.lost3)}: 나목 상한(0.4) 초과`);
       if(M.over>0) warn.push(`평정 기준일(${by}.2.) 이후의 ${fmtYM(M.over)}은 이번 평정에 넣지 않았어요. 시뮬레이션 탭에서 미래 계획으로 넣으세요.`);
-      if(M.noStart) warn.push("시작 연·월이 없어 전체를 2023.2. 이전 경력으로 보고 계산했어요(가목·나목 없음). 시작 연·월을 넣으면 시기를 자동으로 나눕니다.");
+      if(M.noStart) warn.push(`시작 연·월이 비어 있어 <b>평정 기준일(${by}.2.)까지 이어진 보직</b>으로 보고 계산했어요(시작 ${idxYM(by*12+1-M.total+1)}.로 가정). 실제 시작 연·월을 넣으면 2023.3.·2028.3. 시기 구분이 정확해집니다.`);
+      { const si=$('[data-p="quick.p.bjStart"]'); if(si) si.classList.toggle("need", M.noStart); }
       el.className="bjalloc"+((A.full||M.total===0)&&!warn.length?"":" warn");
       // 배지: 보직 몫 합계(①+②+③)와 다음 단계
       { const v1=Math.min(A.bojik,A.bjCap), v2=vA, v3=vB, sum=r3(v1+v2+v3);
