@@ -606,6 +606,18 @@ input.need{border-color:var(--warn);box-shadow:0 0 0 2px var(--warn-l)}
 .bjalloc.assume{opacity:.78;border:1px dashed var(--warn);background:#fff}
 .pv.assume{opacity:.7;border:1px dashed var(--warn)}
 #qPeriodIn .pv.assume{background:#fff;color:var(--ink2)}
+.bjadj{display:flex;align-items:center;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--teal);color:#fff;box-shadow:0 4px 12px rgba(15,138,126,.25)}
+.bjadj.off{background:var(--grey-l);color:var(--ink2);box-shadow:none}
+.bjadj.off b{color:var(--ink)}
+.bjadj-t{font-size:13.5px;line-height:1.4}
+.bjadj-t b{color:#fff}
+.bjadj-d{display:block;font-size:12px;opacity:.85;font-weight:500}
+.bjadj-s{display:inline-flex;align-items:center;background:#fff;border-radius:12px;padding:3px;gap:2px;flex:0 0 auto}
+.bjadj-s .sb{width:44px;height:40px;flex:0 0 44px;border:0;border-radius:9px;background:#e5f5ec;color:var(--teal);font-size:22px;font-weight:800;cursor:pointer}
+.bjadj-s .sb:hover{background:#cdeedd}
+.bjadj-v{min-width:74px;text-align:center;font-size:18px;font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums}
+.bjadj-v small{font-size:12px;font-weight:600;margin-left:2px}
+@media(max-width:440px){.bjadj{justify-content:center}.bjadj-t{text-align:center;flex-basis:100%}}
 .bjq-l{font-weight:500;color:var(--muted);font-size:12.5px;flex-basis:100%}
 @media(min-width:560px){.bjq-l{flex-basis:auto;margin-right:2px}}
 .bjsent{font-size:14px;margin:10px 0 0;padding:8px 12px}
@@ -1171,7 +1183,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
             <div class="bjsent" id="bjSent"></div>
           </div>
           <div class="bjalloc" id="pv-bjalloc"></div>
-          <p class="hint" style="margin:6px 0 0">오래된 달부터 ① 보직(월 0.021 · 학폭과 합쳐 2.0)에 채우고, 2.0을 넘긴 뒤의 보직은 ② 가목(월 0.01 · 0.5, 2023.3.1. 이후 경력만), 가목까지 채우면 ③ 나목(월 0.01 · 0.4, 2028.3.1. 이후 경력만)으로 자동 배분합니다.</p></div>
+          <p class="hint" style="margin:6px 0 0">오래된 달부터 ① 보직(월 0.021 · 학폭과 합쳐 2.0)에 채우고, 2.0을 넘긴 뒤의 보직은 ② 가목(월 0.01 · 0.5, 2023.3.1. 이후 경력만), 가목까지 채우면 ③ 나목(월 0.01 · 0.4, 2028.3.1. 이후 경력만)으로 자동 배분합니다. 2.0을 넘긴 뒤에는 가목·나목 옆 −1개월·+1개월 버튼으로 마지막 보직 달을 바로 조정할 수 있어요.</p></div>
         <div class="prow"><div class="ph"><b>교육전문직</b><span class="rate">1년 0.2016</span><span class="pv num" id="pv-jeon"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="40" inputmode="numeric" data-p="quick.p.jeonY" placeholder="0" aria-label="년"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>년</span></div><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="11" inputmode="numeric" data-p="quick.p.jeonM" placeholder="0" aria-label="개월"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>개월</span></div></div></div>
         <div class="prow"><div class="ph"><b>학교폭력 예방·대응 실적</b><span class="rate">1회 0.1</span><span class="pv num" id="pv-sv"></span></div><div class="pin"><div class="pst"><div class="stepper sm"><button type="button" class="sb" data-stepd="-1" aria-label="줄이기">−</button><input type="number" min="0" max="10" inputmode="numeric" data-p="quick.p.svN" placeholder="0" aria-label="회(인정받은 해)"><button type="button" class="sb" data-stepd="1" aria-label="늘리기">+</button></div><span>회(인정받은 해)</span></div></div></div>
         <details class="rare" id="qBjDirect"><summary>가목·나목 점수를 평정표 값으로 고정하기 <span class="rate">자동 배분과 다를 때만</span><span class="pv num" id="pv-bjdirect"></span></summary>
@@ -1637,7 +1649,7 @@ function defState(){
     guide:{hireYear:"", leave:"", q1:"95", res:"3", style:"steady", gwangju:true, checks:{}, recipe:"std",
            rev:{target:"4.96", sv:"3", cr:"1", rs:"1", reg:"0.5", gj:"1"}},
     quick:{eligAll:false, careerFull:false, careerY:"", careerM:"", trainFull:false, trainPts:"", bmode:"period",
-           p:{bjYears:{},bjStartM:"3",bjEndM:"2",bjFix:false,jeonY:"",jeonM:"",svN:"",rsMoeY:"",rsMoeM:"",rsEduY:"",rsEduM:"",prY:"",prM:"",cr6:"",cr4:"",crFull:false,addApts:"",addBpts:"",region:"",regionFull:false,gold:"",silver:"",bronze:"",ovY:"",ovM:"",koY:"",koM:"",guideN:"",spOld:""},
+           p:{bjYears:{},bjStartM:"3",bjEndM:"2",bjAddM:0,bjFix:false,jeonY:"",jeonM:"",svN:"",rsMoeY:"",rsMoeM:"",rsEduY:"",rsEduM:"",prY:"",prM:"",cr6:"",cr4:"",crFull:false,addApts:"",addBpts:"",region:"",regionFull:false,gold:"",silver:"",bronze:"",ovY:"",ovM:"",koY:"",koM:"",guideN:"",spOld:""},
            b:{bojik:"",sv:"",region:"",research:"",credits:"",sports:"",addA:"",overseas:"",specialOld:"",addB:""}, bonusTotal:"", curRegion:"general", curClasses:""},
     sim:{inc:0.16, active:"A", sel:null, plans:{A:defPlan(), B:defPlan()}},
     perf:{mode:"direct", staff:"", years:[]}
@@ -2043,8 +2055,20 @@ function bojikMonths(P){
     if(y===ys[0]){ const sm=Math.floor(n(P.bjStartM))||3; a=Math.max(a, b+kOf(sm)); }
     if(y===ys[ys.length-1]){ const em=Math.floor(n(P.bjEndM))||2; e=Math.min(e, b+kOf(em)); }
     take(a,e); });
+  // 2.0 도달 뒤 스테퍼로 더한 개월: 마지막 보직 달 뒤에 이어 붙임(기준일까지)
+  const add=Math.max(0,Math.floor(n(P.bjAddM))); let lastSel=null; set.forEach(i=>{ if(lastSel==null||i>lastSel) lastSel=i; });
+  if(add>0 && lastSel!=null) take(lastSel+1, lastSel+add);
   let m1=0,m2=0,m3=0; set.forEach(i=>{ if(i<BJ_A) m1++; else if(i<BJ_B) m2++; else m3++; });
-  return {m1,m2,m3, total:m1+m2+m3, over, noStart:false, years:ys};
+  return {m1,m2,m3, total:m1+m2+m3, over, noStart:false, years:ys, add};
+}
+// 마지막 보직 달을 한 달 늘리거나 줄임(가목·나목 ± 버튼). 학년도 칩과 종료 월을 함께 맞춤
+function bjShiftEnd(delta){
+  const P=S.quick.p, by=+S.profile.baseYear, last=by*12+1;
+  const tmp={...P, bjAddM:0}; const M0=bojikMonths(tmp); if(!M0.total) return "보직 학년도를 먼저 고르세요.";
+  const cur=Math.max(0,Math.floor(n(P.bjAddM)));
+  if(delta>0){ const M1=bojikMonths({...P, bjAddM:cur+1}); if(M1.over>M0.over) return `평정 기준일(${by}.2.) 이후는 이번 평정에 넣을 수 없어요. 시뮬레이션 탭에서 미래 계획으로 넣으세요.`; P.bjAddM=cur+1; }
+  else { if(cur<=0) return "추가한 개월이 없어요. 보직 기간 자체를 줄이려면 학년도 칩이나 종료 월을 고치세요."; P.bjAddM=cur-1; }
+  return "";
 }
 // ① 보직(0.021) → ② 가목(0.01, 2023.3.~) → ③ 나목(0.01, 2028.3.~) 순서로 오래된 달부터 배분
 function bojikAlloc(P, svRaw, jeonRaw, sportsRaw){
@@ -2559,10 +2583,19 @@ function renderQuickPeriod(E){
       const band=`<div class="bjband"><div class="bjbar">${segs.map(x=>`<i class="${x[2]}" style="flex:${x[1]}" title="${x[0]} ${fmtYM(x[1])}"><span>${x[0]} ${fmtYM(x[1])}</span></i>`).join("")}</div><div class="bjax"><span>시기 구분: 2023.2.까지 ${fmtYM(M.m1)} · 2023.3.~2028.2. ${fmtYM(M.m2)}${M.m3?` · 2028.3.~ ${fmtYM(M.m3)}`:""}</span><span>보직 ${fmtYM(tot)}</span></div></div>`;
       const parts=[`① 보직 <b>${f3(Math.min(A.bojik,A.bjCap))}</b> <span class="bjf">(${fm(A.used1,"0.021")})${bjCut?" → 2.0 상한":""}</span>`];
       const clr=k=>`<button type="button" class="bjclr" data-bjclr="${k}" aria-label="평정표 값 지우기">✕ 지우기</button>`;
-      let warn=[];
+      let warn=[], adjRow="";
       if(A.full){
-        parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(vA)}</b> <span class="bjf">${dA?`평정표 값 ${clr("addApts")}`:`(${fm(A.usedA,"0.01")})${A.usedA>=Math.ceil(A.capA/.01-1e-9)&&A.usedA>0?" → 상한":""}`}</span>`);
+        const aFull = A.usedA>=Math.ceil(A.capA/.01-1e-9), bStage = aFull && by>=2029 && !dB;
+        parts.push(`<span class="arr">→</span> ② 가목 <b>${f3(vA)}</b> <span class="bjf">${dA?`평정표 값 ${clr("addApts")}`:`(${fm(A.usedA,"0.01")})${aFull&&A.usedA>0?" → 상한":""}`}</span>`);
         if(by>=2029||dB||A.usedB>0||A.lost2>0) parts.push(`<span class="arr">→</span> ③ 나목 <b>${f3(vB)}</b> <span class="bjf">${dB?`평정표 값 ${clr("addBpts")}`:`(${fm(A.usedB,"0.01")})${A.usedB>=40?" → 상한":""}`}</span>`);
+        // 2.0 도달 뒤 월 단위 조정 줄
+        // 월 조정은 마지막 보직 달이 2023.3. 이후일 때만(그 앞 기간을 늘려도 가목이 되지 않음)
+        const lastYr = M.years && M.years.length? M.years[M.years.length-1] : null;
+        const lastIdx = lastYr==null? null : (()=>{ const b0=lastYr*12+2; let e=b0+11; if(P.bjYears[lastYr]==="h1") e=b0+5; return Math.min(e, b0+((Math.floor(n(P.bjEndM))||2)-3+12)%12); })();
+        const canAdj = lastIdx!=null && lastIdx>=BJ_A && (M.m2+M.m3)>0;
+        if(!dA && !(bStage && dB) && !canAdj) adjRow = `<div class="bjadj off"><span class="bjadj-t"><b>2.0 도달 ✓</b> 마지막 보직이 2023.2. 이전이라 월 조정이 없어요. 2023.3.1. 이후 보직이 더 있으면 그 학년도 칩을 켜세요 — 그때부터 한 달에 가목 +0.01</span></div>`;
+        if(!dA && !(bStage && dB) && canAdj){ const stage = bStage? "③ 나목" : "② 가목"; const cnt = Math.max(0,Math.floor(n(P.bjAddM))); const capped = bStage? A.usedB>=40 : aFull;
+          adjRow = `<div class="bjadj"><span class="bjadj-t"><b>2.0 도달 ✓</b> 보직 한 달 더 = ${stage} <b>+0.01</b>${capped?` · ${stage} 상한`:""}<small class="bjadj-d">학년도 칩에 더해 추가로 맡은 개월</small></span><span class="bjadj-s"><button type="button" class="sb" data-bjshift="-1" aria-label="추가 개월 줄이기">−</button><span class="bjadj-v">${cnt}<small>개월</small></span><button type="button" class="sb" data-bjshift="1" aria-label="추가 개월 늘리기">+</button></span></div>`; }
         if(dA && n(P.addApts)>0 && A.usedA===0 && M.m2+M.m3===0) warn.push("2023.3.1. 이후 보직 기간이 없는데 가목을 평정표 값으로 고정했어요. 기간을 확인하거나 고정을 풀어 주세요.");
         if(dA && Math.abs(n(P.addApts)-A.addA)>1e-4) warn.push(`가목을 평정표 값 ${f3(Math.min(.5,n(P.addApts)))}점으로 고정해 쓰는 중이에요. 넣은 기간으로 계산하면 ${f3(A.addA)}점입니다. 평정표 값이 아니면 '평정표 값으로 고정'을 끄거나 ✕ 지우기를 누르세요.`);
         if(dB && Math.abs(n(P.addBpts)-A.addB)>1e-4) warn.push(`나목을 평정표 값 ${f3(Math.min(.4,n(P.addBpts)))}점으로 고정해 쓰는 중이에요(기간 계산 ${f3(A.addB)}점).`);
@@ -2588,7 +2621,7 @@ function renderQuickPeriod(E){
         const pb=$("#pv-bojik"); if(pb) pb.innerHTML = sum>0? `+${f3(sum)} <small>${tail}</small>` : "";
         const bx=$("#bjMax"); if(bx){ const mx=r3(Math.min(1.75,2-Math.min(1,r.sv))+A.capA+.4); // 이 사람이 보직으로 받을 수 있는 최대
           bx.innerHTML = M.total? `<div class="bjmx-t"><span>보직으로 받는 점수</span><b>${f3(sum)}</b><span class="xs muted">/ 최대 ${f2(mx)} (학폭 ${f2(Math.min(1,r.sv))} 포함 시 ${f2(Math.min(1,r.sv)+mx)})</span></div><div class="bjmx-bar"><i class="s1" style="width:${v1/mx*100}%"></i><i class="s2" style="width:${v2/mx*100}%"></i><i class="s3" style="width:${v3/mx*100}%"></i><span class="bjmx-tick" style="left:${Math.min(1.75,2-Math.min(1,r.sv))/mx*100}%" title="① 상한 — 여기부터 가목"></span></div><div class="bjmx-ax"><span>① 보직</span><span>② 가목</span><span>③ 나목</span></div>` : ""; } }
-      el.innerHTML = band + `<div class="bjline">${parts.join(" ")}</div>` + (why.length?`<div class="bjwhy">${why.map(w=>`<span>· 점수 없는 기간 — ${w}</span>`).join("")}</div>`:"") + warn.map(w=>`<span class="bjwarn">${w}</span>`).join(""); } }
+      el.innerHTML = band + `<div class="bjline">${parts.join(" ")}</div>` + adjRow + (why.length?`<div class="bjwhy">${why.map(w=>`<span>· 점수 없는 기간 — ${w}</span>`).join("")}</div>`:"") + warn.map(w=>`<span class="bjwarn">${w}</span>`).join(""); } }
     const d=$("#pv-bjdirect"); if(d) d.textContent = fx&&(P.addApts!==""||P.addBpts!=="")? "평정표 값 사용 중" : (P.addApts!==""||P.addBpts!=="")? "값 있음 · 고정 안 함" : "";
     { const dt=$("#qBjDirect"); if(dt && fx && (P.addApts!==""||P.addBpts!=="") && !dt.dataset.auto){ dt.open=true; dt.dataset.auto="1"; } }
     const on=$("#bjOldNote"); if(on) on.innerHTML = (P.addAfrom==="old" && P.addApts!=="" && !fx)? `<p class="hint">이전 버전에서 가목 년·개월로 넣었던 값(${f3(n(P.addApts))}점)이 남아 있어요. 지금은 보직 기간에서 자동 배분하므로 이 값은 쓰지 않습니다. 평정표 값이 맞으면 위 체크를 켜고, 아니면 ✕ 지우기로 지우세요. <button type="button" class="bjclr" data-bjclr="addApts">✕ 지우기</button></p>` : ""; }
@@ -2649,9 +2682,9 @@ function renderBjRows(){
       // 켜진 학년도를 구간으로 묶어 읽기: 2015·2016, 2019~2021학년도
       const full=y=>Y[y]===12||Y[y]==="12";
       const g=[]; sel.forEach(y=>{ const L=g[g.length-1]; if(L && L.full && full(y) && L.e===y-1) L.e=y; else g.push({s:y,e:y,full:full(y)}); });
-      const txt=g.map(x=> x.full? (x.s===x.e? `${x.s}` : `${x.s}~${x.e}`) : `${x.s} ${CHIP_LBL[Y[x.s]]}`).join(", ");
+      const txt=g.map(x=> x.full? (x.s===x.e? `${x.s}학년도` : `${x.s}~${x.e}학년도`) : `${x.s}학년도 ${CHIP_LBL[Y[x.s]]}`).join(", ");
       const M=bojikMonths(P); const sm=Math.floor(n(P.bjStartM))||3, em=Math.floor(n(P.bjEndM))||2;
-      sn.innerHTML=`<span class="ok">${txt}학년도</span> · 모두 <b>${fmtYM(M.total)}</b>${(sm!==3||em!==2)?` <small class="muted">(${sel[0]}학년도 ${sm}월부터 · ${sel[sel.length-1]}학년도 ${em}월까지)</small>`:""}${P.bjFilled?` <small class="muted">· 최근 ${P.bjFilled}년으로 채웠어요, 시기가 다르면 칩을 고치세요</small>`:""}`; } }
+      sn.innerHTML=`<span class="ok">${txt}</span> · 모두 <b>${fmtYM(M.total)}</b>${(sm!==3||em!==2)?` <small class="muted">(${sel[0]}학년도 ${sm}월부터 · ${sel[sel.length-1]}학년도 ${em}월까지)</small>`:""}${M.add?` <small class="muted">(추가 ${M.add}개월 포함)</small>`:""}${P.bjFilled?` <small class="muted">· 최근 ${P.bjFilled}년으로 채웠어요, 시기가 다르면 칩을 고치세요</small>`:""}`; } }
 }
 function renderCalcOut(){
   renderBjRows();
@@ -4082,9 +4115,10 @@ function init(){
       else if(changed) toast(S.mode==="quick"?"'평정표 점수로' 입력으로 바꿨습니다. 근무 기록으로 넣은 내용은 그대로 보관됩니다.":"'근무 기록으로' 입력으로 바꿨습니다. 평정표 점수로 넣은 내용은 그대로 보관됩니다.");
       return; }
     if(t.dataset.qbm){ S.quick.bmode=t.dataset.qbm; save(); renderCalcOut(); renderDock(); return; }
-    if(t.dataset.bjy){ const P=S.quick.p; P.bjYears=P.bjYears||{}; const y=t.dataset.bjy, v=P.bjYears[y]; const nv = !v? 12 : (v===12||v==="12")? "h1" : v==="h1"? "h2" : 0; if(nv) P.bjYears[y]=nv; else delete P.bjYears[y]; delete P.bjFilled; save(); const sy=window.scrollY; renderCalcOut(); renderDock(); window.scrollTo(0,sy); return; }
+    if(t.dataset.bjy){ const P=S.quick.p; P.bjYears=P.bjYears||{}; const y=t.dataset.bjy, v=P.bjYears[y]; const nv = !v? 12 : (v===12||v==="12")? "h1" : v==="h1"? "h2" : 0; if(nv) P.bjYears[y]=nv; else delete P.bjYears[y]; delete P.bjFilled; P.bjAddM=0; save(); const sy=window.scrollY; renderCalcOut(); renderDock(); window.scrollTo(0,sy); return; }
+    if(t.dataset.bjshift){ const msg=bjShiftEnd(+t.dataset.bjshift); if(msg){ toast(msg); return; } save(); bindInputs(); const sy=window.scrollY; renderCalcOut(); renderDock(); window.scrollTo(0,sy); return; }
     if(t.dataset.bjrecent){ const P=S.quick.p; const N=Math.max(0,Math.floor(n(($("#bjRecentN")||{}).value))); const by=+S.profile.baseYear; P.bjYears={}; for(let i=1;i<=N;i++) P.bjYears[by-i]=12; if(N) P.bjFilled=N; else delete P.bjFilled; save(); const sy=window.scrollY; renderCalcOut(); renderDock(); window.scrollTo(0,sy); if(N) toast(`${by-N}~${by-1}학년도 ${N}년을 보직으로 채웠습니다. 쉰 해가 있으면 칩을 눌러 끄세요.`); return; }
-    if(t.dataset.bjclear){ const P=S.quick.p; const snap=snapshot(); P.bjYears={}; P.bjStartM="3"; P.bjEndM="2"; delete P.bjFilled; save(); bindInputs(); const sy=window.scrollY; renderCalcOut(); renderDock(); window.scrollTo(0,sy); toast("보직 학년도를 모두 지웠습니다.", ()=>restore(snap)); return; }
+    if(t.dataset.bjclear){ const P=S.quick.p; const snap=snapshot(); P.bjYears={}; P.bjStartM="3"; P.bjEndM="2"; P.bjAddM=0; delete P.bjFilled; save(); bindInputs(); const sy=window.scrollY; renderCalcOut(); renderDock(); window.scrollTo(0,sy); toast("보직 학년도를 모두 지웠습니다.", ()=>restore(snap)); return; }
     if(t.dataset.bjmore){ const P=S.quick.p; const by=+S.profile.baseYear; const cur = P.bjY0? +P.bjY0 : by-18; P.bjY0=cur-6; save(); const sy=window.scrollY; renderCalcOut(); window.scrollTo(0,sy); return; }
     if(t.dataset.stepd){ const box=t.closest(".stepper"); const inp=box&&box.querySelector("input"); if(inp){ const mn=inp.min!==""?+inp.min:-Infinity, mx=inp.max!==""?+inp.max:Infinity;
         let v=Math.round(n(inp.value))+(+t.dataset.stepd); if(inp.value==="" && +t.dataset.stepd>0 && mn>0) v=mn; v=Math.min(mx,Math.max(mn,v)); inp.value=String(v); inp.dispatchEvent(new Event("input",{bubbles:true})); } return; }
