@@ -1132,7 +1132,7 @@ body.hasdock .licbtn{bottom:calc(126px + env(safe-area-inset-bottom))}
         </select>
       </label>
     </div>
-    <p class="hint">교감 자격연수 서류는 해마다 2월 말일을 기준으로 평정합니다. 예) 2026년 자격연수 = 2026.2.28. 기준</p>
+    <p class="hint">교감 자격연수 서류는 해마다 2월 말일을 기준으로 평정합니다. 매해 3월 1일이 되면 기본 기준일이 다음 해 2월 말로 자동 바뀝니다(직접 고른 기준일은 그대로 둡니다).</p>
   </div>
 
   <div class="card hero scoreHero hide" id="scoreHero"></div>
@@ -1659,10 +1659,12 @@ function defRow(){
           bojik:false, sv:false, credits:6, guide:0, medal:"none", coach:1, gwangju:true, leave:0};
 }
 function defPlan(){ const a=[]; for(let i=0;i<6;i++) a.push(defRow()); return a; }
+// 기본 평정 기준 연도: 매해 3월 1일부터 다음 해 2월 말 기준(다음 해 자격연수)으로 자동 전환
+function defaultBaseYear(d){ d=d||new Date(); return d.getFullYear() + (d.getMonth()>=2? 1 : 0); }
 function defState(){
   return {
     v:1, tab:"home",
-    profile:{baseYear:2026, special:false, cert1:"", cert1ok:false, khist:"", hire:"", excl:"", na:"", gwangju:"", perf:""},
+    profile:{baseYear:defaultBaseYear(), special:false, cert1:"", cert1ok:false, khist:"", hire:"", excl:"", na:"", gwangju:"", perf:""},
     train:{jobs:[{s:"",v:""},{s:"",v:""},{s:"",v:""}], qmode:"score", qscore:"", qgrade:""},
     research:{contests:[], master:"none", doctor:"none"},
     items:[], seq:0, bonusNone:false,
@@ -1714,6 +1716,11 @@ function fromSaved(obj){
     if(tot>0 && !Object.keys(P.bjYears||{}).length){ const a = st0==null? last-tot+1 : st0, e=Math.min(last, a+tot-1); const Y={};
       for(let y=Math.floor((a-2)/12); y<=Math.floor((e-2)/12); y++){ const b0=y*12+2; const h1=a<=b0+5&&e>=b0, h2=a<=b0+11&&e>=b0+6; Y[y]= h1&&h2? 12 : h1? "h1":"h2"; }
       P.bjYears=Y; P.bjStartM=String(a%12+1); P.bjEndM=String(e%12+1); } }
+  { const dby=defaultBaseYear(); const cur=+st.profile.baseYear||dby;
+    if(st.profile && !st.profile.byPicked && cur<dby){ const d=dby-cur; st.profile.baseYear=dby; st.profile.byAuto=dby;
+      // 시뮬레이션 계획은 학년도에 맞춰 앞쪽 d년을 지난 해로 떨어뜨림(지난 해 보직 계획은 실제 보직 칩으로 옮김)
+      if(st.sim && st.sim.plans){ ["A","B"].forEach(k=>{ const pl=st.sim.plans[k]; if(!Array.isArray(pl)) return; const dropped=pl.splice(0,d); while(pl.length<6) pl.push(defRow());
+          if(k==="A" && st.quick && st.quick.p){ st.quick.p.bjYears=st.quick.p.bjYears||{}; dropped.forEach((r,i)=>{ if(r && r.bojik && r.work!=="leave" && !st.quick.p.bjYears[cur+i]) st.quick.p.bjYears[cur+i]=12; }); } }); } } }
   if(st.quick.p){ const P=st.quick.p; if(!P.bjStartM) P.bjStartM="3"; if(!P.bjEndM) P.bjEndM="2"; ["bjMode","bjr","bjSumY","bjSumM","bjStart","bjFrom","bjExtra"].forEach(k=>delete P[k]); }
   if(obj && obj.quick && obj.quick.p && obj.quick.p.bjMode===undefined && st.quick.p.bjMode==="range" && !(obj.quick.p.bjr||[]).length) st.quick.p.bjMode="years";
   if(st.quick.p && st.quick.p.etc){ if(!st.quick.p.spOld) st.quick.p.spOld=st.quick.p.etc; delete st.quick.p.etc; }
@@ -2295,7 +2302,7 @@ function onInput(e){
   const el=e.target; if(!el.dataset || !el.dataset.p) return;
   let v = el.type==="checkbox"?el.checked:el.value;
   if(el.dataset.p==="profile.special") v = (v==="true");
-  if(el.dataset.p==="profile.baseYear") v = +v;
+  if(el.dataset.p==="profile.baseYear"){ v = +v; S.profile.byPicked=true; }
   setP(el.dataset.p, v);
   if(el.dataset.p==="quick.p.addApts" && S.quick.p.addAfrom) delete S.quick.p.addAfrom;
   { const P=el.dataset.p, m = /^quick\.p\.region/.test(P)? "accBonus" : /^quick\.career/.test(P)? "accCareer" : /^quick\.train/.test(P)? "accTrain" : null; if(m && S.auto) delete S.auto[m]; }
@@ -3938,7 +3945,7 @@ function rerenderAll(){ bindInputs(); toggleQ(); renderJobRows(); renderContestR
 
 const DEMO = {
   v:1, mode:"quick", demo:true,
-  profile:{baseYear:2026, special:false, cert1:"", khist:"", hire:"", excl:"", na:"", gwangju:"300", perf:"99.5"},
+  profile:{baseYear:defaultBaseYear(), special:false, cert1:"", khist:"", hire:"", excl:"", na:"", gwangju:"300", perf:"99.5"},
   quick:{eligAll:true, careerFull:true, careerY:"", careerM:"", trainFull:false, trainPts:"29.7625", bmode:"bundle",
          b:{bojik:"1.386",sv:"0.3",region:"0.648",research:"1",credits:"0.8",sports:"",addA:"",etc:""}, bonusTotal:"", curRegion:"general", curClasses:"22"},
   sim:{inc:0.16, active:"A", sel:null, plans:{
@@ -4038,8 +4045,9 @@ function renderTab(tab){
 function init(){
   load();
   const sel=$("#baseYearSel");
-  for(let y=2026;y<=2032;y++){ const o=document.createElement("option"); o.value=y; o.textContent=`${y}.2.${isLeap(y)?29:28}. (${y}년 자격연수)`; sel.appendChild(o); }
+  { const dby=defaultBaseYear(); for(let y=2026;y<=Math.max(2032,dby+5);y++){ const o=document.createElement("option"); o.value=y; o.textContent=`${y}.2.${isLeap(y)?29:28}. (${y}년 자격연수)${y===dby?" · 올해 기본":""}`; sel.appendChild(o); } }
   bindInputs(); toggleQ(); renderJobRows(); renderContestRows(); renderBundles();
+  if(S.profile.byAuto && S.profile.byAutoSeen!==S.profile.byAuto){ S.profile.byAutoSeen=S.profile.byAuto; save(); setTimeout(()=>toast(`새 학년도가 시작되어 평정 기준일을 ${S.profile.byAuto}.2.로 옮기고, 지난 해 보직 계획은 실제 보직으로 옮겼어요. 기준일은 위에서 바꿀 수 있어요.`), 600); }
 
   document.addEventListener("input", e=>{
     const el=e.target;
